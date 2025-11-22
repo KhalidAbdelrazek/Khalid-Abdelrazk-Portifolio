@@ -3,11 +3,11 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-const repoName = "portifolio-data";
+const repoName = "Khalid-Abdelrazk-Portifolio";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/portifolio/", // ✅ important for GitHub Pages
+  base: "/Khalid-Abdelrazk-Portifolio/", // ✅ important for GitHub Pages
   server: {
     host: "::", // allows LAN access
     port: 8080,
