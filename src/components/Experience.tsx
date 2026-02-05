@@ -8,6 +8,13 @@ const Experience = () => {
 
   const experiences = [
     {
+      company: "DEPI",
+      role: "Data Engineer Trainee",
+      description:
+        "Training in data engineering concepts, data pipelines, databases, and analytics tools with hands-on projects.",
+      period: "Nov 2025 - Present",
+    },
+    {
       company: "IDH (Integrated Diagnostics Holdings)",
       role: "Data Scientist Intern",
       description:
@@ -72,9 +79,7 @@ const Experience = () => {
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                       <div>
                         <h3 className="text-xl font-bold">{exp.role}</h3>
-                        <p className="text-primary font-medium">
-                          {exp.company}
-                        </p>
+                        <p className="text-primary font-medium">{exp.company}</p>
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground text-sm">
                         <Calendar className="h-4 w-4" />
