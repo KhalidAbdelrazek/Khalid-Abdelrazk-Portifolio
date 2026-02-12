@@ -98,7 +98,7 @@ const Hero = () => {
                   size="lg"
                   className="hover-glow group"
                   onClick={() => {
-                    window.open("https://drive.google.com/file/d/1xTIMbHZeORU_mT_xuEVxSOE8_IPswiq8/view?usp=sharing", "_blank");
+                    window.open("https://drive.google.com/file/d/1R4OBFBmX3yRYVu-ZxegHulADLe0amrLn/view?usp=sharing", "_blank");
                   }}
                 >
                   <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
