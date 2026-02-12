@@ -80,12 +80,12 @@ const skills = [
     icon: PieChart,
     color: "from-blue-400 to-indigo-500",
   },
-  {
-    name: "Big Data / Spark",
-    level: 70,
-    icon: Code2,
-    color: "from-red-400 to-orange-500",
-  },
+  // {
+  //   name: "Big Data / Spark",
+  //   level: 70,
+  //   icon: Code2,
+  //   color: "from-red-400 to-orange-500",
+  // },
   {
     name: "Business Analytics",
     level: 90,
