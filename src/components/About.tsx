@@ -41,7 +41,7 @@ const services = [
 ];
 
 const About = () => {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const contactItems = [

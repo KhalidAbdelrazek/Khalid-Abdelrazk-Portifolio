@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 import { GraduationCap, Calendar, Award, BookOpen } from "lucide-react";
 
 const Education = () => {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
