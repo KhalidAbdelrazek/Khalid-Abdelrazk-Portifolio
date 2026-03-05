@@ -2,6 +2,8 @@ import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Education from "@/components/Education";
+import SoftSkills from "@/components/SoftSkills";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
@@ -16,6 +18,8 @@ const Index = () => {
         <main>
           <Hero />
           <About />
+          <Education />
+          <SoftSkills />
           <Skills />
           <Experience />
           <Projects />

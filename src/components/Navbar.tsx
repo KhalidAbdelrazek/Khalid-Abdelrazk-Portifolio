@@ -17,7 +17,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 🔥 FIXED: Mobile scroll not working
   const scrollToSection = (id: string) => {
     setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
@@ -29,11 +28,12 @@ const Navbar = () => {
           block: "start",
         });
       }
-    }, 300); // Mobile needs this delay
+    }, 300);
   };
 
   const navLinks = [
     { name: "About", id: "about" },
+    { name: "Education", id: "education" },
     { name: "Skills", id: "skills" },
     { name: "Experience", id: "experience" },
     { name: "Projects", id: "projects" },
@@ -44,9 +44,9 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "glass shadow-xl" : "bg-transparent"
-      }`}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "glass shadow-xl backdrop-blur-xl" : "bg-transparent"
+        }`}
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
@@ -60,15 +60,15 @@ const Navbar = () => {
           </motion.button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className="text-foreground/80 hover:text-foreground transition-colors relative group"
+                className="text-sm font-medium text-foreground/75 hover:text-foreground transition-colors relative group py-1"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary transition-all group-hover:w-full" />
+                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-gradient-primary transition-all duration-300 group-hover:w-full rounded-full" />
               </button>
             ))}
             <Button
@@ -122,15 +122,15 @@ const Navbar = () => {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden glass border-t border-border/50"
           >
-            <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
+            <div className="container mx-auto px-6 py-4 flex flex-col gap-2">
               {navLinks.map((link, index) => (
                 <motion.button
                   key={link.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: index * 0.07 }}
                   onClick={() => scrollToSection(link.id)}
-                  className="text-left text-foreground/80 hover:text-foreground transition-colors py-2"
+                  className="text-left text-foreground/80 hover:text-foreground transition-colors py-2 px-2 rounded-lg hover:bg-white/5"
                 >
                   {link.name}
                 </motion.button>

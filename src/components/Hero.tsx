@@ -5,10 +5,6 @@ import profileImage from "@/assets/profile.jpg";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
-  function scrollToSection(arg0: string) {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <section
       id="hero"
