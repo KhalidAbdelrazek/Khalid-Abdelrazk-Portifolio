@@ -75,7 +75,7 @@ const Hero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.6 }}
-                  className="text-lg md:text-xl text-muted-foreground leading-relaxed"
+                  className="text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed px-4 md:px-0"
                 >
                   Data Analyst with 1+ years of experience turning raw data into
                   actionable insights. Skilled in Python, SQL, Power BI, and data
@@ -88,11 +88,11 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 0.6 }}
-                className="flex flex-wrap gap-4 justify-center lg:justify-start"
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full sm:w-auto"
               >
                 <Button
                   size="lg"
-                  className="hover-glow group"
+                  className="hover-glow group w-full sm:w-auto"
                   onClick={() => {
                     window.open("https://drive.google.com/file/d/1R4OBFBmX3yRYVu-ZxegHulADLe0amrLn/view?usp=sharing", "_blank");
                   }}
@@ -104,7 +104,7 @@ const Hero = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="hover-glow"
+                  className="hover-glow w-full sm:w-auto"
                   onClick={() => {
                     window.open("https://github.com/KhalidAbdelrazek?tab=repositories", "_blank");
                   }}
@@ -115,8 +115,8 @@ const Hero = () => {
             </div>
 
             {/* RIGHT COLUMN: Neon Slogan */}
-            <div className="flex-1 w-full flex justify-center lg:justify-end items-center">
-              <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center perspective-1000">
+            <div className="flex-1 w-full flex justify-center lg:justify-end items-center mt-12 lg:mt-0">
+              <div className="relative w-full max-w-[400px] md:max-w-[500px] aspect-square flex items-center justify-center perspective-1000">
 
                 {/* Abstract Tech Background Elements */}
                 <motion.div
@@ -168,7 +168,7 @@ const Hero = () => {
 
                     {/* "FROM CONCEPT" */}
                     <motion.span
-                      className="relative inline-block text-foreground/50 text-2xl md:text-3xl font-mono uppercase tracking-[0.2em]"
+                      className="relative inline-block text-foreground/50 text-xl md:text-2xl lg:text-3xl font-mono uppercase tracking-[0.2em] px-4"
                       whileHover={{ color: "var(--primary)", letterSpacing: "0.3em" }}
                     >
                       From Concept
@@ -178,21 +178,14 @@ const Hero = () => {
                     <span className="block w-1 h-12 bg-gradient-brand rounded-full mx-auto opacity-30"></span>
 
                     {/* "TO CREATION" */}
-                    <motion.div className="relative">
-                      {/* Glow Layer */}
+                    <motion.div className="relative px-4">
+                      {/* Single Optimized Layer with Glow-Effect via text-shadow */}
                       <span
-                        className="absolute inset-0 text-neon blur-md opacity-70 select-none pointer-events-none text-5xl md:text-6xl font-black italic"
-                        aria-hidden="true"
-                      >
-                        TO CREATION
-                      </span>
-
-                      {/* 3D Text Layer */}
-                      <span
-                        className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-primary to-purple-500 text-3d animate-pulse text-5xl md:text-6xl font-black italic whitespace-nowrap block"
+                        className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-primary to-purple-500 text-shadow-glow animate-pulse text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic block"
                         style={{
                           backgroundImage: "linear-gradient(to right, #22d3ee, #0ea5e9, #a855f7)",
                           WebkitBackgroundClip: "text",
+                          textShadow: "0 0 20px rgba(34, 211, 238, 0.3), 0 0 40px rgba(168, 85, 247, 0.2)"
                         }}
                       >
                         TO CREATION

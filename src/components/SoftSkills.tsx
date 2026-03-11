@@ -74,7 +74,7 @@ const SoftSkills = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
-                        Soft <span className="text-gradient">Skills</span>
+                        Soft <span className="text-gradient title-underline">Skills</span>
                     </h2>
                     <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
                         Beyond the technical — the human qualities that make collaboration and
@@ -95,22 +95,19 @@ const SoftSkills = () => {
                                 className={`glass rounded-2xl p-6 hover-glow transition-all hover:scale-[1.04] hover:shadow-xl ${skill.glow} group cursor-default`}
                             >
                                 {/* Icon */}
-                                <div className="flex items-start gap-4">
+                                <div className="flex items-center gap-4">
                                     <motion.div
-                                        className={`p-3 rounded-xl bg-gradient-to-br ${skill.color} flex-shrink-0 shadow-md`}
+                                        className={`p-2.5 rounded-xl bg-gradient-to-br ${skill.color} flex-shrink-0 shadow-md`}
                                         whileHover={{ rotate: [0, -8, 8, 0] }}
                                         transition={{ duration: 0.5 }}
                                     >
-                                        <skill.icon className="h-6 w-6 text-white" />
+                                        <skill.icon className="h-5 w-5 text-white" />
                                     </motion.div>
 
                                     <div className="flex-1 min-w-0">
-                                        <h3 className="font-bold text-base md:text-lg leading-tight mb-1 group-hover:text-gradient transition-colors">
+                                        <h3 className="font-bold text-sm md:text-base leading-tight group-hover:text-primary transition-colors">
                                             {skill.name}
                                         </h3>
-                                        <p className="text-sm text-muted-foreground leading-relaxed">
-                                            {skill.description}
-                                        </p>
                                     </div>
                                 </div>
 

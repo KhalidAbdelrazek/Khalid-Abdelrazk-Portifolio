@@ -24,12 +24,13 @@ const services = [
     color: "from-purple-500/20 to-pink-500/20",
     iconColor: "text-purple-400"
   },
+
   {
-    title: "Flutter Development",
-    description: "Build cross-platform mobile apps with Flutter, focus on high performance and clean UI.",
-    icon: Smartphone,
-    color: "from-indigo-500/20 to-blue-500/20",
-    iconColor: "text-indigo-400"
+    title: "Data Engineering Services",
+    description: "Build scalable data pipelines, ETL processes, and robust database architectures.",
+    icon: Database,
+    color: "from-blue-600/20 to-indigo-600/20",
+    iconColor: "text-blue-400"
   },
   {
     title: "Data Cleaning",
@@ -37,6 +38,13 @@ const services = [
     icon: Database,
     color: "from-emerald-500/20 to-teal-500/20",
     iconColor: "text-emerald-400"
+  },
+  {
+    title: "Flutter Development",
+    description: "Build cross-platform mobile apps with Flutter, focus on high performance and clean UI.",
+    icon: Smartphone,
+    color: "from-indigo-500/20 to-blue-500/20",
+    iconColor: "text-indigo-400"
   }
 ];
 
@@ -115,21 +123,21 @@ const About = () => {
           </div>
 
           <div className="space-y-12">
-            <h3 className="text-3xl font-bold text-center">My <span className="text-gradient">Services</span></h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <h3 className="text-3xl font-bold text-center">My <span className="text-gradient title-underline">Services</span></h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                   transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-                  className="glass rounded-3xl p-8 hover-glow group transition-all duration-500 hover:-translate-y-2 border-white/5"
+                  className="glass rounded-3xl p-6 md:p-8 hover-glow group transition-all duration-500 hover:-translate-y-2 border-white/5"
                 >
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/10`}>
-                    <service.icon className={`h-7 w-7 ${service.iconColor}`} />
+                  <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/10`}>
+                    <service.icon className={`h-6 w-6 md:h-7 md:w-7 ${service.iconColor}`} />
                   </div>
-                  <h4 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.title}</h4>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <h4 className="text-lg md:text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.title}</h4>
+                  <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
                     {service.description}
                   </p>
                 </motion.div>

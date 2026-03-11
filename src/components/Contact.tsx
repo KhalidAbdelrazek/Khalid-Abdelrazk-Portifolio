@@ -65,9 +65,13 @@ const Contact = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-4 text-center">
             Get In <span className="text-gradient">Touch</span>
           </h2>
+          <p className="text-center text-muted-foreground text-sm md:text-base mb-8 md:mb-12 max-w-full sm:max-w-xl mx-auto px-4 sm:px-0 leading-relaxed">
+            Whether you have a project idea, a question, or just want to say hello,
+            I’m always excited to connect and explore new opportunities together.
+          </p>
 
           <div className="max-w-2xl mx-auto">
             <motion.form
@@ -77,7 +81,7 @@ const Contact = () => {
               }
               transition={{ delay: 0.2, duration: 0.6 }}
               onSubmit={handleSubmit}
-              className="glass rounded-3xl p-8 md:p-12 space-y-6"
+              className="glass rounded-3xl p-6 md:p-12 space-y-6"
             >
               <div className="space-y-2">
                 <label htmlFor="name" className="text-sm font-medium">

@@ -58,6 +58,25 @@ const Projects = () => {
       repo: "https://github.com/khalidabdelrazek/HR-Attrition-Analysis",
     },
     {
+      title: "Sales Analytics Dashboard",
+      category: "Data Analysis",
+      description:
+        "A fully interactive Sales Analytics Dashboard built in Excel to analyze 60,000+ transactions and extract actionable business insights.",
+      tech: [
+        "Excel",
+        "Power Query",
+        "Pivot Tables",
+        "Power Pivot",
+        "Data Modeling",
+        "Dashboarding",
+        "KPI Tracking",
+        "Data Visualization",
+        "Pareto Analysis"
+      ],
+      gradient: "from-indigo-500 to-purple-500",
+      repo: "https://github.com/KhalidAbdelrazek/Sales-Analysis-using-Excel",
+    },
+    {
       title: "Telecom Business Performance",
       category: "Data Analysis",
       description:

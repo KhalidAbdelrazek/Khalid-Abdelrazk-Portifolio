@@ -256,13 +256,34 @@
       0 20px 20px rgba(0,0,0,0.5);
   }
 
-  /* Section Divider */
+  /* Section Divider & Underline */
   .section-divider {
     width: 60px;
     height: 3px;
     background: var(--gradient-primary);
     border-radius: 999px;
     margin: 0 auto 3rem;
+  }
+
+  .title-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .title-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 60%;
+    height: 4px;
+    background: var(--gradient-primary);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+
+  .title-underline:hover::after {
+    width: 100%;
   }
 
   /* Gradient Border */
@@ -294,5 +315,10 @@
     opacity: 0.04;
     pointer-events: none;
     border-radius: inherit;
+  }
+
+  /* Nuclear fix for stray UI elements */
+  .scroll-down, .scroll-indicator, .mouse-icon, .mouse-scroll {
+    display: none !important;
   }
 }

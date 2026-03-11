@@ -22,7 +22,7 @@ const Education = () => {
           className="max-w-4xl mx-auto"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
-            My <span className="text-gradient">Education</span>
+            My <span className="text-gradient title-underline">Education</span>
           </h2>
 
           <motion.div
@@ -93,7 +93,20 @@ const Education = () => {
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 pt-2">
-                  {["Signal Processing", "Data Networks", "Embedded Systems", "IoT", "Digital Communications"].map((tag) => (
+                  {[
+                    "Signal Processing",
+                    "Embedded Systems",
+                    "Data Networks",
+                    // "IoT",
+                    "Digital Communications",
+                    "Wireless Communications",
+                    // "Telecom Protocols",
+                    "Network Security",
+                    "RF Engineering",
+                    // "5G & Beyond",
+                    // "Modulation Techniques",
+                    // "Telecom Systems Design",
+                  ].map((tag) => (
                     <span
                       key={tag}
                       className="px-3 py-1 text-xs font-medium glass rounded-full border border-primary/20 text-foreground/70 hover:border-primary/50 hover:text-primary transition-colors"
