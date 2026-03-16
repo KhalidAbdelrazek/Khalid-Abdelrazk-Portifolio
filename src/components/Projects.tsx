@@ -31,6 +31,25 @@ const Projects = () => {
       repo: "", // private
     },
     {
+      title: "NYC Taxi Trips ETL Pipeline (36M+ Records)",
+      category: "Data Engineering",
+      description:
+        "Built an end-to-end scalable ETL pipeline using PySpark to process 36M+ NYC taxi trip records and load them into a Star Schema data warehouse in SQL Server. Developed Power BI dashboards to analyze revenue trends, trip behavior, and operational KPIs.",
+      tech: [
+        "PySpark",
+        "Apache Spark",
+        "SQL Server",
+        "Star Schema",
+        "ETL",
+        "JDBC",
+        "Power BI",
+        "Data Warehouse",
+        "Big Data"
+      ],
+      gradient: "from-indigo-600 to-blue-500",
+      repo: "https://github.com/KhalidAbdelrazek/ETL-TLC-Trips",
+    },
+    {
       title: "IDH Daily Visits Analysis",
       category: "Data Analysis",
       description:
@@ -181,6 +200,13 @@ const Projects = () => {
                 className="hover-glow"
               >
                 Data Analysis
+              </Button>
+              <Button
+                variant={activeFilter === "Data Engineering" ? "default" : "outline"}
+                onClick={() => setActiveFilter("Data Engineering")}
+                className="hover-glow"
+              >
+                Data Engineering
               </Button>
               <Button
                 variant={activeFilter === "Data Science" ? "default" : "outline"}
