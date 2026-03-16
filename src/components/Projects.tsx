@@ -9,6 +9,18 @@ const Projects = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  
+  // New states for expand/collapse
+  const [expandedDesc, setExpandedDesc] = useState<{ [key: number]: boolean }>({});
+  const [expandedTech, setExpandedTech] = useState<{ [key: number]: boolean }>({});
+
+  const WORD_LIMIT = 18;
+  const TECH_LIMIT = 5;
+
+  const getShortText = (text: string) => {
+    const words = text.split(" ");
+    return words.slice(0, WORD_LIMIT).join(" ");
+  };
 
   const projects = [
     // DATA SCIENCE PROJECTS
@@ -147,7 +159,7 @@ const Projects = () => {
       ? projects
       : projects.filter((p) => p.category === activeFilter);
 
-  const handleViewProject = (repo) => {
+  const handleViewProject = (repo: string) => {
     if (repo) {
       window.open(repo, "_blank", "noopener");
     } else {
@@ -160,18 +172,6 @@ const Projects = () => {
 
   return (
     <>
-      {/* FIXED "View Projects" BUTTON */}
-      {/* <Button
-        size="lg"
-        className="fixed bottom-6 right-6 z-50 hover-glow"
-        onClick={() => {
-          const section = document.getElementById("projects");
-          section?.scrollIntoView({ behavior: "smooth" });
-        }}
-      >
-        View Projects
-      </Button> */}
-
       {/* PROJECTS SECTION */}
       <section id="projects" className="py-20 relative">
         <div className="container mx-auto px-6">
@@ -190,28 +190,24 @@ const Projects = () => {
               <Button
                 variant={activeFilter === "all" ? "default" : "outline"}
                 onClick={() => setActiveFilter("all")}
-                className="hover-glow"
               >
                 All Projects
               </Button>
               <Button
                 variant={activeFilter === "Data Analysis" ? "default" : "outline"}
                 onClick={() => setActiveFilter("Data Analysis")}
-                className="hover-glow"
               >
                 Data Analysis
               </Button>
               <Button
                 variant={activeFilter === "Data Engineering" ? "default" : "outline"}
                 onClick={() => setActiveFilter("Data Engineering")}
-                className="hover-glow"
               >
                 Data Engineering
               </Button>
               <Button
                 variant={activeFilter === "Data Science" ? "default" : "outline"}
                 onClick={() => setActiveFilter("Data Science")}
-                className="hover-glow"
               >
                 Data Science
               </Button>
@@ -238,21 +234,49 @@ const Projects = () => {
                   <Badge className="mb-3" variant="secondary">
                     {project.category}
                   </Badge>
-                  <p className="text-foreground/80 text-sm leading-relaxed mb-4">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs px-3 py-1 glass rounded-full text-muted-foreground"
+
+                  {/* DESCRIPTION */}
+                  <div className="text-foreground/80 text-sm leading-relaxed mb-4">
+                    {expandedDesc[index] ? project.description : getShortText(project.description)}
+                    {project.description.split(" ").length > WORD_LIMIT && (
+                      <button
+                        className="text-primary ml-2 font-semibold hover:underline"
+                        onClick={() =>
+                          setExpandedDesc((prev) => ({ ...prev, [index]: !prev[index] }))
+                        }
                       >
-                        {tech}
-                      </span>
-                    ))}
+                        {expandedDesc[index] ? "View Less" : "View More"}
+                      </button>
+                    )}
                   </div>
 
-                  {/* View Project button */}
+                  {/* TECH STACK */}
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {(expandedTech[index] ? project.tech : project.tech.slice(0, TECH_LIMIT)).map(
+                      (tech) => (
+                        <span
+                          key={tech}
+                          className="text-xs px-3 py-1 glass rounded-full text-muted-foreground"
+                        >
+                          {tech}
+                        </span>
+                      )
+                    )}
+                    {project.tech.length > TECH_LIMIT && (
+                      <button
+                        className="text-xs text-primary font-semibold"
+                        onClick={() =>
+                          setExpandedTech((prev) => ({ ...prev, [index]: !prev[index] }))
+                        }
+                      >
+                        {expandedTech[index]
+                          ? "Show Less"
+                          : `+${project.tech.length - TECH_LIMIT} more`}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* VIEW PROJECT BUTTON */}
                   <div className="mt-auto">
                     <Button
                       onClick={() => handleViewProject(project.repo)}
