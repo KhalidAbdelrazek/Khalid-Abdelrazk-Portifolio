@@ -43,7 +43,7 @@ const Projects = () => {
       repo: "", // private
     },
     {
-      title: "NYC Taxi Trips ETL Pipeline (36M+ Records)",
+      title: "TLC Trips ETL Pipeline 36M+ Records",
       category: "Data Engineering",
       description:
         "Built an end-to-end scalable ETL pipeline using PySpark to process 36M+ NYC taxi trip records and load them into a Star Schema data warehouse in SQL Server. Developed Power BI dashboards to analyze revenue trends, trip behavior, and operational KPIs.",
