@@ -62,7 +62,7 @@ const Projects = () => {
       repo: "https://github.com/KhalidAbdelrazek/ETL-TLC-Trips",
     },
     {
-      title: "E-Commerce Data Warehouse ETL Pipeline",
+      title: "E-Commerce ETL Pipeline",
       category: "Data Engineering",
       description:
         "Designed and built a full end-to-end automated ETL pipeline to extract, clean, transform, and load E-Commerce transactional data into a Star Schema data warehouse in SQL Server. Implemented data cleaning, dimensional modeling, and analytics-ready architecture enabling business intelligence reporting and advanced data analysis.",
