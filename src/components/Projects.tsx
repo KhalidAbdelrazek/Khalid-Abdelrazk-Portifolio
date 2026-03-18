@@ -9,7 +9,7 @@ const Projects = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  
+
   // New states for expand/collapse
   const [expandedDesc, setExpandedDesc] = useState<{ [key: number]: boolean }>({});
   const [expandedTech, setExpandedTech] = useState<{ [key: number]: boolean }>({});
@@ -60,6 +60,27 @@ const Projects = () => {
       ],
       gradient: "from-indigo-600 to-blue-500",
       repo: "https://github.com/KhalidAbdelrazek/ETL-TLC-Trips",
+    },
+    {
+      title: "E-Commerce Data Warehouse ETL Pipeline",
+      category: "Data Engineering",
+      description:
+        "Designed and built a full end-to-end automated ETL pipeline to extract, clean, transform, and load E-Commerce transactional data into a Star Schema data warehouse in SQL Server. Implemented data cleaning, dimensional modeling, and analytics-ready architecture enabling business intelligence reporting and advanced data analysis.",
+      tech: [
+        "Python",
+        "Pandas",
+        "SQL Server",
+        "SQLAlchemy",
+        "ETL",
+        "Data Cleaning",
+        "Star Schema",
+        "Data Warehouse",
+        "Dimensional Modeling",
+        "Jupyter",
+        "Analytics Engineering"
+      ],
+      gradient: "from-emerald-500 to-cyan-500",
+      repo: "https://github.com/KhalidAbdelrazek/E-Commerce-Data-Pipeline",
     },
     {
       title: "IDH Daily Visits Analysis",
