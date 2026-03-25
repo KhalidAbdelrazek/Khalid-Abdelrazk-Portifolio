@@ -83,10 +83,30 @@ const Projects = () => {
       repo: "https://github.com/KhalidAbdelrazek/E-Commerce-Data-Pipeline",
     },
     {
+  title: "E-Commerce Business Intelligence Dashboard",
+  category: "Data Analysis",
+  description:
+    "Designed and developed a multi-page executive Power BI dashboard analyzing E-Commerce performance including profitability trends, logistics efficiency, product pricing gaps, and RFM-based customer segmentation. Delivered actionable insights on VIP customer revenue impact, retention behavior, and regional order dominance to support data-driven decision making.",
+  tech: [
+    "Power BI",
+    "DAX",
+    "Data Modeling",
+    "Star Schema",
+    "KPI Tracking",
+    "Data Visualization",
+    "RFM Analysis",
+    "Time Intelligence",
+    "Dashboard Design",
+    "Business Analytics"
+  ],
+  gradient: "from-green-500 to-cyan-600",
+  repo: "https://github.com/KhalidAbdelrazek/E-Commerce-Data-Pipeline",
+},
+    {
       title: "IDH Daily Visits Analysis",
       category: "Data Analysis",
       description:
-        "Analyzed daily visit patterns and trends for healthcare facilities to optimize staffing and resource allocation.",
+  "Analyzed large-scale daily visit data for healthcare facilities to uncover demand fluctuations, bottlenecks, and service utilization trends. Developed analytical dashboards and KPI tracking models to optimize workforce planning, reduce patient wait times, and improve operational efficiency. Delivered actionable insights through data storytelling and visual analytics to support strategic planning and performance monitoring.",
       tech: ["Excel", "Power BI", "Python", "SQL", "Data Cleaning", "EDA", "Data Visualization", "Dashboarding", "KPI Tracking", "Data Storytelling"],
       gradient: "from-indigo-500 to-blue-500",
       repo: "", // private
