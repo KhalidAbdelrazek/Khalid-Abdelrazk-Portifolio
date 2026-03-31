@@ -7,7 +7,7 @@ const Education = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="education" className="py-20 relative overflow-hidden">
+    <section id="education" className="py-14 md:py-20 relative overflow-hidden">
       {/* Subtle background accent */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl" />
@@ -21,7 +21,7 @@ const Education = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-12 text-center">
             My <span className="text-gradient title-underline">Education</span>
           </h2>
 
@@ -29,7 +29,7 @@ const Education = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="glass rounded-3xl p-8 md:p-10 hover-glow transition-all hover:scale-[1.01] group relative overflow-hidden"
+            className="glass rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 hover-glow transition-all hover:scale-[1.01] group relative overflow-hidden"
           >
             {/* Corner accent */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/20 to-transparent rounded-bl-3xl" />
@@ -56,7 +56,7 @@ const Education = () => {
               {/* Content */}
               <div className="flex-1 space-y-4">
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-bold leading-tight mb-1">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight mb-1">
                     Bachelor of{" "}
                     <span className="text-gradient">Telecommunications Engineering</span>
                   </h3>

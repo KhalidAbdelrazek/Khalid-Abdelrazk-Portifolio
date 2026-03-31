@@ -59,7 +59,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 relative overflow-hidden">
+    <section id="about" className="py-14 md:py-20 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-20 -left-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
@@ -78,9 +78,9 @@ const About = () => {
           </h2>
           <div className="section-divider mb-16" />
 
-          <div className="grid lg:grid-cols-3 gap-8 items-start mb-24">
+          <div className="grid lg:grid-cols-3 gap-8 items-start mb-10 md:mb-16">
             <div className="lg:col-span-3 space-y-8">
-              <div className="glass rounded-3xl p-8 md:p-10 hover-glow transition-all">
+              <div className="glass rounded-2xl md:rounded-3xl p-5 sm:p-7 md:p-10 hover-glow transition-all">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -98,7 +98,7 @@ const About = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ delay: 0.4, duration: 0.6 }}
-                  className="grid sm:grid-cols-3 gap-6 pt-8 border-t border-white/10"
+                  className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-white/10"
                 >
                   {contactItems.map((item, i) => (
                     <motion.div
@@ -122,18 +122,18 @@ const About = () => {
             </div>
           </div>
 
-          <div className="space-y-12">
-            <h3 className="text-3xl font-bold text-center">My <span className="text-gradient title-underline">Services</span></h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-6 sm:space-y-8 md:space-y-12">
+            <h3 className="text-2xl sm:text-3xl font-bold text-center">My <span className="text-gradient title-underline">Services</span></h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {services.map((service, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                   transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-                  className="glass rounded-3xl p-6 md:p-8 hover-glow group transition-all duration-500 hover:-translate-y-2 border-white/5"
+                  className="glass rounded-2xl p-4 sm:p-6 md:p-8 hover-glow group transition-all duration-500 hover:-translate-y-2 border-white/5"
                 >
-                  <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/10`}>
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/10`}>
                     <service.icon className={`h-6 w-6 md:h-7 md:w-7 ${service.iconColor}`} />
                   </div>
                   <h4 className="text-lg md:text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.title}</h4>

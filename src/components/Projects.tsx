@@ -214,7 +214,7 @@ const Projects = () => {
   return (
     <>
       {/* PROJECTS SECTION */}
-      <section id="projects" className="py-20 relative">
+      <section id="projects" className="py-14 md:py-20 relative">
         <div className="container mx-auto px-6">
           <motion.div
             ref={ref}
@@ -222,40 +222,48 @@ const Projects = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-center">
               Featured <span className="text-gradient">Projects</span>
             </h2>
 
             {/* Filter Buttons */}
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
               <Button
+                size="sm"
                 variant={activeFilter === "all" ? "default" : "outline"}
                 onClick={() => setActiveFilter("all")}
+                className="text-xs sm:text-sm"
               >
                 All Projects
               </Button>
               <Button
+                size="sm"
                 variant={activeFilter === "Data Analysis" ? "default" : "outline"}
                 onClick={() => setActiveFilter("Data Analysis")}
+                className="text-xs sm:text-sm"
               >
                 Data Analysis
               </Button>
               <Button
+                size="sm"
                 variant={activeFilter === "Data Engineering" ? "default" : "outline"}
                 onClick={() => setActiveFilter("Data Engineering")}
+                className="text-xs sm:text-sm"
               >
                 Data Engineering
               </Button>
               <Button
+                size="sm"
                 variant={activeFilter === "Data Science" ? "default" : "outline"}
                 onClick={() => setActiveFilter("Data Science")}
+                className="text-xs sm:text-sm"
               >
                 Data Science
               </Button>
             </div>
 
             {/* Projects Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-7xl mx-auto">
               {filteredProjects.map((project, index) => (
                 <motion.div
                   key={project.title}
@@ -264,7 +272,7 @@ const Projects = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="glass rounded-2xl p-6 hover-glow transition-all hover:scale-105 group flex flex-col"
+                  className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 hover-glow transition-all hover:scale-105 group flex flex-col"
                 >
                   <div
                     className={`h-2 w-full bg-gradient-to-r ${project.gradient} rounded-full mb-4`}

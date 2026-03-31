@@ -59,7 +59,7 @@ const SoftSkills = () => {
     const isInView = useInView(ref, { once: true, margin: "-80px" });
 
     return (
-        <section id="soft-skills" className="py-20 relative overflow-hidden">
+        <section id="soft-skills" className="py-14 md:py-20 relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-0 right-0 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
@@ -73,7 +73,7 @@ const SoftSkills = () => {
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-center">
                         Soft <span className="text-gradient title-underline">Skills</span>
                     </h2>
                     <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
@@ -81,7 +81,7 @@ const SoftSkills = () => {
                         innovation possible.
                     </p>
 
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 max-w-5xl mx-auto">
                         {softSkills.map((skill, index) => (
                             <motion.div
                                 key={skill.name}
@@ -92,7 +92,7 @@ const SoftSkills = () => {
                                         : { opacity: 0, y: 40, scale: 0.95 }
                                 }
                                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                                className={`glass rounded-2xl p-6 hover-glow transition-all hover:scale-[1.04] hover:shadow-xl ${skill.glow} group cursor-default`}
+                                className={`glass rounded-xl sm:rounded-2xl p-4 sm:p-6 hover-glow transition-all hover:scale-[1.04] hover:shadow-xl ${skill.glow} group cursor-default`}
                             >
                                 {/* Icon */}
                                 <div className="flex items-center gap-4">

@@ -43,7 +43,7 @@ const Skills = () => {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="skills" className="py-20 relative overflow-hidden">
+    <section id="skills" className="py-14 md:py-20 relative overflow-hidden">
       {/* Background accents */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -57,12 +57,12 @@ const Skills = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-3 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center">
             Technical <span className="text-gradient">Skills</span>
           </h2>
-          <div className="section-divider mb-12" />
+          <div className="section-divider mb-8 sm:mb-12" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 max-w-6xl mx-auto">
             {skills.map((skill, index) => (
               <motion.div
                 key={skill.name}
@@ -73,7 +73,7 @@ const Skills = () => {
                     : { opacity: 0, y: 30, scale: 0.95 }
                 }
                 transition={{ delay: index * 0.07, duration: 0.5 }}
-                className="glass rounded-2xl p-6 hover-glow hover:scale-[1.03] transition-all duration-300 group cursor-default"
+                className="glass rounded-xl sm:rounded-2xl p-3 sm:p-5 hover-glow hover:scale-[1.03] transition-all duration-300 group cursor-default"
               >
                 <div className="flex items-center gap-2.5 mb-2">
                   <motion.div

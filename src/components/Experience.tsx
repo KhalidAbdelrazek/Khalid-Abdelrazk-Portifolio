@@ -106,82 +106,82 @@ const Experience = () => {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className="py-24 relative overflow-hidden bg-background/50">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] -z-10" />
+    <section id="experience" className="py-14 md:py-24 relative overflow-hidden bg-background/50">
+      <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10" />
+      <div className="absolute bottom-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-accent/5 rounded-full blur-[120px] -z-10" />
 
-      <div className="container mx-auto px-6" ref={containerRef}>
+      <div className="container mx-auto px-4 sm:px-6" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="text-center mb-10 md:mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             Work <span className="text-gradient">Experience</span>
           </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-primary to-accent rounded-full mx-auto" />
+          <div className="w-16 sm:w-24 h-1 sm:h-1.5 bg-gradient-to-r from-primary to-accent rounded-full mx-auto" />
         </motion.div>
 
         <div className="max-w-4xl mx-auto relative">
-          {/* Vertical Timeline line */}
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-accent/50 to-transparent" />
+          {/* Vertical Timeline line — offset to match dot position */}
+          <div className="absolute left-4 sm:left-5 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-accent/50 to-transparent" />
 
           {experiences.map((exp, index) => (
             <motion.div
               key={`${exp.company}-${index}`}
-              initial={{ opacity: 0, x: 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="relative mb-16 flex flex-col md:flex-row items-start md:items-center"
+              initial={{ opacity: 0, x: 30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+              transition={{ duration: 0.7, delay: index * 0.15 }}
+              className="relative mb-8 md:mb-14 flex items-start"
             >
-            {/* Timeline dot */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full glass border border-primary/30 
-                        flex items-center justify-center z-10 shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)] 
-                        -translate-x-1/2">
-                <div className={`w-3 h-3 rounded-full bg-gradient-to-br ${exp.color} animate-pulse`} />
-            </div>
+              {/* Timeline dot — aligned to left line */}
+              <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full glass border border-primary/30
+                          flex items-center justify-center z-10 shadow-[0_0_20px_rgba(0,180,220,0.2)]
+                          mr-4 sm:mr-5 mt-1">
+                <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-br ${exp.color} animate-pulse`} />
+              </div>
 
               {/* Content Card */}
-              <div className="w-full md:w-[calc(100%-80px)] ml-12 md:ml-16">
-                <div className="glass rounded-3xl p-8 hover-glow transition-all duration-500 hover:-translate-y-2 group border-white/5 relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${exp.color} opacity-[0.03] rounded-bl-full`} />
+              <div className="flex-1 min-w-0">
+                <div className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 hover-glow transition-all duration-500 hover:-translate-y-1 group border-white/5 relative overflow-hidden">
+                  <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${exp.color} opacity-[0.03] rounded-bl-full`} />
 
-                  <div className="flex items-center gap-4 mb-6 flex-wrap">
-                    <div className={`p-3 rounded-2xl bg-gradient-to-br ${exp.color} shadow-lg shadow-primary/20`}>
-                      <exp.icon className="h-6 w-6 text-white" />
+                  <div className="flex items-center gap-3 mb-4 flex-wrap">
+                    <div className={`p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-gradient-to-br ${exp.color} shadow-lg shadow-primary/20 flex-shrink-0`}>
+                      <exp.icon className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
                     </div>
-                    <div className="flex-1 min-w-[200px]">
-                      <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{exp.title}</h3>
-                      <p className="text-muted-foreground font-medium">{exp.company}</p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base sm:text-xl font-bold group-hover:text-primary transition-colors leading-tight">{exp.title}</h3>
+                      <p className="text-muted-foreground font-medium text-xs sm:text-sm leading-tight mt-0.5 line-clamp-2">{exp.company}</p>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-4 mb-6 text-sm text-foreground/60">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="h-4 w-4" />
-                      {exp.period}
+                  <div className="flex flex-wrap gap-2 sm:gap-4 mb-4 text-xs sm:text-sm text-foreground/60">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                      <span>{exp.period}</span>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4" />
-                      {exp.location}
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                      <span>{exp.location}</span>
                     </div>
                   </div>
 
-                  <ul className="space-y-3 mb-8">
+                  <ul className="space-y-2 mb-5">
                     {exp.description.map((item, i) => (
-                      <li key={i} className="flex gap-3 text-sm leading-relaxed text-foreground/80">
-                        <ChevronRight className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+                      <li key={i} className="flex gap-2 text-xs sm:text-sm leading-relaxed text-foreground/80">
+                        <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0 mt-0.5" />
                         {item}
                       </li>
                     ))}
                   </ul>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {exp.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full bg-primary/10 text-primary border border-primary/20"
+                        className="px-2 py-0.5 sm:px-3 sm:py-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-full bg-primary/10 text-primary border border-primary/20"
                       >
                         {skill}
                       </span>
