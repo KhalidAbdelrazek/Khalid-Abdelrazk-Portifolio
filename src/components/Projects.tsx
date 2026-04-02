@@ -89,7 +89,7 @@ const Projects = () => {
       repo: "https://github.com/KhalidAbdelrazek/E-Commerce-Data-Pipeline",
     },
     {
-  title: "E-Commerce Business Intelligence Dashboard",
+  title: "E-Commerce Business Intelligence",
   category: "Data Analysis",
   description:
     "Designed and developed a multi-page executive Power BI dashboard analyzing E-Commerce performance including profitability trends, logistics efficiency, product pricing gaps, and RFM-based customer segmentation. Delivered actionable insights on VIP customer revenue impact, retention behavior, and regional order dominance to support data-driven decision making.",
