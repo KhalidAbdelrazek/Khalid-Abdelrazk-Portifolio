@@ -2,6 +2,8 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { DemoModal } from "./DemoModal";
+import { demoMap } from "./demoData";
 
 const Projects = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -9,6 +11,10 @@ const Projects = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+
+  // Demo modal states
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+  const [selectedDemoProject, setSelectedDemoProject] = useState<string | null>(null);
 
   // New states for expand/collapse
   const [expandedDesc, setExpandedDesc] = useState<{ [key: number]: boolean }>({});
@@ -326,14 +332,31 @@ const Projects = () => {
                   </div>
 
                   {/* VIEW PROJECT BUTTON */}
-                  <div className="mt-auto">
+                  <div className="mt-auto flex flex-col sm:flex-row gap-3">
                     <Button
                       onClick={() => handleViewProject(project.repo)}
                       variant="default"
-                      className="hover-glow w-full"
+                      className="hover-glow w-full flex-1 border border-primary/50"
                     >
                       View Project
                     </Button>
+                    {demoMap[project.title] && (
+                      <Button
+                        onClick={() => {
+                          setSelectedDemoProject(project.title);
+                          setDemoModalOpen(true);
+                        }}
+                        variant="outline"
+                        className="hover-glow w-full flex-1 bg-white/5 border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300 transition-all font-semibold shadow-[0_0_15px_rgba(16,185,129,0.15)] group/demo"
+                      >
+                        <span className="flex items-center gap-2">
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-400 group-hover/demo:text-emerald-300">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                          Live Demo
+                        </span>
+                      </Button>
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -349,7 +372,7 @@ const Projects = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
-            className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg max-w-sm text-center"
+            className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg max-w-sm text-center border border-white/10"
           >
             <p className="mb-4 text-gray-900 dark:text-gray-100">{modalMessage}</p>
             <Button
@@ -362,6 +385,14 @@ const Projects = () => {
           </motion.div>
         </div>
       )}
+
+      {/* LIVE DEMO MODAL */}
+      <DemoModal
+        isOpen={demoModalOpen}
+        onClose={() => setDemoModalOpen(false)}
+        projectTitle={selectedDemoProject || ""}
+        demoEntry={selectedDemoProject ? demoMap[selectedDemoProject] : { items: [] }}
+      />
     </>
   );
 };
