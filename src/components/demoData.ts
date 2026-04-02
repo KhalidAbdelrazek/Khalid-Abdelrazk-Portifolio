@@ -1,33 +1,12 @@
-// ─── Demo Asset Imports ──────────────────────────────────────────────────────
-// Vite resolves these at build time so URLs are correct in both dev & prod.
-
-import idhHouseCallVideo from "@/assets/demo/Idh House Call Prediction.mp4";
-import tlcTripsVideo from "@/assets/demo/Tlc Trips Etl Pipeline 36M+ Records.mp4";
-import ecommerceEtl1Video from "@/assets/demo/E-Commerce Etl Pipeline.mp4";
-import ecommerceEtl2Video from "@/assets/demo/E-Commerce Etl Pipeline 2.mp4";
-import ecommerceBiVideo from "@/assets/demo/E-Commerce Business Intelligence Dashboard.mp4";
-import idhDailyVisitsVideo from "@/assets/demo/Idh Daily Visits Analysis.mp4";
-import idhDelayVideo from "@/assets/demo/Idh Delay Analysis.mp4";
-import hrAttritionVideo from "@/assets/demo/Hr Employee Attrition Analysis.mp4";
-import salesDashboardVideo from "@/assets/demo/Sales Analytics Dashboard.mp4";
-import telecomVideo from "@/assets/demo/Telecom Business Performance.mp4";
-import customerChurnPdf from "@/assets/demo/Customer churn analysis with python.pdf";
-
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-export type VideoItem = {
-  type: "video";
+export type IframeItem = {
+  type: "iframe";
   src: string;
   label?: string;
 };
 
-export type PdfItem = {
-  type: "pdf";
-  src: string;
-  label?: string;
-};
-
-export type DemoItem = VideoItem | PdfItem;
+export type DemoItem = IframeItem;
 
 export interface DemoEntry {
   items: DemoItem[];
@@ -37,43 +16,40 @@ export interface DemoEntry {
 // Keys must exactly match project titles in Projects.tsx
 
 export const demoMap: Record<string, DemoEntry> = {
-  "IDH House Call Prediction": {
-    items: [{ type: "video", src: idhHouseCallVideo, label: "Demo" }],
-  },
-  // Campaign Patient Flag shares the same IDH House Call video
-  "Campaign Patient Flag Prediction": {
-    items: [{ type: "video", src: idhHouseCallVideo, label: "Demo" }],
-  },
   "TLC Trips ETL Pipeline 36M+ Records": {
-    items: [{ type: "video", src: tlcTripsVideo, label: "Demo" }],
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1YVVNH6qrb5fa0pbSMJDNPnF6-bo7Rnv9/preview", label: "Demo" }]
+  },
+  "Telecom Business Performance": {
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1UKC8mmKOXRd1Zk_Yru35tk-eeeU9hHb9/preview", label: "Demo" }]
+  },
+  "Sales Analytics Dashboard": {
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1y7YOAE5mgV9TWv41Q_TFcuk0L5NBJV3F/preview", label: "Demo" }]
+  },
+  "IDH House Call Prediction": {
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1aYJc0Q3Y1BkspMN8nmztT3GPIhnfbXDc/preview", label: "Demo" }]
+  },
+  "Campaign Patient Flag Prediction": {
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1aYJc0Q3Y1BkspMN8nmztT3GPIhnfbXDc/preview", label: "Demo" }]
+  },
+  "IDH Delay Analysis": {
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1mU9dkkvg9OikeJkoOF6VzyFcflgEEu_q/preview", label: "Demo" }]
+  },
+  "IDH Daily Visits Analysis": {
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1fO9vVitrH1g_oh2fV4VfafZYEvKZKQXz/preview", label: "Demo" }]
+  },
+  "HR Employee Attrition Analysis": {
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/195zbfePxQFTp13QV1NnXv5eXmUxOn-TH/preview", label: "Demo" }]
   },
   "E-Commerce ETL Pipeline": {
     items: [
-      { type: "video", src: ecommerceEtl1Video, label: "Part 1 — Pipeline" },
-      { type: "video", src: ecommerceEtl2Video, label: "Part 2 — Analysis" },
-    ],
+      { type: "iframe", src: "https://drive.google.com/file/d/1dImiAKkfE6M0Kjr7YRhPcyoyAGbox8P9/preview", label: "Part 1" },
+      { type: "iframe", src: "https://drive.google.com/file/d/1Xi5-nQ8MV43OQjOOO6lWurT-Hrzwvt8T/preview", label: "Part 2" }
+    ]
   },
   "E-Commerce Business Intelligence Dashboard": {
-    items: [{ type: "video", src: ecommerceBiVideo, label: "Demo" }],
-  },
-  "IDH Daily Visits Analysis": {
-    items: [{ type: "video", src: idhDailyVisitsVideo, label: "Demo" }],
-  },
-  "IDH Delay Analysis": {
-    items: [{ type: "video", src: idhDelayVideo, label: "Demo" }],
-  },
-  "HR Employee Attrition Analysis": {
-    items: [{ type: "video", src: hrAttritionVideo, label: "Demo" }],
-  },
-  "Sales Analytics Dashboard": {
-    items: [{ type: "video", src: salesDashboardVideo, label: "Demo" }],
-  },
-  "Telecom Business Performance": {
-    items: [{ type: "video", src: telecomVideo, label: "Demo" }],
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1ziC31HNS1CXJupP_aO4t5Z5cgEOvQpHq/preview", label: "Demo" }]
   },
   "Customer Churn Analysis": {
-    items: [{ type: "pdf", src: customerChurnPdf, label: "Analysis Report" }],
-  },
-  // Projects with no demo (COVID-19 Dashboard, Real Estate Analysis,
-  // Bike Buyer Analysis using Excel) are intentionally omitted — no button shown.
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1sO5Vif7W217hVYaNe6QZFZKFkZWljJ_Z/preview", label: "Analysis Report" }]
+  }
 };
