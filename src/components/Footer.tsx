@@ -43,7 +43,6 @@ const Footer = () => {
           <div className="text-center md:text-right">
             <p className="text-muted-foreground text-sm flex items-center gap-1 justify-center md:justify-end">
               © 2026 Khalid Abdelrazk.
-              <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500 inline" />
             </p>
           </div>
         </div>
