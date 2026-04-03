@@ -46,7 +46,7 @@ export const demoMap: Record<string, DemoEntry> = {
       { type: "iframe", src: "https://drive.google.com/file/d/1Xi5-nQ8MV43OQjOOO6lWurT-Hrzwvt8T/preview", label: "Part 2" }
     ]
   },
-  "E-Commerce Business Intelligence Dashboard": {
+  "E-Commerce Business Intelligence": {
     items: [{ type: "iframe", src: "https://drive.google.com/file/d/1ziC31HNS1CXJupP_aO4t5Z5cgEOvQpHq/preview", label: "Demo" }]
   },
   "Customer Churn Analysis": {
