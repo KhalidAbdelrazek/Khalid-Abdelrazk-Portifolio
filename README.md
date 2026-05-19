@@ -7,7 +7,7 @@ Welcome to my Data Analysis portfolio! This repository highlights my experience 
 ## 👤 About Me
 
 - **Name:** Khalid Mohammed Abdelrazk Ibrahim  
-- **Location:** Beni Suef, Egypt  
+- **Location:** Cairo, Egypt  
 - **Email:** [khalidabdelrazk4@gmail.com](mailto:khalidabdelrazk4@gmail.com)  
 - **LinkedIn:** [https://www.linkedin.com/in/khalid-abdelrazk-7719b32b3/](https://www.linkedin.com/in/khalid-abdelrazk-7719b32b3/)  
 - **GitHub:** [https://github.com/khalidabdelrazk](https://github.com/khalidabdelrazk)  

@@ -18,7 +18,7 @@ const experiences: ExperienceItem[] = [
     {
         title: "Senior Project Lead",
         company: "Multi-Functional Healthcare Robot (Graduation Project)",
-        location: "Beni Suef, Egypt",
+        location: "Cairo, Egypt",
         period: "Jun 2025 - Present",
         description: [
             "Leading a cross-functional team of 8 engineers to design and implement an automated medical logistics robot for hospitals.",
