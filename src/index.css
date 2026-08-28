@@ -119,12 +119,18 @@
     color: inherit;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-bold;
     letter-spacing: -0.02em;
   }
 
-  code, pre {
+  code,
+  pre {
     font-family: 'JetBrains Mono', monospace;
   }
 }
@@ -133,13 +139,16 @@
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: hsla(195, 100%, 50%, 0.4);
   border-radius: 999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: hsla(195, 100%, 50%, 0.7);
 }
@@ -147,23 +156,126 @@
 /* ─── Utility Classes ──────────────────────────────────────── */
 @layer utilities {
 
-  /* Glassmorphism */
+  /* ─── Core Glassmorphism Panel ─────────────────────────────── */
+  /* Asymmetric shadow (heavier bottom-left offset, not a uniform glow)
+     + intentional 1px border that holds in both light and dark mode. */
   .glass {
     background: var(--glass-bg);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-card);
+    /* Asymmetric shadow: offset 4px right / 8px down, no uniform glow */
+    box-shadow:
+      4px 8px 32px -4px hsla(222, 47%, 3%, 0.35),
+      0 1px 0 0 hsla(0, 0%, 100%, 0.06) inset;
+  }
+
+  .dark .glass {
+    /* Dark mode: shadow is invisible on dark bg → use border + inner glow instead */
+    box-shadow:
+      4px 8px 32px -4px hsla(222, 47%, 3%, 0.55),
+      0 0 0 1px hsla(0, 0%, 100%, 0.07) inset;
   }
 
   .glass-heavy {
-    background: hsla(0, 0%, 100%, 0.08);
+    background: hsla(0, 0%, 100%, 0.06);
     backdrop-filter: blur(24px) saturate(200%);
     -webkit-backdrop-filter: blur(24px) saturate(200%);
     border: 1px solid var(--glass-border);
+    box-shadow:
+      4px 8px 32px -4px hsla(222, 47%, 3%, 0.4),
+      0 1px 0 0 hsla(0, 0%, 100%, 0.08) inset;
   }
 
-  /* Gradients */
+  /* ─── Accent Edge Card Bar ──────────────────────────────────── */
+  /* A 2px left-edge accent bar (replaces generic corner blobs as a design anchor) */
+  .card-accent-bar {
+    position: relative;
+  }
+
+  .card-accent-bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16%;
+    bottom: 16%;
+    width: 2px;
+    border-radius: 999px;
+    background: var(--gradient-primary);
+    opacity: 0.6;
+    transition: opacity 0.3s ease, top 0.3s ease, bottom 0.3s ease;
+  }
+
+  .card-accent-bar:hover::before {
+    opacity: 1;
+    top: 10%;
+    bottom: 10%;
+  }
+
+  /* ─── Icon Accent (Flat / Duotone Treatment) ────────────────── */
+  /* Replaces gradient-filled rounded-square icon box.
+     Uses a muted tinted background + colored icon instead of a gradient fill. */
+  .icon-accent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.625rem;
+    /* 10px — slightly less rounded than the card itself */
+    border: 1px solid var(--glass-border);
+    background: hsla(0, 0%, 100%, 0.04);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.25s ease;
+  }
+
+  .icon-accent:hover,
+  .group:hover .icon-accent {
+    background: hsla(195, 100%, 50%, 0.08);
+    border-color: hsla(195, 100%, 50%, 0.25);
+    transform: translateY(-1px);
+  }
+
+  /* ─── Tag / Badge Redesign ──────────────────────────────────── */
+  /* Bordered tag: left colored border + sharp corners instead of a full pill. */
+  .tag-bordered {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    border-radius: 4px;
+    /* sharp, not pill */
+    border: 1px solid hsla(195, 100%, 50%, 0.2);
+    border-left: 2px solid hsl(195, 100%, 50%);
+    background: hsla(195, 100%, 50%, 0.06);
+    color: hsl(195, 100%, 68%);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .tag-bordered:hover {
+    border-color: hsla(195, 100%, 50%, 0.5);
+    background: hsla(195, 100%, 50%, 0.12);
+  }
+
+  /* Inline underline tag: no background, just weight + color accent + underline */
+  .tag-inline {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+    border-bottom: 1.5px solid hsla(195, 100%, 50%, 0.4);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .tag-inline:hover {
+    color: hsl(195, 100%, 60%);
+    border-color: hsl(195, 100%, 60%);
+  }
+
+  /* ─── Gradients ─────────────────────────────────────────────── */
   .gradient-primary {
     background: var(--gradient-primary);
   }
@@ -190,8 +302,15 @@
   }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-20px); }
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
   }
 
   /* Shimmer Animation */
@@ -201,8 +320,13 @@
   }
 
   @keyframes shimmer {
-    0%   { background-position: -200% 0; }
-    100% { background-position:  200% 0; }
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
   }
 
   /* Pulse Glow */
@@ -211,24 +335,35 @@
   }
 
   @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 20px hsla(195, 100%, 50%, 0.2); }
-    50%       { box-shadow: 0 0 40px hsla(195, 100%, 50%, 0.5), 0 0 60px hsla(280, 100%, 65%, 0.2); }
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px hsla(195, 100%, 50%, 0.2);
+    }
+
+    50% {
+      box-shadow: 0 0 40px hsla(195, 100%, 50%, 0.5), 0 0 60px hsla(280, 100%, 65%, 0.2);
+    }
   }
 
-  /* Glow on Hover */
+  /* Glow on Hover — now uses border intensification instead of a uniform box-shadow blob */
   .hover-glow {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hover-glow:hover {
-    box-shadow: var(--shadow-glow);
-    transform: translateY(-1px);
+    /* Intensify the asymmetric shadow and add a faint top inner highlight */
+    box-shadow:
+      6px 12px 40px -4px hsla(222, 47%, 3%, 0.45),
+      0 0 0 1px hsla(195, 100%, 60%, 0.15),
+      0 1px 0 0 hsla(0, 0%, 100%, 0.1) inset;
+    transform: translateY(-2px);
   }
 
   /* Card Hover Lift */
   .hover-lift {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hover-lift:hover {
@@ -257,7 +392,7 @@
       2px 2px 0px hsl(220, 20%, 10%),
       3px 3px 0px hsl(220, 20%, 10%),
       4px 4px 0px hsl(195, 100%, 50%),
-      0 20px 20px rgba(0,0,0,0.5);
+      0 20px 20px rgba(0, 0, 0, 0.5);
   }
 
   /* Section Divider & Underline */
@@ -322,7 +457,10 @@
   }
 
   /* Nuclear fix for stray UI elements */
-  .scroll-down, .scroll-indicator, .mouse-icon, .mouse-scroll {
+  .scroll-down,
+  .scroll-indicator,
+  .mouse-icon,
+  .mouse-scroll {
     display: none !important;
   }
 
@@ -350,6 +488,7 @@
     0% {
       transform: translate3d(0, 0, 0);
     }
+
     100% {
       transform: translate3d(-50%, 0, 0);
     }
@@ -359,6 +498,7 @@
     0% {
       transform: translate3d(-50%, 0, 0);
     }
+
     100% {
       transform: translate3d(0, 0, 0);
     }
@@ -384,4 +524,33 @@
   .marquee-track:hover .animate-marquee-right {
     animation-play-state: paused;
   }
+}
+
+/* ─── Global Accessibility: prefers-reduced-motion ──────────── */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Light Mode Card Override ───────────────────────────────── */
+/* In light mode the dark shadow is invisible; use a slightly stronger drop + border */
+:root:not(.dark) .glass {
+  box-shadow:
+    4px 8px 24px -4px hsla(220, 40%, 15%, 0.10),
+    0 1px 0 0 hsla(0, 0%, 100%, 0.9) inset;
+  border-color: hsla(220, 15%, 70%, 0.4);
+}
+
+:root:not(.dark) .hover-glow:hover {
+  box-shadow:
+    6px 12px 32px -4px hsla(220, 40%, 15%, 0.16),
+    0 0 0 1px hsla(195, 100%, 45%, 0.18),
+    0 1px 0 0 hsla(0, 0%, 100%, 0.9) inset;
 }

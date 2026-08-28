@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Calendar, MapPin, ChevronRight } from "lucide-react";
 import { FaRobot, FaDatabase, FaChartPie, FaMobileAlt, FaTools } from "react-icons/fa";
 
@@ -122,6 +122,7 @@ const experiences: ExperienceItem[] = [
 const Experience = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section id="experience" className="py-14 md:py-24 relative overflow-hidden bg-background/50">
@@ -148,9 +149,9 @@ const Experience = () => {
           {experiences.map((exp, index) => (
             <motion.div
               key={`${exp.company}-${index}`}
-              initial={{ opacity: 0, x: 30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-              transition={{ duration: 0.7, delay: index * 0.15 }}
+              initial={{ opacity: 0, x: prefersReducedMotion ? 0 : 30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: prefersReducedMotion ? 0 : 30 }}
+              transition={{ duration: 0.7, delay: prefersReducedMotion ? 0 : index * 0.15 }}
               className="relative mb-8 md:mb-14 flex items-start"
             >
               {/* Timeline dot — aligned to left line */}
@@ -162,12 +163,12 @@ const Experience = () => {
 
               {/* Content Card */}
               <div className="flex-1 min-w-0">
-                <div className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 hover-glow transition-all duration-500 hover:-translate-y-1 group border-white/5 relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${exp.color} opacity-[0.03] rounded-bl-full`} />
+                <div className="glass card-accent-bar rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 hover-glow transition-all duration-500 hover:-translate-y-1 group border-white/5 relative overflow-hidden">
 
                   <div className="flex items-center gap-3 mb-4 flex-wrap">
-                    <div className={`p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-gradient-to-br ${exp.color} shadow-lg shadow-primary/20 flex-shrink-0`}>
-                      <exp.icon className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
+                    {/* Flat icon treatment — replaces gradient-filled icon-square */}
+                    <div className="icon-accent w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+                      <exp.icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-base sm:text-xl font-bold group-hover:text-primary transition-colors leading-tight">{exp.title}</h3>
@@ -197,10 +198,7 @@ const Experience = () => {
 
                   <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {exp.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2 py-0.5 sm:px-3 sm:py-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-full bg-primary/10 text-primary border border-primary/20"
-                      >
+                      <span key={skill} className="tag-bordered">
                         {skill}
                       </span>
                     ))}

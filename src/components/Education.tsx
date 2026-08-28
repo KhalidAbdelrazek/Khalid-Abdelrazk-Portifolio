@@ -1,55 +1,64 @@
 import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { GraduationCap, Calendar, Award, BookOpen } from "lucide-react";
 
 const Education = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section id="education" className="py-14 md:py-20 relative overflow-hidden">
-      {/* Subtle background accent */}
+      {/* Intentional single ambient spotlight — not two corner blobs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[260px] bg-primary/5 rounded-full blur-[120px]" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-12 text-center">
-            My <span className="text-gradient title-underline">Education</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center">
+            My <span className="text-gradient">Education</span>
           </h2>
+          <div className="section-divider mb-10 sm:mb-14" />
 
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ delay: 0.2, duration: 0.7 }}
-            className="glass rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 hover-glow transition-all hover:scale-[1.01] group relative overflow-hidden"
+            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
+            transition={{ delay: 0.15, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            // card-accent-bar replaces the generic gradient corner blobs with a purposeful 2px left accent spine
+            className="glass card-accent-bar rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 hover-glow transition-all group relative overflow-hidden"
           >
-            {/* Corner accent */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/20 to-transparent rounded-bl-3xl" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent/10 to-transparent rounded-tr-3xl" />
+            {/* Subtle top-right dot pattern as intentional texture — not a gradient blob */}
+            <div
+              className="absolute top-4 right-4 w-24 h-24 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity pointer-events-none"
+              style={{
+                backgroundImage: `radial-gradient(circle, hsl(195,100%,60%) 1px, transparent 1px)`,
+                backgroundSize: "10px 10px",
+              }}
+            />
 
             <div className="flex flex-col md:flex-row gap-8 relative z-10">
-              {/* Icon & Degree Badge */}
+              {/* Icon & Credential Block */}
               <div className="flex-shrink-0 flex flex-col items-center md:items-start gap-4">
+                {/* Flat duotone icon container — replaces gradient-filled rounded square */}
                 <motion.div
-                  className="p-5 bg-gradient-to-br from-primary to-accent rounded-2xl shadow-lg group-hover:shadow-primary/30 transition-shadow"
-                  whileHover={{ rotate: [0, -5, 5, 0], scale: 1.05 }}
-                  transition={{ duration: 0.5 }}
+                  className="icon-accent w-16 h-16 sm:w-20 sm:h-20"
+                  whileHover={prefersReducedMotion ? {} : { rotate: [-2, 2, -1, 0], scale: 1.04 }}
+                  transition={{ duration: 0.45 }}
                 >
-                  <GraduationCap className="h-10 w-10 text-white" />
+                  <GraduationCap className="h-8 w-8 sm:h-10 sm:w-10 text-primary" strokeWidth={1.5} />
                 </motion.div>
 
-                {/* GPA Badge */}
-                <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full">
-                  <Award className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-semibold text-primary">GPA: 3.3 / 4.0</span>
+                {/* GPA Badge — left-border tag instead of a pill */}
+                <div className="tag-bordered">
+                  <Award className="h-3 w-3 mr-1.5 flex-shrink-0 opacity-80" />
+                  GPA: 3.3 / 4.0
                 </div>
               </div>
 
@@ -58,59 +67,47 @@ const Education = () => {
                 <div>
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight mb-1">
                     Bachelor of{" "}
-                    <span className="text-gradient">Electronics & Communications Engineering</span>
+                    <span className="text-gradient">Electronics &amp; Communications Engineering</span>
                   </h3>
-                  <p className="text-lg text-foreground/80 font-medium">
+                  <p className="text-base sm:text-lg text-foreground/80 font-semibold mt-1">
                     Faculty of Engineering
                   </p>
-                  <p className="text-base text-muted-foreground">
+                  <p className="text-sm text-muted-foreground mt-0.5">
                     BNS University, Egypt
                   </p>
                 </div>
 
-                {/* Details Grid */}
-                <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-border/40">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 glass rounded-lg flex-shrink-0">
-                      <Calendar className="h-4 w-4 text-primary" />
-                    </div>
+                {/* Details — clean icon+label rows, no icon-square boxes */}
+                <div className="grid sm:grid-cols-2 gap-3 pt-4 border-t border-border/30">
+                  <div className="flex items-center gap-2.5">
+                    <Calendar className="h-4 w-4 text-primary flex-shrink-0" strokeWidth={1.75} />
                     <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Graduated</p>
-                      <p className="font-semibold text-sm">2026</p>
+                      <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">Graduated</p>
+                      <p className="font-bold text-sm">2026</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 glass rounded-lg flex-shrink-0">
-                      <BookOpen className="h-4 w-4 text-accent" />
-                    </div>
+                  <div className="flex items-center gap-2.5">
+                    <BookOpen className="h-4 w-4 text-accent flex-shrink-0" strokeWidth={1.75} />
                     <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Field</p>
-                      <p className="font-semibold text-sm">Electronics & Communications Engineering</p>
+                      <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">Field</p>
+                      <p className="font-bold text-sm leading-tight">Electronics &amp; Communications</p>
                     </div>
                   </div>
                 </div>
 
-                {/* Tags */}
+                {/* Tags — left-border bordered tags instead of rounded pills */}
                 <div className="flex flex-wrap gap-2 pt-2">
                   {[
                     "Signal Processing",
                     "Embedded Systems",
                     "Data Networks",
-                    // "IoT",
                     "Digital Communications",
                     "Wireless Communications",
-                    // "Telecom Protocols",
                     "Network Security",
                     "RF Engineering",
-                    // "5G & Beyond",
-                    // "Modulation Techniques",
-                    // "Telecom Systems Design",
                   ].map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 text-xs font-medium glass rounded-full border border-primary/20 text-foreground/70 hover:border-primary/50 hover:text-primary transition-colors"
-                    >
+                    <span key={tag} className="tag-bordered">
                       {tag}
                     </span>
                   ))}
