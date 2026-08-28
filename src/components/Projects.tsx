@@ -49,6 +49,15 @@ const Projects = () => {
       repo: "", // private
     },
     {
+      title: "Momkn Commission Rate Snapshot (SCD2)",
+      category: "Data Engineering",
+      description:
+        "Built a dbt snapshot model implementing Slowly Changing Dimension (Type 2) logic to track historical changes in partner commission rates shared via API, enabling auditable rate history.",
+      tech: ["dbt", "SQL", "SCD2", "Data Modeling", "Snapshots"],
+      gradient: "from-violet-500 to-indigo-600",
+      repo: "",
+    },
+    {
       title: "TLC Trips ETL Pipeline 36M+ Records",
       category: "Data Engineering",
       description:

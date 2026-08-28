@@ -49,7 +49,7 @@ const Education = () => {
                 {/* GPA Badge */}
                 <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full">
                   <Award className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-semibold text-primary">GPA: 3.2 / 4.0</span>
+                  <span className="text-sm font-semibold text-primary">GPA: 3.3 / 4.0</span>
                 </div>
               </div>
 
@@ -75,7 +75,7 @@ const Education = () => {
                       <Calendar className="h-4 w-4 text-primary" />
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Expected Graduation</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Graduated</p>
                       <p className="font-semibold text-sm">2026</p>
                     </div>
                   </div>

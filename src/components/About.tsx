@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { MapPin, Phone, Mail, BarChart2, PieChart, Brain, Smartphone, Database } from "lucide-react";
+import { MapPin, Phone, Mail, BarChart2, PieChart, Brain, Database } from "lucide-react";
 
 const services = [
   {
@@ -40,10 +40,10 @@ const services = [
     iconColor: "text-emerald-400"
   },
   {
-    title: "Flutter Development",
-    description: "Build cross-platform mobile apps with Flutter, focus on high performance and clean UI.",
-    icon: Smartphone,
-    color: "from-indigo-500/20 to-blue-500/20",
+    title: "Analytics Engineering",
+    description: "Build and maintain scalable dbt models and data transformation pipelines for analytics-ready datasets.",
+    icon: Database,
+    color: "from-indigo-500 to-blue-500",
     iconColor: "text-indigo-400"
   }
 ];
@@ -87,11 +87,9 @@ const About = () => {
                   transition={{ delay: 0.2, duration: 0.6 }}
                   className="text-lg text-foreground/85 leading-relaxed mb-8"
                 >
-                  Data Analyst with 1+ year of experience converting complex datasets into strategic insights that drive
-                  decision-making. Proven track record in data analysis, machine learning, and data visualization, with
-                  strong skills in Python, SQL, and Power BI. Currently spearheading an 8-member team on a cutting-edge{" "}
-                  <span className="text-gradient font-semibold">Smart Medical Sample Transport System</span>, leveraging
-                  analytics and automation to optimize healthcare workflows and improve operational efficiency.
+                  Data Analyst and Data Engineer with 1+ year of experience converting complex datasets into strategic insights and scalable data infrastructure. Proven track record across data analysis, analytics engineering, and BI development, with strong skills in Python, SQL, dbt, and Power BI. Recently led an 8-member team to deliver a{" "}
+                  <span className="text-gradient font-semibold">Smart Medical Sample Transport System</span>{" "}
+                  as a graduation project, earning full marks — leveraging analytics and automation to optimize healthcare workflows.
                 </motion.p>
 
                 <motion.div

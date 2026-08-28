@@ -61,7 +61,7 @@ const Hero = () => {
                   transition={{ delay: 0.4, duration: 0.6 }}
                   className="text-primary text-xs sm:text-sm md:text-base tracking-wider uppercase font-semibold"
                 >
-                  Senior Electronics &amp; Communication Engineering Student | Data Analyst & Data Engineer Enthusiast
+                  Data Analyst | Data Engineer | Electronics & Communications Engineering Graduate
                 </motion.p>
                 <motion.h1
                   initial={{ opacity: 0, y: 20 }}
@@ -79,9 +79,7 @@ const Hero = () => {
                   transition={{ delay: 0.6, duration: 0.6 }}
                   className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground leading-relaxed"
                 >
-                  Data Analyst with 1+ years of experience turning raw data into
-                  actionable insights. Skilled in Python, SQL, Power BI, and data
-                  storytelling.
+                  Data Analyst and Data Engineer with 1+ years of experience building data pipelines, analytics models, and BI dashboards that turn raw data into business decisions. Skilled in Python, SQL, dbt, Power BI, and cloud data platforms.
                 </motion.p>
               </div>
 

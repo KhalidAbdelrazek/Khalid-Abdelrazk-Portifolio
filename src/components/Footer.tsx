@@ -18,7 +18,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="text-center md:text-left">
             <p className="text-xl font-bold text-gradient mb-1">Khalid Abdelrazk</p>
-            <p className="text-muted-foreground text-sm">Data Analyst · Flutter Developer</p>
+            <p className="text-muted-foreground text-sm">Data Analyst · Data Engineer</p>
           </div>
 
           {/* Social Links */}

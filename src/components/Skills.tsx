@@ -36,6 +36,14 @@ const skills = [
 
   // Analytics & Statistics
   { name: "Statistics", level: 80, icon: BarChart3, color: "from-green-400 to-lime-500" },
+
+  // Data Engineering & Cloud
+  { name: "dbt (data build tool)", level: 85, icon: Database, color: "from-orange-400 to-red-500" },
+  { name: "Apache Airflow", level: 80, icon: Cpu, color: "from-teal-500 to-cyan-400" },
+  { name: "Amazon Redshift", level: 80, icon: Database, color: "from-orange-500 to-yellow-500" },
+  { name: "Azure Databricks", level: 75, icon: Cpu, color: "from-blue-500 to-indigo-600" },
+  { name: "Apache Spark / PySpark", level: 80, icon: Cpu, color: "from-orange-600 to-red-600" },
+  { name: "Metabase", level: 85, icon: BarChart3, color: "from-blue-400 to-cyan-500" },
 ];
 
 const Skills = () => {
