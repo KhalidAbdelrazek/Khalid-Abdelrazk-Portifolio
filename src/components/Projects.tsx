@@ -67,25 +67,6 @@ const Projects = () => {
       repo: "",
     },
     {
-      title: "TLC Trips ETL Pipeline 36M+ Records",
-      category: "Data Engineering",
-      description:
-        "Built an end-to-end scalable ETL pipeline using PySpark to process 36M+ NYC taxi trip records and load them into a Star Schema data warehouse in SQL Server. Developed Power BI dashboards to analyze revenue trends, trip behavior, and operational KPIs.",
-      tech: [
-        "PySpark",
-        "Apache Spark",
-        "SQL Server",
-        "Star Schema",
-        "ETL",
-        "JDBC",
-        "Power BI",
-        "Data Warehouse",
-        "Big Data"
-      ],
-      gradient: "from-indigo-600 to-blue-500",
-      repo: "https://github.com/KhalidAbdelrazek/ETL-TLC-Trips",
-    },
-    {
       title: "E-Commerce ETL Pipeline",
       category: "Data Engineering",
       description:
@@ -105,6 +86,25 @@ const Projects = () => {
       ],
       gradient: "from-emerald-500 to-cyan-500",
       repo: "https://github.com/KhalidAbdelrazek/E-Commerce-Data-Pipeline",
+    },
+    {
+      title: "TLC Trips ETL Pipeline 36M+ Records",
+      category: "Data Engineering",
+      description:
+        "Built an end-to-end scalable ETL pipeline using PySpark to process 36M+ NYC taxi trip records and load them into a Star Schema data warehouse in SQL Server. Developed Power BI dashboards to analyze revenue trends, trip behavior, and operational KPIs.",
+      tech: [
+        "PySpark",
+        "Apache Spark",
+        "SQL Server",
+        "Star Schema",
+        "ETL",
+        "JDBC",
+        "Power BI",
+        "Data Warehouse",
+        "Big Data"
+      ],
+      gradient: "from-indigo-600 to-blue-500",
+      repo: "https://github.com/KhalidAbdelrazek/ETL-TLC-Trips",
     },
 
     // GROUP 2: DATA ANALYSIS / BI
