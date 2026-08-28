@@ -87,7 +87,7 @@ const Certifications = () => {
                   <h3 className="font-bold text-sm sm:text-base leading-snug mb-2 group-hover:text-primary transition-colors text-foreground">
                     {cert.title}
                   </h3>
-                  <div className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold mb-2 text-primary dark:text-cyan-400">
+                  <div className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold mb-2 text-primary dark:text-foreground/90">
                     <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
                     <span>{cert.issuer}</span>
                   </div>

@@ -151,29 +151,29 @@ const Experience = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-10 md:mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
             Work <span className="text-gradient">Experience</span>
           </h2>
-          <div className="w-16 sm:w-24 h-1 sm:h-1.5 bg-gradient-to-r from-primary to-accent rounded-full mx-auto" />
+          <div className="section-divider mb-8" />
         </motion.div>
 
         <div className="max-w-4xl mx-auto relative">
-          {/* Vertical Timeline line — offset to match dot position */}
-          <div className="absolute left-4 sm:left-5 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-accent/50 to-transparent" />
+          {/* Vertical Timeline line */}
+          <div className="absolute left-4 sm:left-5 top-0 bottom-0 w-px bg-border" />
 
           {experiences.map((exp, index) => (
             <motion.div
               key={`${exp.company}-${index}`}
               initial={{ opacity: 0, x: prefersReducedMotion ? 0 : 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: prefersReducedMotion ? 0 : 30 }}
-              transition={{ duration: 0.7, delay: prefersReducedMotion ? 0 : index * 0.15 }}
-              className="relative mb-8 md:mb-14 flex items-start"
+              transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : index * 0.1 }}
+              className="relative mb-8 md:mb-12 flex items-start"
             >
-              {/* Timeline dot — aligned to left line */}
-              <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full glass border border-primary/30
-                          flex items-center justify-center z-10 shadow-[0_0_20px_rgba(0,180,220,0.2)]
+              {/* Timeline dot */}
+              <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-card border border-border
+                          flex items-center justify-center z-10
                           mr-4 sm:mr-5 mt-1">
-                <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-br ${exp.color} animate-pulse`} />
+                <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-primary" />
               </div>
 
               {/* Content Card */}

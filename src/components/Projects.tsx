@@ -308,7 +308,7 @@ const Projects = () => {
             </div>
 
             {/* Minimal Category Tabs with Animated Underline */}
-            <div className="flex flex-wrap justify-center gap-1 sm:gap-2 mb-8 sm:mb-12 border-b border-border/50 max-w-3xl mx-auto pb-2">
+            <div className="flex flex-wrap justify-center gap-1 sm:gap-2  border-b border-border/50 max-w-3xl mx-auto pb-2">
               {filterTabs.map((tab) => {
                 const isActive = activeFilter === tab.id;
                 const count =
@@ -344,7 +344,7 @@ const Projects = () => {
             </div>
 
             {/* Dense Horizontal List Layout */}
-            <div className="max-w-5xl mx-auto border-t border-b border-border/80 divide-y divide-border/60">
+            <div className="max-w-6xl mx-auto border-t border-b border-border/80 divide-y divide-border/60">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeFilter}
@@ -414,7 +414,7 @@ const Projects = () => {
                               {hasDemo && (
                                 <button
                                   onClick={(e) => handleOpenDemo(e, project.title)}
-                                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 px-2.5 py-1 rounded transition-colors"
+                                  className="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground hover:text-foreground bg-secondary/80 hover:bg-secondary px-2 py-0.5 rounded border border-border/60 transition-colors"
                                   title="View Interactive Live Demo"
                                 >
                                   <Play className="w-2.5 h-2.5 fill-current" />
@@ -502,7 +502,7 @@ const Projects = () => {
                                 {hasDemo && (
                                   <button
                                     onClick={(e) => handleOpenDemo(e, project.title)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-secondary text-secondary-foreground hover:bg-muted border border-border transition-colors shadow-sm"
                                   >
                                     <Play className="w-3 h-3 fill-current" />
                                     Launch Live Demo

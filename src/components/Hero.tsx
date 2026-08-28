@@ -199,25 +199,17 @@ const Hero = () => {
 
                     {/* "FROM CONCEPT" */}
                     <motion.span
-                      className="relative inline-block text-foreground/50 text-xl md:text-2xl lg:text-3xl font-mono uppercase tracking-[0.2em] px-4"
-                      whileHover={{ color: "var(--primary)", letterSpacing: "0.3em" }}
+                      className="relative inline-block text-muted-foreground text-xl md:text-2xl lg:text-3xl font-mono uppercase tracking-[0.2em] px-4"
                     >
                       From Concept
                     </motion.span>
 
                     {/* Divider */}
-                    <span className="block w-1 h-12 bg-gradient-brand rounded-full mx-auto opacity-30"></span>
+                    <span className="block w-1 h-10 bg-border rounded-full mx-auto"></span>
 
                     {/* "TO CREATION" */}
                     <motion.div className="relative px-4">
-                      <span
-                        className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-primary to-purple-500 text-shadow-glow animate-pulse text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic block"
-                        style={{
-                          backgroundImage: "linear-gradient(to right, #22d3ee, #0ea5e9, #a855f7)",
-                          WebkitBackgroundClip: "text",
-                          textShadow: "0 0 20px rgba(34, 211, 238, 0.3), 0 0 40px rgba(168, 85, 247, 0.2)"
-                        }}
-                      >
+                      <span className="relative z-10 text-gradient text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black italic block">
                         TO CREATION
                       </span>
                     </motion.div>
@@ -239,23 +231,23 @@ const Hero = () => {
             href="https://github.com/khalidabdelrazek"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 glass rounded-full hover-glow transition-all hover:scale-110"
+            className="p-3 glass rounded-full hover-glow transition-all"
           >
-            <Github className="h-6 w-6" />
+            <Github className="h-5 w-5" />
           </a>
           <a
             href="https://www.linkedin.com/in/khalid-abdelrazk-7719b32b3/"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 glass rounded-full hover-glow transition-all hover:scale-110"
+            className="p-3 glass rounded-full hover-glow transition-all"
           >
-            <Linkedin className="h-6 w-6" />
+            <Linkedin className="h-5 w-5" />
           </a>
           <a
             href="mailto:khalidabdelrazk4@gmail.com"
-            className="p-3 glass rounded-full hover-glow transition-all hover:scale-110"
+            className="p-3 glass rounded-full hover-glow transition-all"
           >
-            <Mail className="h-6 w-6" />
+            <Mail className="h-5 w-5" />
           </a>
         </motion.div>
 
@@ -263,11 +255,10 @@ const Hero = () => {
         <div className="pb-8 lg:pb-0" />
       </motion.div>
 
-      {/* Floating Elements — smaller on mobile */}
-      <div className="absolute bottom-10 left-4 sm:left-10 w-12 sm:w-20 h-12 sm:h-20 bg-primary/20 rounded-full blur-xl animate-float" />
+      {/* Floating Elements */}
+      <div className="absolute bottom-10 left-4 sm:left-10 w-12 sm:w-20 h-12 sm:h-20 bg-primary/10 dark:bg-transparent rounded-full blur-xl pointer-events-none" />
       <div
-        className="absolute top-20 right-4 sm:right-20 w-20 sm:w-32 h-20 sm:h-32 bg-accent/20 rounded-full blur-xl animate-float"
-        style={{ animationDelay: "1s" }}
+        className="absolute top-20 right-4 sm:right-20 w-20 sm:w-32 h-20 sm:h-32 bg-accent/10 dark:bg-transparent rounded-full blur-xl pointer-events-none"
       />
     </section>
   );
