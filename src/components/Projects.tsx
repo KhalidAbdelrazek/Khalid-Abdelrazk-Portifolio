@@ -29,23 +29,14 @@ const Projects = () => {
   };
 
   const projects = [
-    // DATA SCIENCE PROJECTS
+    // GROUP 1: DATA ENGINEERING
     {
-      title: "IDH House Call Prediction",
-      category: "Data Science",
+      title: "KPI & P&L Reporting Automation",
+      category: "Data Engineering",
       description:
-        "Built machine learning model to predict house call requirements for healthcare services, optimizing resource allocation and scheduling.",
-      tech: ["Python", "ML", "Scikit-learn", "Feature Engineering", "Data Cleaning", "EDA"],
-      gradient: "from-cyan-500 to-blue-500",
-      repo: "", // private
-    },
-    {
-      title: "Campaign Patient Flag Prediction",
-      category: "Data Science",
-      description:
-        "Developed ML model to identify patients most likely to respond to health campaigns, improving campaign effectiveness.",
-      tech: ["Python", "ML", "Scikit-learn", "Feature Engineering", "Data Cleaning", "EDA"],
-      gradient: "from-pink-500 to-purple-500",
+        "Consolidated 50+ fragmented finance and growth KPIs (MAU, TPV, revenue, CAC, churn) previously pulled via manual ad hoc queries into a single governed Metabase model. Built a Python and Dagster-orchestrated pipeline to sync the model into Google Sheets and auto-refresh downstream KPI & P&L reporting decks, eliminating manual updates and establishing one source of truth for finance and leadership.",
+      tech: ["Python", "Dagster", "Metabase", "Google Sheets API", "KPI Reporting", "Data Orchestration"],
+      gradient: "from-cyan-500 to-blue-600",
       repo: "", // private
     },
     {
@@ -55,6 +46,24 @@ const Projects = () => {
         "Built a dbt snapshot model implementing Slowly Changing Dimension (Type 2) logic to track historical changes in partner commission rates shared via API, enabling auditable rate history.",
       tech: ["dbt", "SQL", "SCD2", "Data Modeling", "Snapshots"],
       gradient: "from-violet-500 to-indigo-600",
+      repo: "",
+    },
+    {
+      title: "Incremental dbt Migration for Transaction Facts",
+      category: "Data Engineering",
+      description:
+        "Migrated a high-volume core transaction facts table from full daily refresh to incremental dbt materializations, reducing pipeline runtime and warehouse compute cost while preserving downstream data integrity across all referencing models.",
+      tech: ["dbt", "SQL", "Incremental Models", "Data Warehousing", "Performance Optimization"],
+      gradient: "from-amber-500 to-orange-600",
+      repo: "",
+    },
+    {
+      title: "AI-Ready Data Layer for Natural-Language Analytics",
+      category: "Data Engineering",
+      description:
+        "Materialized a curated set of tables into a dedicated analytics schema powering an internal AI/natural-language query tool, enabling non-technical stakeholders to self-serve business data insights (e.g. transaction counts, failure rates) without writing SQL.",
+      tech: ["Data Modeling", "Schema Design", "dbt", "Analytics Enablement"],
+      gradient: "from-purple-500 to-pink-500",
       repo: "",
     },
     {
@@ -97,34 +106,36 @@ const Projects = () => {
       gradient: "from-emerald-500 to-cyan-500",
       repo: "https://github.com/KhalidAbdelrazek/E-Commerce-Data-Pipeline",
     },
+
+    // GROUP 2: DATA ANALYSIS / BI
     {
-  title: "E-Commerce Business Intelligence",
-  category: "Data Analysis",
-  description:
-    "Designed and developed a multi-page executive Power BI dashboard analyzing E-Commerce performance including profitability trends, logistics efficiency, product pricing gaps, and RFM-based customer segmentation. Delivered actionable insights on VIP customer revenue impact, retention behavior, and regional order dominance to support data-driven decision making.",
-  tech: [
-    "Power BI",
-    "DAX",
-    "Data Modeling",
-    "Star Schema",
-    "KPI Tracking",
-    "Data Visualization",
-    "RFM Analysis",
-    "Time Intelligence",
-    "Dashboard Design",
-    "Business Analytics"
-  ],
-  gradient: "from-green-500 to-cyan-600",
-  repo: "https://github.com/KhalidAbdelrazek/E-Commerce-Data-Pipeline",
-},
-    {
-      title: "IDH Daily Visits Analysis",
+      title: "E-Commerce Business Intelligence",
       category: "Data Analysis",
       description:
-  "Analyzed large-scale daily visit data for healthcare facilities to uncover demand fluctuations, bottlenecks, and service utilization trends. Developed analytical dashboards and KPI tracking models to optimize workforce planning, reduce patient wait times, and improve operational efficiency. Delivered actionable insights through data storytelling and visual analytics to support strategic planning and performance monitoring.",
-      tech: ["Excel", "Power BI", "Python", "SQL", "Data Cleaning", "EDA", "Data Visualization", "Dashboarding", "KPI Tracking", "Data Storytelling"],
-      gradient: "from-indigo-500 to-blue-500",
-      repo: "", // private
+        "Designed and developed a multi-page executive Power BI dashboard analyzing E-Commerce performance including profitability trends, logistics efficiency, product pricing gaps, and RFM-based customer segmentation. Delivered actionable insights on VIP customer revenue impact, retention behavior, and regional order dominance to support data-driven decision making.",
+      tech: [
+        "Power BI",
+        "DAX",
+        "Data Modeling",
+        "Star Schema",
+        "KPI Tracking",
+        "Data Visualization",
+        "RFM Analysis",
+        "Time Intelligence",
+        "Dashboard Design",
+        "Business Analytics"
+      ],
+      gradient: "from-green-500 to-cyan-600",
+      repo: "https://github.com/KhalidAbdelrazek/E-Commerce-Data-Pipeline",
+    },
+    {
+      title: "Telecom Business Performance",
+      category: "Data Analysis",
+      description:
+        "Built comprehensive dashboard tracking KPIs for telecom operations, enabling real-time monitoring of business performance and data-driven decision making.",
+      tech: ["Python", "SQL", "Excel", "Power BI", "Data Cleaning", "EDA", "Data Visualization", "Dashboarding", "ETL", "Data Modeling"],
+      gradient: "from-purple-500 to-pink-500",
+      repo: "https://github.com/khalidabdelrazek/Telecom-Churn-Analysis",
     },
     {
       title: "IDH Delay Analysis",
@@ -134,6 +145,24 @@ const Projects = () => {
       tech: ["Python", "Excel", "Power BI", "SQL", "Data Cleaning", "EDA", "Data Visualization", "Dashboarding", "KPI Tracking", "Data Storytelling"],
       gradient: "from-red-400 to-orange-500",
       repo: "", // private
+    },
+    {
+      title: "IDH Daily Visits Analysis",
+      category: "Data Analysis",
+      description:
+        "Analyzed large-scale daily visit data for healthcare facilities to uncover demand fluctuations, bottlenecks, and service utilization trends. Developed analytical dashboards and KPI tracking models to optimize workforce planning, reduce patient wait times, and improve operational efficiency. Delivered actionable insights through data storytelling and visual analytics to support strategic planning and performance monitoring.",
+      tech: ["Excel", "Power BI", "Python", "SQL", "Data Cleaning", "EDA", "Data Visualization", "Dashboarding", "KPI Tracking", "Data Storytelling"],
+      gradient: "from-indigo-500 to-blue-500",
+      repo: "", // private
+    },
+    {
+      title: "Customer Churn Analysis",
+      category: "Data Analysis",
+      description:
+        "Developed predictive models to identify customers at risk of churning, providing insights for targeted retention campaigns.",
+      tech: ["Python", "Pandas", "Scikit-learn", "Data Cleaning", "EDA", "Data Visualization", "Feature Engineering"],
+      gradient: "from-orange-500 to-red-500",
+      repo: "https://github.com/khalidabdelrazek/Customer-churn-analysis-with-python",
     },
     {
       title: "HR Employee Attrition Analysis",
@@ -164,24 +193,6 @@ const Projects = () => {
       repo: "https://github.com/KhalidAbdelrazek/Sales-Analysis-using-Excel",
     },
     {
-      title: "Telecom Business Performance",
-      category: "Data Analysis",
-      description:
-        "Built comprehensive dashboard tracking KPIs for telecom operations, enabling real-time monitoring of business performance and data-driven decision making.",
-      tech: ["Python", "SQL", "Excel", "Power BI", "Data Cleaning", "EDA", "Data Visualization", "Dashboarding", "ETL", "Data Modeling"],
-      gradient: "from-purple-500 to-pink-500",
-      repo: "https://github.com/khalidabdelrazek/Telecom-Churn-Analysis",
-    },
-    {
-      title: "Customer Churn Analysis",
-      category: "Data Analysis",
-      description:
-        "Developed predictive models to identify customers at risk of churning, providing insights for targeted retention campaigns.",
-      tech: ["Python", "Pandas", "Scikit-learn", "Data Cleaning", "EDA", "Data Visualization", "Feature Engineering"],
-      gradient: "from-orange-500 to-red-500",
-      repo: "https://github.com/khalidabdelrazek/Customer-churn-analysis-with-python",
-    },
-    {
       title: "COVID-19 Dashboard",
       category: "Data Analysis",
       description:
@@ -207,6 +218,26 @@ const Projects = () => {
       tech: ["Excel", "Data Cleaning", "EDA", "Data Visualization", "Pivot Tables", "Charts", "Dashboarding"],
       gradient: "from-green-400 to-emerald-500",
       repo: "https://github.com/khalidabdelrazek/Bike-Buyer-Analysis-using-Excel",
+    },
+
+    // GROUP 3: DATA SCIENCE
+    {
+      title: "IDH House Call Prediction",
+      category: "Data Science",
+      description:
+        "Built machine learning model to predict house call requirements for healthcare services, optimizing resource allocation and scheduling.",
+      tech: ["Python", "ML", "Scikit-learn", "Feature Engineering", "Data Cleaning", "EDA"],
+      gradient: "from-cyan-500 to-blue-500",
+      repo: "", // private
+    },
+    {
+      title: "Campaign Patient Flag Prediction",
+      category: "Data Science",
+      description:
+        "Developed ML model to identify patients most likely to respond to health campaigns, improving campaign effectiveness.",
+      tech: ["Python", "ML", "Scikit-learn", "Feature Engineering", "Data Cleaning", "EDA"],
+      gradient: "from-pink-500 to-purple-500",
+      repo: "", // private
     },
   ];
 

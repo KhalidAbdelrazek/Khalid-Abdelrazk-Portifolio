@@ -58,7 +58,7 @@ const Education = () => {
                 <div>
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight mb-1">
                     Bachelor of{" "}
-                    <span className="text-gradient">Telecommunications Engineering</span>
+                    <span className="text-gradient">Electronics & Communications Engineering</span>
                   </h3>
                   <p className="text-lg text-foreground/80 font-medium">
                     Faculty of Engineering
@@ -86,7 +86,7 @@ const Education = () => {
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground uppercase tracking-wide">Field</p>
-                      <p className="font-semibold text-sm">Telecommunications Engineering</p>
+                      <p className="font-semibold text-sm">Electronics & Communications Engineering</p>
                     </div>
                   </div>
                 </div>

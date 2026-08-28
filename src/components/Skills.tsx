@@ -1,50 +1,120 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
-  Database,
-  BarChart3,
-  Code2,
-  Brain,
-  FileSpreadsheet,
+  SiPython,
+  SiR,
+  SiPostgresql,
+  SiMongodb,
+  SiDocker,
+  SiGit,
+  SiGithub,
+  SiApacheairflow,
+  SiApachespark,
+  SiDbt,
+  SiDatabricks,
+  SiDuckdb,
+  SiMetabase,
+} from "react-icons/si";
+import { FaAws, FaFileExcel } from "react-icons/fa";
+import { DiMsqlServer } from "react-icons/di";
+import { TbBrandAzure, TbSql, TbChartPie } from "react-icons/tb";
+import {
+  Workflow,
+  Layers,
+  Network,
+  Search,
   PieChart,
-  Cpu,
+  Brain,
+  Calculator,
+  Sparkles,
+  Server,
+  TrendingUp,
+  BarChart3,
 } from "lucide-react";
 
-const skills = [
-  // Programming & Core Tools
-  { name: "Python", level: 90, icon: Code2, color: "from-blue-500 to-cyan-500" },
-  { name: "R Programming", level: 75, icon: Code2, color: "from-indigo-500 to-violet-500" },
-  { name: "SQL", level: 85, icon: Database, color: "from-orange-500 to-red-500" },
-  { name: "PostgreSQL", level: 80, icon: Database, color: "from-indigo-500 to-purple-500" },
-  { name: "MongoDB", level: 80, icon: Database, color: "from-green-500 to-teal-500" },
+interface SkillItem {
+  name: string;
+  icon: React.ElementType;
+  iconColor: string;
+  bgColor?: string;
+}
 
-  // Data Analysis & BI
-  { name: "Power BI", level: 90, icon: BarChart3, color: "from-yellow-500 to-orange-500" },
-  { name: "Excel", level: 90, icon: FileSpreadsheet, color: "from-green-500 to-emerald-500" },
-  { name: "Tableau", level: 80, icon: PieChart, color: "from-blue-400 to-indigo-500" },
-  { name: "Data Visualization", level: 90, icon: PieChart, color: "from-cyan-500 to-blue-500" },
-  { name: "Business Analytics", level: 90, icon: BarChart3, color: "from-teal-400 to-cyan-500" },
-
-  // AI & ML
-  { name: "Machine Learning", level: 80, icon: Brain, color: "from-purple-500 to-pink-500" },
-  { name: "ETL & Pipelines", level: 80, icon: Database, color: "from-pink-500 to-red-400" },
-  { name: "Data Cleaning", level: 90, icon: FileSpreadsheet, color: "from-yellow-400 to-orange-400" },
-
-  // Databases & Containers
-  { name: "Database Administration", level: 85, icon: Database, color: "from-red-500 to-orange-500" },
-  { name: "Docker (Containers)", level: 75, icon: Cpu, color: "from-blue-400 to-teal-500" },
-
-  // Analytics & Statistics
-  { name: "Statistics", level: 80, icon: BarChart3, color: "from-green-400 to-lime-500" },
-
-  // Data Engineering & Cloud
-  { name: "dbt (data build tool)", level: 85, icon: Database, color: "from-orange-400 to-red-500" },
-  { name: "Apache Airflow", level: 80, icon: Cpu, color: "from-teal-500 to-cyan-400" },
-  { name: "Amazon Redshift", level: 80, icon: Database, color: "from-orange-500 to-yellow-500" },
-  { name: "Azure Databricks", level: 75, icon: Cpu, color: "from-blue-500 to-indigo-600" },
-  { name: "Apache Spark / PySpark", level: 80, icon: Cpu, color: "from-orange-600 to-red-600" },
-  { name: "Metabase", level: 85, icon: BarChart3, color: "from-blue-400 to-cyan-500" },
+// ROW 1: Data Engineering, Cloud & Languages (Scrolls Left)
+const row1Skills: SkillItem[] = [
+  { name: "Python", icon: SiPython, iconColor: "text-[#38bdf8]" },
+  { name: "SQL", icon: TbSql, iconColor: "text-[#f97316]" },
+  { name: "dbt (data build tool)", icon: SiDbt, iconColor: "text-[#ff694b]" },
+  { name: "Apache Airflow", icon: SiApacheairflow, iconColor: "text-[#00c7d4]" },
+  { name: "Apache Spark / PySpark", icon: SiApachespark, iconColor: "text-[#e25a1c]" },
+  { name: "Amazon Redshift", icon: FaAws, iconColor: "text-[#ff9900]" },
+  { name: "Azure Databricks", icon: SiDatabricks, iconColor: "text-[#ff3621]" },
+  { name: "PostgreSQL", icon: SiPostgresql, iconColor: "text-[#336791]" },
+  { name: "ETL & Pipelines", icon: Workflow, iconColor: "text-cyan-400" },
+  { name: "Medallion Architecture", icon: Layers, iconColor: "text-purple-400" },
 ];
+
+// ROW 2: BI, Analytics, Databases & Querying (Scrolls Right)
+const row2Skills: SkillItem[] = [
+  { name: "Power BI", icon: BarChart3, iconColor: "text-[#f2c811]" },
+  { name: "Tableau", icon: TbChartPie, iconColor: "text-[#e97627]" },
+  { name: "Metabase", icon: SiMetabase, iconColor: "text-[#509ee3]" },
+  { name: "Microsoft Excel", icon: FaFileExcel, iconColor: "text-[#107c41]" },
+  { name: "Microsoft Azure", icon: TbBrandAzure, iconColor: "text-[#0089d6]" },
+  { name: "SQL Server", icon: DiMsqlServer, iconColor: "text-[#cc292b]" },
+  { name: "DuckDB", icon: SiDuckdb, iconColor: "text-[#fff000]" },
+  { name: "MongoDB", icon: SiMongodb, iconColor: "text-[#47a248]" },
+  { name: "R", icon: SiR, iconColor: "text-[#276dc3]" },
+  { name: "Business Analytics", icon: TrendingUp, iconColor: "text-emerald-400" },
+];
+
+// ROW 3: Analysis, Modeling, Tools & ML (Scrolls Left)
+const row3Skills: SkillItem[] = [
+  { name: "Data Modeling", icon: Network, iconColor: "text-violet-400" },
+  { name: "Exploratory Data Analysis (EDA)", icon: Search, iconColor: "text-sky-400" },
+  { name: "Data Visualization", icon: PieChart, iconColor: "text-pink-400" },
+  { name: "Machine Learning", icon: Brain, iconColor: "text-purple-400" },
+  { name: "Statistics", icon: Calculator, iconColor: "text-teal-400" },
+  { name: "Data Cleaning", icon: Sparkles, iconColor: "text-amber-400" },
+  { name: "Database Administration", icon: Server, iconColor: "text-indigo-400" },
+  { name: "Docker", icon: SiDocker, iconColor: "text-[#2496ed]" },
+  { name: "Git", icon: SiGit, iconColor: "text-[#f05032]" },
+  { name: "GitHub", icon: SiGithub, iconColor: "text-foreground" },
+];
+
+interface MarqueeRowProps {
+  skills: SkillItem[];
+  direction: "left" | "right";
+  speedClass?: string;
+}
+
+const MarqueeRow: React.FC<MarqueeRowProps> = ({ skills, direction }) => {
+  // Duplicate array once for seamless -50% translation loop
+  const duplicatedSkills = [...skills, ...skills];
+  const animClass = direction === "left" ? "animate-marquee-left" : "animate-marquee-right";
+
+  return (
+    <div className="relative w-full overflow-hidden marquee-track py-1.5">
+      <div className={`flex gap-3 sm:gap-4 ${animClass}`}>
+        {duplicatedSkills.map((skill, index) => {
+          const Icon = skill.icon;
+          return (
+            <div
+              key={`${skill.name}-${index}`}
+              className="glass rounded-xl sm:rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3.5 flex items-center gap-3 sm:gap-3.5 shrink-0 hover-glow border border-white/10 hover:border-primary/40 bg-white/[0.03] backdrop-blur-md transition-all duration-300 group/card cursor-pointer select-none hover:scale-105"
+            >
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-white/5 border border-white/10 group-hover/card:scale-110 group-hover/card:bg-primary/10 group-hover/card:border-primary/30 transition-all shrink-0">
+                <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${skill.iconColor} transition-transform group-hover/card:rotate-6`} />
+              </div>
+              <span className="text-xs sm:text-sm font-semibold text-foreground/90 group-hover/card:text-primary transition-colors whitespace-nowrap">
+                {skill.name}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 const Skills = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -52,59 +122,41 @@ const Skills = () => {
 
   return (
     <section id="skills" className="py-14 md:py-20 relative overflow-hidden">
-      {/* Background accents */}
+      {/* Background ambient accents */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[350px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[350px] bg-accent/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6 }}
         >
+          {/* Section Header */}
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center">
             Technical <span className="text-gradient">Skills</span>
           </h2>
-          <div className="section-divider mb-8 sm:mb-12" />
+          <div className="section-divider mb-10 sm:mb-14" />
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 max-w-6xl mx-auto">
-            {skills.map((skill, index) => (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={
-                  isInView
-                    ? { opacity: 1, y: 0, scale: 1 }
-                    : { opacity: 0, y: 30, scale: 0.95 }
-                }
-                transition={{ delay: index * 0.07, duration: 0.5 }}
-                className="glass rounded-xl sm:rounded-2xl p-3 sm:p-5 hover-glow hover:scale-[1.03] transition-all duration-300 group cursor-default"
-              >
-                <div className="flex items-center gap-2.5 mb-2">
-                  <motion.div
-                    className={`p-1.5 rounded-lg bg-gradient-to-br ${skill.color} shadow-sm`}
-                    whileHover={{ rotate: [0, -6, 6, 0], scale: 1.1 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <skill.icon className="h-3.5 w-3.5 text-white" />
-                  </motion.div>
-                  <h3 className="font-semibold text-xs md:text-sm truncate">{skill.name}</h3>
-                  <span className="ml-auto text-[10px] font-bold text-muted-foreground">{skill.level}%</span>
-                </div>
+          {/* Marquee Container with Left & Right edge gradient fade masks */}
+          <div className="relative w-full overflow-hidden max-w-7xl mx-auto space-y-3 sm:space-y-4">
+            {/* Left fade gradient */}
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-28 md:w-36 z-10 bg-gradient-to-r from-background via-background/80 to-transparent" />
+            
+            {/* Right fade gradient */}
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-28 md:w-36 z-10 bg-gradient-to-l from-background via-background/80 to-transparent" />
 
-                <div className="h-1 bg-muted/30 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
-                    transition={{ delay: index * 0.04 + 0.2, duration: 0.8, ease: "easeOut" }}
-                    className={`h-full rounded-full bg-gradient-to-r ${skill.color}`}
-                  />
-                </div>
-              </motion.div>
-            ))}
+            {/* Row 1: Left */}
+            <MarqueeRow skills={row1Skills} direction="left" />
+
+            {/* Row 2: Right */}
+            <MarqueeRow skills={row2Skills} direction="right" />
+
+            {/* Row 3: Left */}
+            <MarqueeRow skills={row3Skills} direction="left" />
           </div>
         </motion.div>
       </div>
@@ -113,3 +165,4 @@ const Skills = () => {
 };
 
 export default Skills;
+
