@@ -274,38 +274,27 @@ const Projects = () => {
 
             {/* Filter Buttons */}
             <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
-              <Button
-                size="sm"
-                variant={activeFilter === "all" ? "default" : "outline"}
-                onClick={() => setActiveFilter("all")}
-                className="text-xs sm:text-sm"
-              >
-                All Projects
-              </Button>
-              <Button
-                size="sm"
-                variant={activeFilter === "Data Analysis" ? "default" : "outline"}
-                onClick={() => setActiveFilter("Data Analysis")}
-                className="text-xs sm:text-sm"
-              >
-                Data Analysis
-              </Button>
-              <Button
-                size="sm"
-                variant={activeFilter === "Data Engineering" ? "default" : "outline"}
-                onClick={() => setActiveFilter("Data Engineering")}
-                className="text-xs sm:text-sm"
-              >
-                Data Engineering
-              </Button>
-              <Button
-                size="sm"
-                variant={activeFilter === "Data Science" ? "default" : "outline"}
-                onClick={() => setActiveFilter("Data Science")}
-                className="text-xs sm:text-sm"
-              >
-                Data Science
-              </Button>
+              {[
+                { id: "all", label: "All Projects" },
+                { id: "Data Analysis", label: "Data Analysis" },
+                { id: "Data Engineering", label: "Data Engineering" },
+                { id: "Data Science", label: "Data Science" },
+              ].map((tab) => {
+                const isActive = activeFilter === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveFilter(tab.id)}
+                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 border ${
+                      isActive
+                        ? "bg-gradient-primary text-white border-transparent shadow-md"
+                        : "glass border-border text-foreground/80 hover:text-foreground hover:bg-secondary"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Projects Grid */}
@@ -314,89 +303,95 @@ const Projects = () => {
                 <motion.div
                   key={project.title}
                   layout
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 hover-glow transition-all hover:scale-105 group flex flex-col"
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.35, delay: index * 0.05 }}
+                  className="glass card-accent-bar rounded-2xl p-5 sm:p-6 hover-glow transition-all duration-300 group flex flex-col justify-between border border-border hover:border-primary/50"
                 >
-                  <div
-                    className={`h-2 w-full bg-gradient-to-r ${project.gradient} rounded-full mb-4`}
-                  />
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-gradient transition-all">
-                    {project.title}
-                  </h3>
-                  <Badge className="mb-3" variant="secondary">
-                    {project.category}
-                  </Badge>
+                  <div>
+                    <div
+                      className={`h-1.5 w-full bg-gradient-to-r ${project.gradient} rounded-full mb-4 opacity-85`}
+                    />
+                    <div className="flex items-center justify-between gap-2 mb-2.5">
+                      <span className="tag-bordered text-[10px] sm:text-xs">
+                        {project.category}
+                      </span>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-primary transition-colors text-foreground">
+                      {project.title}
+                    </h3>
 
-                  {/* DESCRIPTION */}
-                  <div className="text-foreground/80 text-sm leading-relaxed mb-4">
-                    {expandedDesc[index] ? project.description : getShortText(project.description)}
-                    {project.description.split(" ").length > WORD_LIMIT && (
-                      <button
-                        className="text-primary ml-2 font-semibold hover:underline"
-                        onClick={() =>
-                          setExpandedDesc((prev) => ({ ...prev, [index]: !prev[index] }))
-                        }
-                      >
-                        {expandedDesc[index] ? "View Less" : "View More"}
-                      </button>
-                    )}
-                  </div>
-
-                  {/* TECH STACK */}
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {(expandedTech[index] ? project.tech : project.tech.slice(0, TECH_LIMIT)).map(
-                      (tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs px-3 py-1 glass rounded-full text-muted-foreground"
+                    {/* DESCRIPTION */}
+                    <div className="text-foreground/85 text-xs sm:text-sm leading-relaxed mb-4">
+                      {expandedDesc[index] ? project.description : getShortText(project.description)}
+                      {project.description.split(" ").length > WORD_LIMIT && (
+                        <button
+                          className="text-primary ml-1.5 font-bold hover:underline inline"
+                          onClick={() =>
+                            setExpandedDesc((prev) => ({ ...prev, [index]: !prev[index] }))
+                          }
                         >
-                          {tech}
-                        </span>
-                      )
-                    )}
-                    {project.tech.length > TECH_LIMIT && (
-                      <button
-                        className="text-xs text-primary font-semibold"
-                        onClick={() =>
-                          setExpandedTech((prev) => ({ ...prev, [index]: !prev[index] }))
-                        }
-                      >
-                        {expandedTech[index]
-                          ? "Show Less"
-                          : `+${project.tech.length - TECH_LIMIT} more`}
-                      </button>
-                    )}
+                          {expandedDesc[index] ? "View Less" : "View More"}
+                        </button>
+                      )}
+                    </div>
                   </div>
 
-                  {/* VIEW PROJECT BUTTON */}
-                  <div className="mt-auto flex flex-col sm:flex-row gap-3">
-                    <Button
-                      onClick={() => handleViewProject(project.repo)}
-                      variant="default"
-                      className="hover-glow w-full flex-1 border border-primary/50"
-                    >
-                      View Project
-                    </Button>
-                    {demoMap[project.title] && (
+                  <div>
+                    {/* TECH STACK */}
+                    <div className="flex flex-wrap gap-1.5 mb-5 pt-2 border-t border-border/30">
+                      {(expandedTech[index] ? project.tech : project.tech.slice(0, TECH_LIMIT)).map(
+                        (tech) => (
+                          <span
+                            key={tech}
+                            className="tag-bordered text-[10px] sm:text-[11px]"
+                          >
+                            {tech}
+                          </span>
+                        )
+                      )}
+                      {project.tech.length > TECH_LIMIT && (
+                        <button
+                          className="text-[11px] text-primary font-bold px-1.5 py-0.5 hover:underline"
+                          onClick={() =>
+                            setExpandedTech((prev) => ({ ...prev, [index]: !prev[index] }))
+                          }
+                        >
+                          {expandedTech[index]
+                            ? "Show Less"
+                            : `+${project.tech.length - TECH_LIMIT} more`}
+                        </button>
+                      )}
+                    </div>
+
+                    {/* VIEW PROJECT BUTTON */}
+                    <div className="mt-auto flex flex-col sm:flex-row gap-2.5">
                       <Button
-                        onClick={() => {
-                          setSelectedDemoProject(project.title);
-                          setDemoModalOpen(true);
-                        }}
-                        variant="outline"
-                        className="hover-glow w-full flex-1 bg-white/5 border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300 transition-all font-semibold shadow-[0_0_15px_rgba(16,185,129,0.15)] group/demo"
+                        onClick={() => handleViewProject(project.repo)}
+                        variant="default"
+                        className="hover-glow w-full flex-1 border border-primary/50 text-xs sm:text-sm font-semibold h-9 rounded-xl"
                       >
-                        <span className="flex items-center gap-2">
-                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-400 group-hover/demo:text-emerald-300">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                          Live Demo
-                        </span>
+                        View Project
                       </Button>
-                    )}
+                      {demoMap[project.title] && (
+                        <Button
+                          onClick={() => {
+                            setSelectedDemoProject(project.title);
+                            setDemoModalOpen(true);
+                          }}
+                          variant="outline"
+                          className="hover-glow w-full flex-1 bg-secondary/50 border-emerald-500/50 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/15 transition-all text-xs sm:text-sm font-semibold h-9 rounded-xl shadow-sm group/demo"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                            Live Demo
+                          </span>
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               ))}

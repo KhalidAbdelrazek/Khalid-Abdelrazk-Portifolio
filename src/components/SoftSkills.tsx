@@ -13,10 +13,6 @@ interface SoftSkillItem {
   name: string;
   description: string;
   icon: React.ElementType;
-  // accent color used for the icon itself (not a gradient box fill)
-  iconClass: string;
-  // hover border accent color
-  borderAccent: string;
 }
 
 const softSkills: SoftSkillItem[] = [
@@ -24,43 +20,31 @@ const softSkills: SoftSkillItem[] = [
     name: "Problem Solving",
     description: "Breaking down complex challenges into clear, actionable solutions.",
     icon: Lightbulb,
-    iconClass: "text-amber-400",
-    borderAccent: "group-hover:border-amber-500/45",
   },
   {
     name: "Teamwork & Collaboration",
     description: "Working closely with cross-functional teams to deliver shared goals.",
     icon: Users,
-    iconClass: "text-cyan-400",
-    borderAccent: "group-hover:border-cyan-500/45",
   },
   {
     name: "Communication Skills",
     description: "Translating technical findings into insights stakeholders can act on.",
     icon: MessageSquare,
-    iconClass: "text-emerald-400",
-    borderAccent: "group-hover:border-emerald-500/45",
   },
   {
     name: "Time Management",
     description: "Balancing multiple priorities and deadlines without losing quality.",
     icon: Clock,
-    iconClass: "text-purple-400",
-    borderAccent: "group-hover:border-purple-500/45",
   },
   {
     name: "Adaptability",
     description: "Adjusting quickly to new tools, requirements, and shifting priorities.",
     icon: Zap,
-    iconClass: "text-pink-400",
-    borderAccent: "group-hover:border-pink-500/45",
   },
   {
     name: "Critical Thinking",
     description: "Questioning assumptions and validating data before drawing conclusions.",
     icon: Brain,
-    iconClass: "text-indigo-400",
-    borderAccent: "group-hover:border-indigo-500/45",
   },
 ];
 
@@ -71,7 +55,7 @@ const SoftSkills = () => {
 
   return (
     <section id="soft-skills" className="py-14 md:py-20 relative overflow-hidden">
-      {/* Reduced ambient glow — single central spot rather than two corner blobs */}
+      {/* Reduced ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-accent/4 rounded-full blur-[100px]" />
         <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-primary/4 rounded-full blur-[100px]" />
@@ -112,23 +96,21 @@ const SoftSkills = () => {
                     duration: 0.5,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  // card-accent-bar gives each card the 2px left accent spine instead of corner gradient blobs
-                  className={`glass card-accent-bar rounded-2xl p-6 sm:p-7 hover-glow hover:-translate-y-1.5 transition-all duration-300 border border-white/10 ${skill.borderAccent} group cursor-default flex flex-col justify-between`}
+                  className="glass card-accent-bar rounded-2xl p-6 sm:p-7 hover-glow hover:-translate-y-1.5 transition-all duration-300 border border-border hover:border-primary/50 group cursor-default flex flex-col justify-between"
                 >
                   <div>
-                    {/* Flat icon treatment — icon-accent replaces gradient-square box */}
+                    {/* Consistent icon treatment */}
                     <div className="flex items-start justify-between mb-5">
                       <div className="icon-accent w-12 h-12 flex-shrink-0">
-                        <Icon className={`h-5 w-5 ${skill.iconClass}`} strokeWidth={1.75} />
+                        <Icon className="h-5 w-5 text-primary" strokeWidth={1.75} />
                       </div>
-                      {/* Small ordinal accent — adds visual interest without a blob */}
-                      <span className="text-[10px] font-bold tracking-widest text-muted-foreground/40 mt-1 select-none">
+                      <span className="text-[10px] font-bold tracking-widest text-muted-foreground/50 mt-1 select-none">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                     </div>
 
                     {/* Heading */}
-                    <h3 className="text-lg sm:text-xl font-bold mb-2.5 group-hover:text-primary transition-colors leading-snug">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2.5 group-hover:text-primary transition-colors leading-snug text-foreground">
                       {skill.name}
                     </h3>
 

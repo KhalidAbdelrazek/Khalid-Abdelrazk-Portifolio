@@ -100,12 +100,12 @@ const MarqueeRow: React.FC<MarqueeRowProps> = ({ skills, direction }) => {
           return (
             <div
               key={`${skill.name}-${index}`}
-              className="glass rounded-xl sm:rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3.5 flex items-center gap-3 sm:gap-3.5 shrink-0 hover-glow border border-white/10 hover:border-primary/40 bg-white/[0.03] backdrop-blur-md transition-all duration-300 group/card cursor-pointer select-none hover:scale-105"
+              className="glass rounded-xl sm:rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3.5 flex items-center gap-3 sm:gap-3.5 shrink-0 hover-glow border border-border hover:border-primary/50 transition-all duration-300 group/card cursor-pointer select-none hover:scale-105"
             >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-white/5 border border-white/10 group-hover/card:scale-110 group-hover/card:bg-primary/10 group-hover/card:border-primary/30 transition-all shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center bg-secondary border border-border/80 group-hover/card:scale-110 group-hover/card:bg-primary/10 group-hover/card:border-primary/30 transition-all shrink-0">
                 <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${skill.iconColor} transition-transform group-hover/card:rotate-6`} />
               </div>
-              <span className="text-xs sm:text-sm font-semibold text-foreground/90 group-hover/card:text-primary transition-colors whitespace-nowrap">
+              <span className="text-xs sm:text-sm font-semibold text-foreground group-hover/card:text-primary transition-colors whitespace-nowrap">
                 {skill.name}
               </span>
             </div>

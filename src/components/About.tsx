@@ -7,43 +7,31 @@ const services = [
     title: "Data Analysis",
     description: "Analyze datasets, perform EDA, and extract actionable insights for business growth.",
     icon: BarChart2,
-    iconClass: "text-cyan-400",
-    hoverBorder: "group-hover:border-cyan-500/45",
   },
   {
     title: "Data Visualization",
     description: "Build immersive dashboards using Power BI and Python to track critical KPIs.",
     icon: PieChart,
-    iconClass: "text-amber-400",
-    hoverBorder: "group-hover:border-amber-500/45",
   },
   {
     title: "Machine Learning",
     description: "Develop robust predictive models for complex forecasting and classification problems.",
     icon: Brain,
-    iconClass: "text-purple-400",
-    hoverBorder: "group-hover:border-purple-500/45",
   },
   {
     title: "Data Engineering",
     description: "Build scalable data pipelines, ETL processes, and robust database architectures.",
     icon: Database,
-    iconClass: "text-blue-400",
-    hoverBorder: "group-hover:border-blue-500/45",
   },
   {
     title: "Data Cleaning",
     description: "Clean, transform, and structure raw datasets to prepare them for deep analysis.",
     icon: Sparkles,
-    iconClass: "text-emerald-400",
-    hoverBorder: "group-hover:border-emerald-500/45",
   },
   {
     title: "Analytics Engineering",
     description: "Build and maintain scalable dbt models and data transformation pipelines for analytics-ready datasets.",
     icon: Layers,
-    iconClass: "text-indigo-400",
-    hoverBorder: "group-hover:border-indigo-500/45",
   }
 ];
 
@@ -80,12 +68,12 @@ const About = () => {
 
           <div className="grid lg:grid-cols-3 gap-8 items-start mb-10 md:mb-16">
             <div className="lg:col-span-3 space-y-8">
-              <div className="glass rounded-2xl md:rounded-3xl p-5 sm:p-7 md:p-10 hover-glow transition-all">
+              <div className="glass rounded-2xl md:rounded-3xl p-5 sm:p-7 md:p-10 hover-glow transition-all border border-border">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
-                  className="text-lg text-foreground/85 leading-relaxed mb-8"
+                  className="text-lg text-foreground/90 leading-relaxed mb-8"
                 >
                   Data Analyst and Data Engineer with 1+ year of experience converting complex datasets into strategic insights and scalable data infrastructure. Proven track record across data analysis, analytics engineering, and BI development, with strong skills in Python, SQL, dbt, and Power BI. Recently led an 8-member team to deliver a{" "}
                   <span className="text-gradient font-semibold">Smart Medical Sample Transport System</span>{" "}
@@ -96,7 +84,7 @@ const About = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ delay: 0.4, duration: 0.6 }}
-                  className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-white/10"
+                  className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-border/40"
                 >
                   {contactItems.map((item, i) => (
                     <motion.div
@@ -106,12 +94,12 @@ const About = () => {
                       animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                       transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
                     >
-                      <div className="p-3 glass rounded-xl group-hover:scale-110 transition-transform flex-shrink-0">
+                      <div className="p-3 glass rounded-xl group-hover:scale-110 transition-transform flex-shrink-0 border border-border/50">
                         <item.icon className={`h-5 w-5 ${item.color}`} />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{item.label}</p>
-                        <p className="font-bold text-xs truncate">{item.value}</p>
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold">{item.label}</p>
+                        <p className="font-bold text-xs truncate text-foreground">{item.value}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -120,7 +108,7 @@ const About = () => {
             </div>
           </div>
 
-            <div className="space-y-6 sm:space-y-8 md:space-y-12">
+          <div className="space-y-6 sm:space-y-8 md:space-y-12">
             <h3 className="text-2xl sm:text-3xl font-bold text-center">My <span className="text-gradient title-underline">Services</span></h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {services.map((service, i) => (
@@ -129,18 +117,18 @@ const About = () => {
                   initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 28 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 28 }}
                   transition={{ delay: prefersReducedMotion ? 0 : 0.2 + i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className={`glass card-accent-bar rounded-2xl p-5 sm:p-7 hover-glow group transition-all duration-500 hover:-translate-y-1.5 border border-white/10 ${service.hoverBorder}`}
+                  className="glass card-accent-bar rounded-2xl p-5 sm:p-7 hover-glow group transition-all duration-500 hover:-translate-y-1.5 border border-border hover:border-primary/50"
                 >
-                  {/* Flat icon-accent replaces gradient-filled rounded icon-square */}
+                  {/* Consistent Duotone Icon Container */}
                   <div className="flex items-start justify-between mb-5">
                     <div className="icon-accent w-12 h-12">
-                      <service.icon className={`h-5 w-5 ${service.iconClass}`} strokeWidth={1.75} />
+                      <service.icon className="h-5 w-5 text-primary" strokeWidth={1.75} />
                     </div>
-                    <span className="text-[10px] font-bold tracking-widest text-muted-foreground/35 mt-1 select-none">
+                    <span className="text-[10px] font-bold tracking-widest text-muted-foreground/50 mt-1 select-none">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                   </div>
-                  <h4 className="text-base sm:text-lg font-bold mb-2.5 group-hover:text-primary transition-colors">{service.title}</h4>
+                  <h4 className="text-base sm:text-lg font-bold mb-2.5 group-hover:text-primary transition-colors text-foreground">{service.title}</h4>
                   <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                     {service.description}
                   </p>

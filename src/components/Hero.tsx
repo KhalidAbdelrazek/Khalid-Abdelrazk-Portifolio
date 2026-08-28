@@ -15,9 +15,9 @@ const Hero = () => {
         <img
           src={heroBg}
           alt="Hero background"
-          className="w-full h-full object-cover opacity-20"
+          className="w-full h-full object-cover opacity-10 dark:opacity-25"
         />
-        <div className="absolute inset-0 gradient-hero opacity-90" />
+        <div className="absolute inset-0 gradient-hero opacity-95 dark:opacity-90" />
       </div>
 
       {/* Content Container */}
