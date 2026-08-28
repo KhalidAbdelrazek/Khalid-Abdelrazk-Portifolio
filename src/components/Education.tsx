@@ -64,7 +64,7 @@ const Education = () => {
                     Faculty of Engineering
                   </p>
                   <p className="text-base text-muted-foreground">
-                    Cairo University, Egypt
+                    BNS University, Egypt
                   </p>
                 </div>
 
