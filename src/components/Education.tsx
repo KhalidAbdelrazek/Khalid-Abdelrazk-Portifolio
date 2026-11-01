@@ -1,6 +1,16 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { GraduationCap, Calendar, Award, BookOpen } from "lucide-react";
+import { GraduationCap, CalendarDays, Award, BookOpen } from "lucide-react";
+
+const studyAreas = [
+  "Signal Processing",
+  "Embedded Systems",
+  "Data Networks",
+  "Digital Communications",
+  "Wireless Communications",
+  "Network Security",
+  "RF Engineering",
+];
 
 const Education = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -8,113 +18,63 @@ const Education = () => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section id="education" className="py-14 md:py-20 relative overflow-hidden">
-      {/* Intentional single ambient spotlight — not two corner blobs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[260px] bg-primary/5 rounded-full blur-[120px]" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="education" className="py-16 md:py-24">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+          transition={{ duration: 0.45 }}
+          className="mx-auto max-w-6xl"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center">
-            My <span className="text-gradient">Education</span>
-          </h2>
-          <div className="section-divider mb-10 sm:mb-14" />
+          <div className="mb-8 border-b border-border pb-5 sm:mb-10">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Academic background</p>
+            <h2 className="text-3xl font-semibold sm:text-4xl">Education</h2>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
-            transition={{ delay: 0.15, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            // card-accent-bar replaces the generic gradient corner blobs with a purposeful 2px left accent spine
-            className="glass card-accent-bar rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 hover-glow transition-all group relative overflow-hidden"
-          >
-            {/* Subtle top-right dot pattern as intentional texture — not a gradient blob */}
-            <div
-              className="absolute top-4 right-4 w-24 h-24 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity pointer-events-none"
-              style={{
-                backgroundImage: `radial-gradient(circle, hsl(195,100%,60%) 1px, transparent 1px)`,
-                backgroundSize: "10px 10px",
-              }}
-            />
-
-            <div className="flex flex-col md:flex-row gap-8 relative z-10">
-              {/* Icon & Credential Block */}
-              <div className="flex-shrink-0 flex flex-col items-center md:items-start gap-4">
-                {/* Flat duotone icon container — replaces gradient-filled rounded square */}
-                <motion.div
-                  className="icon-accent w-16 h-16 sm:w-20 sm:h-20"
-                  whileHover={prefersReducedMotion ? {} : { rotate: [-2, 2, -1, 0], scale: 1.04 }}
-                  transition={{ duration: 0.45 }}
-                >
-                  <GraduationCap className="h-8 w-8 sm:h-10 sm:w-10 text-primary" strokeWidth={1.5} />
-                </motion.div>
-
-                {/* GPA Badge — left-border tag instead of a pill */}
-                <div className="tag-bordered">
-                  <Award className="h-3 w-3 mr-1.5 flex-shrink-0 opacity-80" />
-                  GPA: 3.3 / 4.0
+          <article className="grid overflow-hidden rounded-2xl border border-border bg-card lg:grid-cols-[minmax(0,1fr)_18rem]">
+            <div className="p-6 sm:p-8 md:p-10">
+              <div className="flex flex-wrap items-start justify-between gap-5">
+                <div className="flex items-start gap-4">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-secondary text-foreground/80">
+                    <GraduationCap className="size-6" strokeWidth={1.6} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Bachelor’s degree</p>
+                    <h3 className="mt-2 max-w-2xl text-xl font-semibold leading-snug sm:text-2xl">Electronics &amp; Communications Engineering</h3>
+                    <p className="mt-2 text-sm font-medium text-foreground/80">Faculty of Engineering</p>
+                    <p className="mt-1 text-sm text-muted-foreground">BNS University, Egypt</p>
+                  </div>
                 </div>
+                <div className="rounded-lg border border-border px-3 py-2 text-sm font-semibold tabular-nums">GPA 3.3 / 4.0</div>
               </div>
 
-              {/* Content */}
-              <div className="flex-1 space-y-4">
-                <div>
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight mb-1">
-                    Bachelor of{" "}
-                    <span className="text-gradient">Electronics &amp; Communications Engineering</span>
-                  </h3>
-                  <p className="text-base sm:text-lg text-foreground/80 font-semibold mt-1">
-                    Faculty of Engineering
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-0.5">
-                    BNS University, Egypt
-                  </p>
+              <div className="mt-8 border-t border-border pt-6">
+                <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <BookOpen className="size-4" aria-hidden="true" /> Areas of study
                 </div>
-
-                {/* Details — clean icon+label rows, no icon-square boxes */}
-                <div className="grid sm:grid-cols-2 gap-3 pt-4 border-t border-border/30">
-                  <div className="flex items-center gap-2.5">
-                    <Calendar className="h-4 w-4 text-primary flex-shrink-0" strokeWidth={1.75} />
-                    <div>
-                      <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">Graduated</p>
-                      <p className="font-bold text-sm">2026</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2.5">
-                    <BookOpen className="h-4 w-4 text-accent flex-shrink-0" strokeWidth={1.75} />
-                    <div>
-                      <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-semibold">Field</p>
-                      <p className="font-bold text-sm leading-tight">Electronics &amp; Communications</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Tags — left-border bordered tags instead of rounded pills */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {[
-                    "Signal Processing",
-                    "Embedded Systems",
-                    "Data Networks",
-                    "Digital Communications",
-                    "Wireless Communications",
-                    "Network Security",
-                    "RF Engineering",
-                  ].map((tag) => (
-                    <span key={tag} className="tag-bordered">
-                      {tag}
-                    </span>
+                <ul className="flex flex-wrap gap-2">
+                  {studyAreas.map((area) => (
+                    <li key={area} className="rounded-md bg-secondary px-3 py-1.5 text-xs text-secondary-foreground">{area}</li>
                   ))}
-                </div>
+                </ul>
               </div>
             </div>
-          </motion.div>
+
+            <aside className="flex flex-row items-center justify-between gap-4 border-t border-border bg-secondary/40 p-6 lg:flex-col lg:items-start lg:justify-between lg:border-l lg:border-t-0 lg:p-8">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Completed</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <CalendarDays className="size-4 text-muted-foreground" aria-hidden="true" />
+                  <p className="text-2xl font-semibold tabular-nums">2026</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                <Award className="size-4" aria-hidden="true" />
+                Electronics &amp; Communications
+              </div>
+            </aside>
+          </article>
         </motion.div>
       </div>
     </section>

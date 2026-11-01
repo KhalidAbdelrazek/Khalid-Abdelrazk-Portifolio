@@ -1,5 +1,5 @@
-import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   Lightbulb,
   Users,
@@ -9,16 +9,10 @@ import {
   Brain,
 } from "lucide-react";
 
-interface SoftSkillItem {
-  name: string;
-  description: string;
-  icon: React.ElementType;
-}
-
-const softSkills: SoftSkillItem[] = [
+const softSkills = [
   {
     name: "Problem Solving",
-    description: "Breaking down complex challenges into clear, actionable solutions.",
+    description: "Breaking complex challenges into clear, actionable steps.",
     icon: Lightbulb,
   },
   {
@@ -28,7 +22,7 @@ const softSkills: SoftSkillItem[] = [
   },
   {
     name: "Communication Skills",
-    description: "Translating technical findings into insights stakeholders can act on.",
+    description: "Explaining technical findings in terms stakeholders can use.",
     icon: MessageSquare,
   },
   {
@@ -38,7 +32,7 @@ const softSkills: SoftSkillItem[] = [
   },
   {
     name: "Adaptability",
-    description: "Adjusting quickly to new tools, requirements, and shifting priorities.",
+    description: "Adjusting quickly as tools, requirements, and priorities change.",
     icon: Zap,
   },
   {
@@ -54,78 +48,38 @@ const SoftSkills = () => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section id="soft-skills" className="py-14 md:py-20 relative overflow-hidden">
-      {/* Reduced ambient glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-accent/4 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-primary/4 rounded-full blur-[100px]" />
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+    <section id="soft-skills" className="py-16 md:py-24">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 35 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 35 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-6xl mx-auto"
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+          transition={{ duration: 0.45 }}
+          className="mx-auto max-w-6xl"
         >
-          {/* Section Header */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center">
-            Soft <span className="text-gradient">Skills</span>
-          </h2>
-          <div className="section-divider mb-4 sm:mb-6" />
-          <p className="text-center text-muted-foreground mb-10 sm:mb-14 max-w-xl mx-auto text-sm sm:text-base">
-            Beyond the technical — the interpersonal strengths and analytical mindset that drive high-impact outcomes.
-          </p>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {softSkills.map((skill, index) => {
-              const Icon = skill.icon;
-              return (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 28, scale: prefersReducedMotion ? 1 : 0.97 }}
-                  animate={
-                    isInView
-                      ? { opacity: 1, y: 0, scale: 1 }
-                      : { opacity: 0, y: prefersReducedMotion ? 0 : 28, scale: prefersReducedMotion ? 1 : 0.97 }
-                  }
-                  transition={{
-                    delay: prefersReducedMotion ? 0 : index * 0.08,
-                    duration: 0.5,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="glass card-accent-bar rounded-2xl p-6 sm:p-7 hover-glow hover:-translate-y-1.5 transition-all duration-300 border border-border hover:border-primary/50 group cursor-default flex flex-col justify-between"
-                >
-                  <div>
-                    {/* Consistent icon treatment */}
-                    <div className="flex items-start justify-between mb-5">
-                      <div className="icon-accent w-12 h-12 flex-shrink-0">
-                        <Icon className="h-5 w-5 text-primary" strokeWidth={1.75} />
-                      </div>
-                      <span className="text-[10px] font-bold tracking-widest text-muted-foreground/50 mt-1 select-none">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-
-                    {/* Heading */}
-                    <h3 className="text-lg sm:text-xl font-bold mb-2.5 group-hover:text-primary transition-colors leading-snug text-foreground">
-                      {skill.name}
-                    </h3>
-
-                    {/* Supporting Description */}
-                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                      {skill.description}
-                    </p>
-                  </div>
-
-                  {/* Bottom accent line — grows on hover */}
-                  <div className="mt-5 h-px w-0 group-hover:w-full bg-gradient-to-r from-transparent via-primary/40 to-transparent transition-all duration-500 rounded-full" />
-                </motion.div>
-              );
-            })}
+          <div className="mb-8 grid gap-4 border-b border-border pb-5 sm:mb-10 sm:grid-cols-[1fr_auto] sm:items-end">
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Working style</p>
+              <h2 className="text-3xl font-semibold sm:text-4xl">Soft skills</h2>
+            </div>
+            <p className="max-w-sm text-sm leading-6 text-muted-foreground sm:text-right">
+              The habits that help me solve problems, collaborate, and communicate useful findings.
+            </p>
           </div>
+
+          <ul className="grid gap-x-10 sm:grid-cols-2">
+            {softSkills.map(({ name, description, icon: Icon }) => (
+              <li key={name} className="flex gap-4 border-b border-border py-5 sm:py-6">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-foreground/80">
+                  <Icon className="size-4" strokeWidth={1.75} aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="text-base font-semibold">{name}</h3>
+                  <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </motion.div>
       </div>
     </section>

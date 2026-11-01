@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { Award, Calendar, CheckCircle2 } from "lucide-react";
+import { Award, CalendarDays } from "lucide-react";
 
 interface Certification {
   title: string;
@@ -10,13 +10,13 @@ interface Certification {
 
 const certifications: Certification[] = [
   {
-    title: "Azure Databricks & Spark for Data Engineers: Hands-on Project",
+    title: "Azure Databricks & Spark for Data Engineers",
     issuer: "Udemy",
     period: "Aug 2026",
   },
   {
     title: "Fundamentals of Azure Databricks",
-    issuer: "Packt / Coursera",
+    issuer: "Coursera",
     period: "Jul 2026",
   },
   {
@@ -42,62 +42,42 @@ const Certifications = () => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section id="certifications" className="py-14 md:py-20 relative overflow-hidden">
-      {/* Background accents */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="certifications" className="py-16 md:py-24">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
+          transition={{ duration: 0.45 }}
+          className="mx-auto max-w-6xl"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center">
-            My <span className="text-gradient">Certifications</span>
-          </h2>
-          <div className="section-divider mb-10 sm:mb-14" />
+          <div className="mb-8 grid gap-4 border-b border-border pb-5 sm:mb-10 sm:grid-cols-[1fr_auto] sm:items-end">
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Courses &amp; credentials</p>
+              <h2 className="text-3xl font-semibold sm:text-4xl">Certifications</h2>
+            </div>
+            <p className="text-sm text-muted-foreground">{String(certifications.length).padStart(2, "0")} completed programs</p>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
+          <div className="grid gap-3 md:grid-cols-2">
             {certifications.map((cert, index) => (
-              <motion.div
-                key={cert.title}
-                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30, scale: prefersReducedMotion ? 1 : 0.95 }}
-                animate={
-                  isInView
-                    ? { opacity: 1, y: 0, scale: 1 }
-                    : { opacity: 0, y: prefersReducedMotion ? 0 : 30, scale: prefersReducedMotion ? 1 : 0.95 }
-                }
-                transition={{ delay: prefersReducedMotion ? 0 : index * 0.1, duration: 0.5 }}
-                className="glass card-accent-bar rounded-2xl p-5 sm:p-6 hover-glow hover:-translate-y-1.5 transition-all duration-300 group cursor-default relative overflow-hidden border border-border hover:border-primary/50 flex flex-col justify-between"
-              >
-                {/* Consistent Brand Gradient Top Bar */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-primary rounded-t-2xl opacity-80 group-hover:opacity-100 transition-opacity" />
-
-                <div>
-                  {/* Icon */}
-                  <div className="icon-accent w-11 h-11 mb-4">
-                    <Award className="h-5 w-5 text-primary" />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className="font-bold text-sm sm:text-base leading-snug mb-2 group-hover:text-primary transition-colors text-foreground">
-                    {cert.title}
-                  </h3>
-                  <div className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold mb-2 text-primary dark:text-foreground/90">
-                    <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
-                    <span>{cert.issuer}</span>
+              <article key={cert.title} className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-foreground/30 sm:p-6">
+                <div className="flex items-start gap-4">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-foreground/80">
+                    <Award className="size-4" strokeWidth={1.7} aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                      <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">{cert.issuer}</span>
+                      <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <CalendarDays className="size-3.5" aria-hidden="true" /> {cert.period}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-semibold leading-snug text-foreground sm:text-lg">{cert.title}</h3>
+                    <p className="mt-3 font-mono text-[11px] tabular-nums text-muted-foreground/70">{String(index + 1).padStart(2, "0")}</p>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground pt-3 border-t border-border/40 mt-2">
-                  <Calendar className="h-3 w-3 flex-shrink-0" />
-                  <span>{cert.period}</span>
-                </div>
-              </motion.div>
+              </article>
             ))}
           </div>
         </motion.div>

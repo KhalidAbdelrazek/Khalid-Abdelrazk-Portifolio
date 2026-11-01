@@ -1,14 +1,21 @@
-import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import projectPreviewFallback from "@/assets/project-preview-fallback.jpg";
+import projectMomkn from "@/assets/project-momkn.jpg";
+import projectDbtMigration from "@/assets/project-dbt-migration.jpg";
+import projectAiDataLayer from "@/assets/project-ai-data-layer.jpg";
+import projectCovidDashboard from "@/assets/project-covid-dashboard.jpg";
+import projectRealEstate from "@/assets/project-real-estate.jpg";
+import projectBikeBuyers from "@/assets/project-bike-buyers.jpg";
+import { ArrowUpRight, ChevronRight, ExternalLink, Lock } from "lucide-react";
 import {
-  ArrowUpRight,
-  ChevronDown,
-  ChevronUp,
-  ExternalLink,
-  Lock,
-  Play,
-  Sparkles,
-} from "lucide-react";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { DemoModal } from "./DemoModal";
 import { demoMap } from "./demoData";
 
@@ -19,12 +26,14 @@ interface ProjectItem {
   tech: string[];
   gradient: string;
   repo: string;
+  proof?: string;
 }
 
 const projects: ProjectItem[] = [
   // GROUP 1: DATA ENGINEERING
   {
     title: "KPI & P&L Reporting Automation",
+    proof: "50+ finance and growth KPIs",
     category: "Data Engineering",
     description:
       "Consolidated 50+ fragmented finance and growth KPIs (MAU, TPV, revenue, CAC, churn) previously pulled via manual ad hoc queries into a single governed Metabase model. Built a Python and Dagster-orchestrated pipeline to sync the model into Google Sheets and auto-refresh downstream KPI & P&L reporting decks, eliminating manual updates and establishing one source of truth for finance and leadership.",
@@ -82,6 +91,7 @@ const projects: ProjectItem[] = [
   },
   {
     title: "TLC Trips ETL Pipeline 36M+ Records",
+    proof: "36M+ trip records processed",
     category: "Data Engineering",
     description:
       "Built an end-to-end scalable ETL pipeline using PySpark to process 36M+ NYC taxi trip records and load them into a Star Schema data warehouse in SQL Server. Developed Power BI dashboards to analyze revenue trends, trip behavior, and operational KPIs.",
@@ -168,6 +178,7 @@ const projects: ProjectItem[] = [
   },
   {
     title: "Sales Analytics Dashboard",
+    proof: "60,000+ transactions",
     category: "Data Analysis",
     description:
       "A fully interactive Sales Analytics Dashboard built in Excel to analyze 60,000+ transactions and extract actionable business insights.",
@@ -235,329 +246,325 @@ const projects: ProjectItem[] = [
 ];
 
 const filterTabs = [
-  { id: "all", label: "All Projects" },
-  { id: "Data Engineering", label: "Data Engineering" },
-  { id: "Data Analysis", label: "Data Analysis" },
-  { id: "Data Science", label: "Data Science" },
+  { id: "all", label: "All work" },
+  { id: "Data Engineering", label: "Data engineering" },
+  { id: "Data Analysis", label: "Data analysis" },
+  { id: "Data Science", label: "Data science" },
 ];
 
+const featuredTitles = [
+  "KPI & P&L Reporting Automation",
+  "TLC Trips ETL Pipeline 36M+ Records",
+  "E-Commerce Business Intelligence",
+];
+
+const defaultFallbackPhoto = {
+  src: projectPreviewFallback,
+  credit: "Windows",
+  href: "https://unsplash.com/photos/qtpt4WGlz3Y",
+};
+
+const projectFallbackPhotos: Record<string, typeof defaultFallbackPhoto> = {
+  "Momkn Commission Rate Snapshot (SCD2)": {
+    src: projectMomkn,
+    credit: "Apex Virtual Education",
+    href: "https://unsplash.com/photos/woman-working-on-laptop-with-charts-and-graphs-KNQUEQwTCY4",
+  },
+  "Incremental dbt Migration for Transaction Facts": {
+    src: projectDbtMigration,
+    credit: "Mohammad Rahmani",
+    href: "https://unsplash.com/photos/laptop-screen-displaying-colorful-code-8qEB0fTe9Vw",
+  },
+  "AI-Ready Data Layer for Natural-Language Analytics": {
+    src: projectAiDataLayer,
+    credit: "nicoll camacho",
+    href: "https://unsplash.com/photos/laptop-displaying-charts-next-to-notebook-and-mug-adFE-OdO7RA",
+  },
+  "COVID-19 Dashboard": {
+    src: projectCovidDashboard,
+    credit: "Vitaly Gariev",
+    href: "https://unsplash.com/photos/doctor-on-phone-working-on-laptop-in-office-egCFrNJ6Djw",
+  },
+  "Real Estate Analysis": {
+    src: projectRealEstate,
+    credit: "Alex Tyson",
+    href: "https://unsplash.com/photos/a-large-open-living-room-with-sliding-glass-doors-MY0gtZCVkm4",
+  },
+  "Bike Buyer Analysis using Excel": {
+    src: projectBikeBuyers,
+    credit: "Diogo Tavares",
+    href: "https://unsplash.com/photos/person-standing-beside-of-city-bicycle-PFZTiiJnjag",
+  },
+};
+
 const Projects = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const prefersReducedMotion = useReducedMotion();
-
   const [activeFilter, setActiveFilter] = useState("all");
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [selectedProjectTitle, setSelectedProjectTitle] = useState<string | null>(null);
+  const [confidentialOpen, setConfidentialOpen] = useState(false);
+  const [demoProject, setDemoProject] = useState<string | null>(null);
 
-  // Modal states
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [demoModalOpen, setDemoModalOpen] = useState(false);
-  const [selectedDemoProject, setSelectedDemoProject] = useState<string | null>(null);
+  const visibleProjects = activeFilter === "all"
+    ? projects
+    : projects.filter((project) => project.category === activeFilter);
+  const featuredProjects = activeFilter === "all"
+    ? featuredTitles.map((title) => projects.find((project) => project.title === title)!).filter(Boolean)
+    : [];
+  const remainingProjects = activeFilter === "all"
+    ? visibleProjects.filter((project) => !featuredTitles.includes(project.title))
+    : visibleProjects;
+  const selectedProject = remainingProjects.find((project) => project.title === selectedProjectTitle) ?? remainingProjects[0];
+  const selectedPreview = selectedProject ? demoMap[selectedProject.title]?.items[0] : undefined;
+  const fallbackPhoto = selectedProject ? projectFallbackPhotos[selectedProject.title] ?? defaultFallbackPhoto : defaultFallbackPhoto;
 
-  const filteredProjects =
-    activeFilter === "all"
-      ? projects
-      : projects.filter((p) => p.category === activeFilter);
-
-  const toggleRow = (index: number) => {
-    setExpandedIndex((prev) => (prev === index ? null : index));
-  };
-
-  const handleOpenRepo = (e: React.MouseEvent, repo: string) => {
-    e.stopPropagation();
+  const openRepo = (repo: string) => {
     if (repo) {
       window.open(repo, "_blank", "noopener,noreferrer");
-    } else {
-      setModalMessage(
-        "This project is proprietary / client confidential. Source repository access is restricted."
-      );
-      setModalOpen(true);
+      return;
     }
+    setConfidentialOpen(true);
   };
 
-  const handleOpenDemo = (e: React.MouseEvent, title: string) => {
-    e.stopPropagation();
-    setSelectedDemoProject(title);
-    setDemoModalOpen(true);
+  const ProjectCard = ({ project, featured = false }: { project: ProjectItem; featured?: boolean }) => {
+    const hasDemo = Boolean(demoMap[project.title]);
+    return (
+      <article className={`group flex h-full flex-col rounded-xl border border-border bg-card p-5 sm:p-6 transition-colors hover:border-foreground/30 ${featured ? "md:p-7" : ""}`}>
+        <div className="mb-5 flex items-start justify-between gap-3">
+          <span className="text-xs font-medium text-muted-foreground">{project.category}</span>
+          {project.proof && (
+            <span className="rounded-full border border-border px-2.5 py-1 text-[11px] font-medium text-foreground/80">
+              {project.proof}
+            </span>
+          )}
+        </div>
+        <h3 className={`max-w-2xl font-semibold leading-snug tracking-tight text-foreground ${featured ? "text-xl sm:text-2xl" : "text-lg"}`}>
+          {project.title}
+        </h3>
+        <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground text-pretty">
+          {project.description}
+        </p>
+        <div className="mt-5 flex flex-wrap gap-2" aria-label="Tools and methods">
+          {project.tech.slice(0, featured ? 5 : 4).map((technology) => (
+            <span key={technology} className="rounded-md bg-secondary px-2 py-1 text-[11px] text-secondary-foreground">
+              {technology}
+            </span>
+          ))}
+          {project.tech.length > (featured ? 5 : 4) && (
+            <span className="px-1 py-1 text-[11px] text-muted-foreground">+{project.tech.length - (featured ? 5 : 4)}</span>
+          )}
+        </div>
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-border pt-4">
+          {hasDemo && (
+            <button
+              type="button"
+              onClick={() => setDemoProject(project.title)}
+              className="inline-flex min-h-9 items-center gap-2 text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground"
+            >
+              Open project preview <ArrowUpRight className="size-4" aria-hidden="true" />
+            </button>
+          )}
+          {project.repo ? (
+            <a
+              href={project.repo}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-9 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Source code <ExternalLink className="size-3.5" aria-hidden="true" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => openRepo("")}
+              className="inline-flex min-h-9 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              aria-label={`Learn about access to ${project.title}`}
+            >
+              <Lock className="size-3.5" aria-hidden="true" /> Client project
+            </button>
+          )}
+        </div>
+      </article>
+    );
   };
 
   return (
     <>
-      <section id="projects" className="py-16 md:py-24 relative overflow-hidden">
-        {/* Subtle background ambient lights */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-primary/5 rounded-full blur-[140px]" />
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 relative z-10" ref={ref}>
-          <motion.div
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 35 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 35 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Header */}
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
-                Featured <span className="text-gradient">Projects</span>
-              </h2>
-              <div className="section-divider mb-8" />
-              <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
-                Explore production ETL pipelines, executive BI dashboards, and applied machine learning models.
+      <section id="projects" className="py-20 md:py-28">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="mx-auto max-w-6xl">
+            <header className="mb-10 grid gap-5 border-b border-border pb-8 md:mb-12 md:grid-cols-[1fr_auto] md:items-end">
+              <div>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Selected work · {projects.length} projects</p>
+                <h2 className="max-w-2xl text-balance text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+                  Work built around <span className="text-muted-foreground">real questions.</span>
+                </h2>
+              </div>
+              <p className="max-w-sm text-sm leading-6 text-muted-foreground text-pretty md:text-right">
+                Data pipelines, dashboards, and analysis projects—what they do, how they were built, and where to explore further.
               </p>
-            </div>
+            </header>
 
-            {/* Minimal Category Tabs with Animated Underline */}
-            <div className="flex flex-wrap justify-center gap-1 sm:gap-2  border-b border-border/50 max-w-3xl mx-auto pb-2">
+            <nav className="mb-8 flex gap-2 overflow-x-auto pb-1" aria-label="Filter projects">
               {filterTabs.map((tab) => {
                 const isActive = activeFilter === tab.id;
-                const count =
-                  tab.id === "all"
-                    ? projects.length
-                    : projects.filter((p) => p.category === tab.id).length;
-
+                const count = tab.id === "all" ? projects.length : projects.filter((project) => project.category === tab.id).length;
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => {
-                      setActiveFilter(tab.id);
-                      setExpandedIndex(null);
-                    }}
-                    className={`relative px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold transition-colors duration-150 flex items-center gap-1.5 ${
-                      isActive
-                        ? "text-primary"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
+                    type="button"
+                    onClick={() => setActiveFilter(tab.id)}
+                    aria-pressed={isActive}
+                    className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${isActive ? "border-foreground bg-foreground text-background" : "border-border text-muted-foreground hover:text-foreground"}`}
                   >
-                    <span>{tab.label}</span>
-                    <span className="text-[11px] opacity-60 font-mono">({count})</span>
-                    {isActive && (
-                      <motion.div
-                        layoutId="projectTabUnderline"
-                        className="absolute bottom-[-9px] left-0 right-0 h-[2px] bg-gradient-primary rounded-full"
-                        transition={{ type: "spring", stiffness: 450, damping: 35 }}
-                      />
-                    )}
+                    {tab.label}<span className={isActive ? "opacity-70" : "opacity-60"}>{count}</span>
                   </button>
                 );
               })}
+            </nav>
+
+            {featuredProjects.length > 0 && (
+              <div className="mb-12">
+                <div className="mb-4 flex items-center gap-3">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">A closer look</h3>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <div className="grid gap-4 lg:grid-cols-2">
+                  {featuredProjects.map((project) => (
+                    <ProjectCard key={project.title} project={project} featured />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="mb-5 flex items-center gap-3">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                {activeFilter === "all" ? `More projects · ${remainingProjects.length}` : `${activeFilter} · ${remainingProjects.length}`}
+              </h3>
+              <div className="h-px flex-1 bg-border" />
+              <span className="hidden text-xs text-muted-foreground sm:inline">Choose a project to explore</span>
             </div>
-
-            {/* Dense Horizontal List Layout */}
-            <div className="max-w-6xl mx-auto border-t border-b border-border/80 divide-y divide-border/60">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeFilter}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="divide-y divide-border/60"
-                >
-                  {filteredProjects.map((project, index) => {
-                    const isExpanded = expandedIndex === index;
-                    const hasDemo = Boolean(demoMap[project.title]);
-                    const indexFormatted = String(index + 1).padStart(2, "0");
-
+            {selectedProject ? (
+              <div className="grid items-start gap-5 lg:grid-cols-[minmax(17rem,0.85fr)_minmax(0,1.4fr)]">
+                <nav aria-label="More projects" className="order-2 divide-y divide-border overflow-hidden rounded-xl border border-border lg:order-1">
+                  {remainingProjects.map((project, index) => {
+                    const isSelected = selectedProject.title === project.title;
                     return (
-                      <div
+                      <button
                         key={project.title}
-                        onClick={() => toggleRow(index)}
-                        className={`group transition-colors duration-150 cursor-pointer ${
-                          isExpanded
-                            ? "bg-secondary/40 dark:bg-secondary/20"
-                            : "hover:bg-primary/[0.04] dark:hover:bg-primary/[0.06]"
-                        }`}
+                        type="button"
+                        onClick={() => setSelectedProjectTitle(project.title)}
+                        aria-pressed={isSelected}
+                        className={`group flex min-h-[4.5rem] w-full items-center gap-3 px-4 py-3 text-left transition-colors focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${isSelected ? "bg-secondary text-foreground" : "bg-card hover:bg-secondary/60"}`}
                       >
-                        {/* Main Horizontal Row */}
-                        <div className="py-4 sm:py-4.5 px-3 sm:px-5 flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-4">
-                          {/* Left Segment: Index + Title */}
-                          <div className="flex items-baseline md:items-center gap-3 min-w-0 flex-1">
-                            <span className="font-mono text-xs text-muted-foreground/60 shrink-0 select-none">
-                              {indexFormatted}
-                            </span>
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <h3 className="font-bold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors leading-snug">
-                                  {project.title}
-                                </h3>
-                                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-secondary/80 text-secondary-foreground border border-border/60 shrink-0">
-                                  {project.category}
-                                </span>
-                              </div>
-
-                              {/* Collapsed view short description on desktop */}
-                              {!isExpanded && (
-                                <p className="text-xs text-muted-foreground truncate max-w-xl mt-0.5 hidden md:block">
-                                  {project.description}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Middle Segment: Inline Tech Stack (Middle-Dot Separated) */}
-                          <div className="hidden lg:block shrink-0 max-w-xs text-right">
-                            <p className="text-[11px] text-muted-foreground/80 font-mono truncate">
-                              {project.tech.slice(0, 4).join(" · ")}
-                              {project.tech.length > 4 && " · +"}
-                            </p>
-                          </div>
-
-                          {/* Right Segment: Actions & Affordance */}
-                          <div className="flex items-center justify-between md:justify-end gap-3 shrink-0 pt-1 md:pt-0 border-t border-border/20 md:border-0">
-                            {/* Mobile inline tech stack preview */}
-                            <p className="text-[11px] text-muted-foreground/80 font-mono truncate lg:hidden">
-                              {project.tech.slice(0, 3).join(" · ")}
-                            </p>
-
-                            <div className="flex items-center gap-2 ml-auto">
-                              {hasDemo && (
-                                <button
-                                  onClick={(e) => handleOpenDemo(e, project.title)}
-                                  className="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground hover:text-foreground bg-secondary/80 hover:bg-secondary px-2 py-0.5 rounded border border-border/60 transition-colors"
-                                  title="View Interactive Live Demo"
-                                >
-                                  <Play className="w-2.5 h-2.5 fill-current" />
-                                  <span>Demo</span>
-                                </button>
-                              )}
-
-                              {project.repo ? (
-                                <button
-                                  onClick={(e) => handleOpenRepo(e, project.repo)}
-                                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline px-1.5 py-1 transition-colors"
-                                  title="Open Source Code"
-                                >
-                                  <span>Code</span>
-                                  <ArrowUpRight className="w-3 h-3" />
-                                </button>
-                              ) : (
-                                <span
-                                  onClick={(e) => handleOpenRepo(e, "")}
-                                  className="inline-flex items-center gap-1 text-[10px] text-muted-foreground px-1 py-1 cursor-pointer hover:text-foreground"
-                                  title="Confidential Project"
-                                >
-                                  <Lock className="w-3 h-3" />
-                                </span>
-                              )}
-
-                              <div className="text-muted-foreground/60 group-hover:text-primary transition-colors p-1">
-                                {isExpanded ? (
-                                  <ChevronUp className="w-4 h-4" />
-                                ) : (
-                                  <ChevronDown className="w-4 h-4" />
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* In-Place Expanded Details */}
-                        <AnimatePresence>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.25, ease: "easeInOut" }}
-                              className="overflow-hidden border-t border-border/40 bg-card/60 dark:bg-card/40 px-4 sm:px-6 py-4 space-y-3"
-                            >
-                              <div>
-                                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                                  Overview &amp; Implementation
-                                </p>
-                                <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
-                                  {project.description}
-                                </p>
-                              </div>
-
-                              <div>
-                                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
-                                  Technologies &amp; Architecture
-                                </p>
-                                <p className="text-xs font-mono text-foreground/80 leading-relaxed">
-                                  {project.tech.join(" · ")}
-                                </p>
-                              </div>
-
-                              <div className="flex flex-wrap items-center gap-3 pt-2">
-                                {project.repo ? (
-                                  <button
-                                    onClick={(e) => handleOpenRepo(e, project.repo)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
-                                  >
-                                    <ExternalLink className="w-3.5 h-3.5" />
-                                    View GitHub Repository
-                                  </button>
-                                ) : (
-                                  <button
-                                    onClick={(e) => handleOpenRepo(e, "")}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border transition-colors"
-                                  >
-                                    <Lock className="w-3.5 h-3.5" />
-                                    Confidential / Enterprise Project
-                                  </button>
-                                )}
-
-                                {hasDemo && (
-                                  <button
-                                    onClick={(e) => handleOpenDemo(e, project.title)}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-secondary text-secondary-foreground hover:bg-muted border border-border transition-colors shadow-sm"
-                                  >
-                                    <Play className="w-3 h-3 fill-current" />
-                                    Launch Live Demo
-                                  </button>
-                                )}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
+                        <span className="w-7 shrink-0 font-mono text-xs tabular-nums text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-medium leading-snug">{project.title}</span>
+                          <span className="mt-1 block text-xs text-muted-foreground">{project.category}</span>
+                        </span>
+                        <ChevronRight className={`size-4 shrink-0 transition-transform ${isSelected ? "translate-x-0 text-foreground" : "-translate-x-1 text-muted-foreground opacity-0 group-hover:translate-x-0 group-hover:opacity-100"}`} aria-hidden="true" />
+                      </button>
                     );
                   })}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
+                </nav>
+
+                <article className="order-1 overflow-hidden rounded-xl border border-border bg-card lg:order-2">
+                  <div className="relative aspect-video bg-secondary">
+                    {selectedPreview ? (
+                      <iframe
+                        key={selectedProject.title}
+                        src={selectedPreview.src}
+                        title={`${selectedProject.title} preview${selectedPreview.label ? ` — ${selectedPreview.label}` : ""}`}
+                        loading="lazy"
+                        allow="fullscreen"
+                        allowFullScreen
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        className="size-full border-0"
+                      />
+                    ) : (
+                      <div className="relative flex size-full flex-col justify-between overflow-hidden p-5 text-white sm:p-7">
+                        <img
+                          src={fallbackPhoto.src}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 size-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/20" />
+                        <span className="relative text-xs font-medium uppercase tracking-[0.12em] text-white/85">Project overview</span>
+                        <div className="relative max-w-sm">
+                          <p className="text-sm font-medium text-white">A public preview isn’t available for this project.</p>
+                          <p className="mt-2 text-xs text-white/80">Ask me about the approach and results.</p>
+                          <a
+                            href={fallbackPhoto.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="mt-4 inline-block text-[11px] text-white/70 underline underline-offset-2 hover:text-white"
+                          >
+                            Photo by {fallbackPhoto.credit} on Unsplash
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-5 sm:p-7">
+                    <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+                      <span className="text-xs font-medium text-muted-foreground">{selectedProject.category}</span>
+                      {selectedProject.proof && <span className="rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground/80">{selectedProject.proof}</span>}
+                    </div>
+                    <h4 className="text-xl font-semibold leading-snug sm:text-2xl">{selectedProject.title}</h4>
+                    <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground text-pretty">{selectedProject.description}</p>
+                    <div className="mt-5 flex flex-wrap gap-2" aria-label="Tools and methods">
+                      {selectedProject.tech.slice(0, 6).map((technology) => (
+                        <span key={technology} className="rounded-md bg-secondary px-2.5 py-1 text-[11px] text-secondary-foreground">{technology}</span>
+                      ))}
+                      {selectedProject.tech.length > 6 && <span className="px-1 py-1 text-[11px] text-muted-foreground">+{selectedProject.tech.length - 6}</span>}
+                    </div>
+                    <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-border pt-4">
+                      {demoMap[selectedProject.title] && (
+                        <button
+                          type="button"
+                          onClick={() => setDemoProject(selectedProject.title)}
+                          className="inline-flex min-h-9 items-center gap-2 text-sm font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground"
+                        >
+                          Open full preview <ArrowUpRight className="size-4" aria-hidden="true" />
+                        </button>
+                      )}
+                      {selectedProject.repo ? (
+                        <a href={selectedProject.repo} target="_blank" rel="noreferrer" className="inline-flex min-h-9 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+                          Source code <ExternalLink className="size-3.5" aria-hidden="true" />
+                        </a>
+                      ) : (
+                        <button type="button" onClick={() => openRepo("")} className="inline-flex min-h-9 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+                          <Lock className="size-3.5" aria-hidden="true" /> Client project
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              </div>
+            ) : (
+              <p className="rounded-xl border border-border p-6 text-sm text-muted-foreground">No projects in this category yet.</p>
+            )}
+          </div>
         </div>
       </section>
 
-      {/* CONFIDENTIAL PROJECT MODAL */}
-      {modalOpen && (
-        <div
-          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50 p-4"
-          onClick={() => setModalOpen(false)}
-        >
-          <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-card text-card-foreground p-6 sm:p-7 rounded-2xl shadow-2xl max-w-md w-full text-center border border-border"
-          >
-            <div className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center mx-auto mb-3 text-primary">
-              <Lock className="w-5 h-5" />
-            </div>
-            <h4 className="text-lg font-bold mb-2">Client Confidential</h4>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-5">
-              {modalMessage}
-            </p>
-            <button
-              onClick={() => setModalOpen(false)}
-              className="w-full py-2 rounded-xl bg-primary text-primary-foreground font-semibold text-xs sm:text-sm hover:bg-primary/90 transition-colors"
-            >
-              Understood
-            </button>
-          </motion.div>
-        </div>
-      )}
+      <Dialog open={confidentialOpen} onOpenChange={setConfidentialOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <div className="mb-2 flex size-10 items-center justify-center rounded-full bg-secondary text-muted-foreground"><Lock className="size-4" aria-hidden="true" /></div>
+            <DialogTitle>Client confidential</DialogTitle>
+            <DialogDescription className="leading-6">This work was completed for a client, so its source repository and underlying data are restricted.</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild><button type="button" className="min-h-10 rounded-md bg-foreground px-4 text-sm font-medium text-background">Close</button></DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
-      {/* LIVE DEMO MODAL */}
       <DemoModal
-        isOpen={demoModalOpen}
-        onClose={() => setDemoModalOpen(false)}
-        projectTitle={selectedDemoProject || ""}
-        demoEntry={selectedDemoProject ? demoMap[selectedDemoProject] : { items: [] }}
+        isOpen={Boolean(demoProject)}
+        onClose={() => setDemoProject(null)}
+        projectTitle={demoProject || ""}
+        demoEntry={demoProject ? demoMap[demoProject] : { items: [] }}
       />
     </>
   );
