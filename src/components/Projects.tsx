@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import projectPreviewFallback from "@/assets/project-preview-fallback.jpg";
 import projectMomkn from "@/assets/project-momkn.jpg";
 import projectDbtMigration from "@/assets/project-dbt-migration.jpg";
@@ -371,12 +372,19 @@ const Projects = () => {
                     setSelectedProjectTitle(null);
                   }}
                   aria-pressed={isActive}
-                  className={`inline-flex shrink-0 items-baseline gap-2 border-b-2 pb-3 text-sm ${
-                    isActive ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"
+                  className={`relative inline-flex shrink-0 items-baseline gap-2 pb-3 text-sm ${
+                    isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {tab.label}
                   <span className="font-mono text-[11px]">{String(count).padStart(2, "0")}</span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="project-filter"
+                      className="absolute inset-x-0 bottom-0 h-0.5 bg-primary"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
                 </button>
               );
             })}
@@ -385,7 +393,14 @@ const Projects = () => {
           {featuredProjects.length > 0 && (
             <div className="mb-16 border-t border-border">
               {featuredProjects.map((project, index) => (
-                <article key={project.title} className="grid gap-4 border-b border-border py-8 md:grid-cols-[4.5rem_minmax(0,1fr)] md:py-10">
+                <motion.article
+                  key={project.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.55, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="grid gap-4 border-b border-border py-8 md:grid-cols-[4.5rem_minmax(0,1fr)] md:py-10"
+                >
                   <p className="font-mono text-[11px] text-primary">{String(index + 1).padStart(2, "0")}</p>
                   <div>
                     <div className="flex flex-wrap items-baseline justify-between gap-3">
@@ -403,7 +418,7 @@ const Projects = () => {
                     </ul>
                     <ProjectLinks project={project} />
                   </div>
-                </article>
+                </motion.article>
               ))}
             </div>
           )}
@@ -444,7 +459,15 @@ const Projects = () => {
                 })}
               </nav>
 
-              <article className="order-1 border border-border lg:order-2">
+              <AnimatePresence mode="wait">
+              <motion.article
+                key={selectedProject.title}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="order-1 border border-border lg:order-2"
+              >
                 <div className="relative aspect-video bg-secondary">
                   {selectedPreview ? (
                     <iframe
@@ -490,7 +513,8 @@ const Projects = () => {
                   </ul>
                   <ProjectLinks project={selectedProject} />
                 </div>
-              </article>
+              </motion.article>
+              </AnimatePresence>
             </div>
           ) : (
             <p className="border border-border p-6 text-sm text-muted-foreground">No projects in this category yet.</p>

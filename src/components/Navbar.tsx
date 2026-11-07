@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
 
 const navLinks = [
@@ -91,24 +92,37 @@ const Navbar = () => {
         </div>
       </header>
 
-      {menuOpen && (
-        <nav className="fixed inset-0 top-14 z-[60] flex flex-col overflow-y-auto bg-background px-6 py-8 lg:hidden" aria-label="Sections">
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              type="button"
-              onClick={() => goTo(link.id)}
-              className="flex items-baseline gap-4 border-b border-border py-3 text-left"
-            >
-              <span className="font-mono text-[11px] text-primary">{link.num}</span>
-              <span className="font-display text-4xl">{link.name}</span>
-            </button>
-          ))}
-          <p className="mt-auto font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-            Cairo {clock}
-          </p>
-        </nav>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            key="index"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 top-14 z-[60] flex flex-col overflow-y-auto bg-background px-6 py-8 lg:hidden"
+            aria-label="Sections"
+          >
+            {navLinks.map((link, index) => (
+              <motion.button
+                key={link.id}
+                type="button"
+                onClick={() => goTo(link.id)}
+                initial={{ y: 18, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.45, delay: 0.04 * index, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-baseline gap-4 border-b border-border py-3 text-left"
+              >
+                <span className="font-mono text-[11px] text-primary">{link.num}</span>
+                <span className="font-display text-4xl">{link.name}</span>
+              </motion.button>
+            ))}
+            <p className="mt-auto pt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+              Cairo {clock}
+            </p>
+          </motion.nav>
+        )}
+      </AnimatePresence>
 
       <aside className="fixed bottom-0 left-0 top-0 z-[60] hidden w-[15rem] flex-col border-r border-border bg-background px-6 py-8 lg:flex">
         <button type="button" onClick={() => goTo("hero")} className="text-left">
@@ -126,13 +140,22 @@ const Navbar = () => {
                 key={link.id}
                 type="button"
                 onClick={() => goTo(link.id)}
-                className={`flex items-baseline gap-3 py-1.5 text-left text-sm transition-colors ${
+                className={`group flex items-baseline gap-3 py-1.5 text-left text-sm transition-colors ${
                   isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
                 aria-current={isActive ? "true" : undefined}
               >
                 <span className={`w-5 font-mono text-[10px] ${isActive ? "text-primary" : ""}`}>{link.num}</span>
-                <span className={isActive ? "border-b border-primary" : ""}>{link.name}</span>
+                <span className="relative">
+                  {link.name}
+                  {isActive && (
+                    <motion.span
+                      layoutId="index-line"
+                      className="absolute -bottom-0.5 left-0 h-px w-full bg-primary"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                </span>
               </button>
             );
           })}

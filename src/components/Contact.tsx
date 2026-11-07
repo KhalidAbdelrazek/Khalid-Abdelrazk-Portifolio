@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
 import SectionHeading from "@/components/SectionHeading";
@@ -8,6 +9,7 @@ const fieldClass =
 
 const Contact = () => {
   const { toast } = useToast();
+  const reduced = useReducedMotion();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -57,7 +59,17 @@ const Contact = () => {
 
         <div className="grid gap-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.1fr)] lg:gap-20">
           <div>
-            <p className="font-display text-4xl italic leading-tight sm:text-5xl">Write to me.</p>
+            <p className="overflow-hidden font-display text-4xl italic leading-tight sm:text-5xl">
+              <motion.span
+                className="block"
+                initial={reduced ? false : { y: "110%" }}
+                whileInView={{ y: "0%" }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Write to me.
+              </motion.span>
+            </p>
             <a
               href="mailto:khalidabdelrazk4@gmail.com"
               className="mt-6 block text-lg underline decoration-border underline-offset-4 hover:decoration-primary"

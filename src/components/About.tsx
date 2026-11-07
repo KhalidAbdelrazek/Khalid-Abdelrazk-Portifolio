@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
 
 const services = [
@@ -104,14 +105,18 @@ const About = () => {
           </div>
           <div className="border-t border-border">
             {services.map((service, index) => (
-              <article
+              <motion.article
                 key={service.title}
-                className="grid gap-2 border-b border-border py-5 sm:grid-cols-[3.5rem_14rem_minmax(0,1fr)] sm:items-baseline sm:gap-6"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                className="grid gap-2 border-b border-border py-5 transition-colors duration-300 hover:bg-secondary/40 sm:grid-cols-[3.5rem_14rem_minmax(0,1fr)] sm:items-baseline sm:gap-6 sm:px-2"
               >
                 <span className="font-mono text-[11px] text-primary">{String(index + 1).padStart(2, "0")}</span>
                 <h4 className="text-base font-medium">{service.title}</h4>
                 <p className="text-sm leading-6 text-muted-foreground">{service.description}</p>
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>

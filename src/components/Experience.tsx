@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
 
 interface ExperienceItem {
@@ -155,27 +156,44 @@ const Experience = () => {
                   </span>
                 </button>
 
-                {isOpen && (
-                  <div className="grid gap-6 pb-8 sm:grid-cols-[7rem_minmax(0,1fr)]">
-                    <div className="hidden sm:block" />
-                    <div className="border-l border-primary pl-5">
-                      <ul className="space-y-3">
-                        {exp.description.map((item) => (
-                          <li key={item} className="text-sm leading-6 text-foreground/90">
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tools used">
-                        {exp.skills.map((skill) => (
-                          <li key={skill} className="border border-border px-2 py-1 text-[11px] text-muted-foreground">
-                            {skill}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="detail"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="grid gap-6 pb-8 sm:grid-cols-[7rem_minmax(0,1fr)]">
+                        <div className="hidden sm:block" />
+                        <div className="border-l border-primary pl-5">
+                          <ul className="space-y-3">
+                            {exp.description.map((item, itemIndex) => (
+                              <motion.li
+                                key={item}
+                                initial={{ opacity: 0, x: 8 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.35, delay: 0.04 * itemIndex }}
+                                className="text-sm leading-6 text-foreground/90"
+                              >
+                                {item}
+                              </motion.li>
+                            ))}
+                          </ul>
+                          <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tools used">
+                            {exp.skills.map((skill) => (
+                              <li key={skill} className="border border-border px-2 py-1 text-[11px] text-muted-foreground">
+                                {skill}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </article>
             );
           })}

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
 
 interface Certification {
@@ -53,15 +54,19 @@ const Certifications = () => {
 
         <ul>
           {certifications.map((cert, index) => (
-            <li
+            <motion.li
               key={cert.title}
+              initial={{ opacity: 0, x: -12 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.45, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
               className="grid gap-1 border-b border-border py-5 sm:grid-cols-[3rem_1.4fr_1fr_auto] sm:items-baseline sm:gap-4"
             >
               <span className="font-mono text-[11px] text-primary">{String(index + 1).padStart(2, "0")}</span>
               <h3 className="text-lg leading-snug sm:text-xl">{cert.title}</h3>
               <p className="text-sm text-muted-foreground">{cert.issuer}</p>
               <p className="font-mono text-xs text-muted-foreground sm:text-right">{cert.period}</p>
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>
