@@ -16,6 +16,9 @@ export interface DemoEntry {
 // Keys must exactly match project titles in Projects.tsx
 
 export const demoMap: Record<string, DemoEntry> = {
+  "P2M Sprint Leaderboard": {
+    items: [{ type: "iframe", src: "https://drive.google.com/file/d/1Ph7DvtLuyCQq7lWGoUrBqQX7xTOTAVZM/preview", label: "Walkthrough" }]
+  },
   "TLC Trips ETL Pipeline 36M+ Records": {
     items: [{ type: "iframe", src: "https://drive.google.com/file/d/1YVVNH6qrb5fa0pbSMJDNPnF6-bo7Rnv9/preview", label: "Demo" }]
   },

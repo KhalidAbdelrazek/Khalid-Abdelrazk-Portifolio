@@ -18,6 +18,7 @@ const experiences: ExperienceItem[] = [
     location: "Cairo, Egypt",
     period: "May 2026 – Present",
     description: [
+      "Built the monthly P2M sales competition board: leading team and seller, month-to-date against a run-rate finish, and the same view for TPV, revenue, and gross profit.",
       "Consolidated 50+ fragmented finance and growth KPIs (MAU, TPV, revenue, CAC, churn) into a single governed Metabase model, replacing manual ad hoc queries from finance and business teams with one source of truth.",
       "Built a Python and Dagster-orchestrated pipeline to sync the KPI model into Google Sheets and auto-refresh downstream KPI & P&L reporting decks, eliminating manual updates for leadership.",
       "Designed and maintained scalable dbt models following the Medallion Architecture (Bronze/Silver/Gold) on Amazon Redshift, transforming raw operational data into trusted, analytics-ready datasets.",

@@ -34,6 +34,16 @@ interface ProjectItem {
 const projects: ProjectItem[] = [
   // GROUP 1: DATA ENGINEERING
   {
+    title: "P2M Sprint Leaderboard",
+    proof: "Monthly sales competition",
+    category: "Data Engineering",
+    description:
+      "Built the monthly P2M sales competition board that replaced the old Metabase view. It shows the leading team and seller, month-to-date against a straight run-rate finish, and how far that finish sits from target. TPV, revenue, and gross profit share the same view. The insight cards cover pace versus a straight line to target, how many sellers are above target, the daily amount still needed, and who carries the largest share. The rest of the board ranks sellers against 100% of target, splits Sunday–Thursday from the Friday–Saturday weekend, and compares the teams. The detail view covers top merchants, the top five versus everyone else, and new versus existing merchants.",
+    tech: ["SQL", "Amazon Redshift", "Metabase", "Metric Modeling", "KPI Reporting"],
+    gradient: "from-cyan-500 to-blue-600",
+    repo: "",
+  },
+  {
     title: "KPI & P&L Reporting Automation",
     proof: "50+ finance and growth KPIs",
     category: "Data Engineering",
@@ -255,6 +265,7 @@ const filterTabs = [
 ];
 
 const featuredTitles = [
+  "P2M Sprint Leaderboard",
   "KPI & P&L Reporting Automation",
   "TLC Trips ETL Pipeline 36M+ Records",
   "E-Commerce Business Intelligence",
