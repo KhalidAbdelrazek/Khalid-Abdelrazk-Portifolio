@@ -1,15 +1,12 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { useToast } from "@/hooks/use-toast";
+import SectionHeading from "@/components/SectionHeading";
+
+const fieldClass =
+  "w-full rounded-none border-0 border-b border-border bg-transparent px-0 py-3 text-base text-foreground shadow-none outline-none placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-offset-0";
 
 const Contact = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -19,9 +16,7 @@ const Contact = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -30,17 +25,12 @@ const Contact = () => {
     setLoading(true);
 
     emailjs
-      .send(
-        "service_vff6qlj",    // Your Service ID
-        "template_6twp54l",   // Your Template ID
-        formData,             // Form data
-        "Dlv3sTt1GEqeR_uYe"   // Public Key
-      )
+      .send("service_vff6qlj", "template_6twp54l", formData, "Dlv3sTt1GEqeR_uYe")
       .then(
         () => {
           toast({
-            title: "Message Sent!",
-            description: "Thank you for reaching out. I'll get back to you soon!",
+            title: "Message sent",
+            description: "Thank you for reaching out. I'll get back to you soon.",
           });
           setFormData({ name: "", email: "", message: "", title: "Website Contact" });
           setLoading(false);
@@ -48,100 +38,94 @@ const Contact = () => {
         (error) => {
           console.error(error);
           toast({
-            title: "Error!",
-            description: "Something went wrong. Please try again later.",
+            title: "Something went wrong",
+            description: "Please try again, or email me directly.",
           });
           setLoading(false);
-        }
+        },
       );
   };
 
   return (
-    <section id="contact" className="py-20 relative">
-      <div className="container mx-auto px-6">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-4 text-center">
-            Get In <span className="text-gradient">Touch</span>
-          </h2>
-          <p className="text-center text-muted-foreground text-sm md:text-base mb-8 md:mb-12 max-w-full sm:max-w-xl mx-auto px-4 sm:px-0 leading-relaxed">
-            Whether you have a project idea, a question, or just want to say hello,
-            I’m always excited to connect and explore new opportunities together.
-          </p>
+    <section id="contact" className="scroll-mt-24 border-b border-border py-16 md:py-24">
+      <div className="frame">
+        <SectionHeading
+          index="07 — Correspondence"
+          title="Contact"
+          lede="A project, a role, or a question about the work. I read everything."
+        />
 
-          <div className="max-w-2xl mx-auto">
-            <motion.form
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={
-                isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
-              }
-              transition={{ delay: 0.2, duration: 0.6 }}
-              onSubmit={handleSubmit}
-              className="glass rounded-3xl p-6 md:p-12 space-y-6"
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.1fr)] lg:gap-20">
+          <div>
+            <p className="font-display text-4xl italic leading-tight sm:text-5xl">Write to me.</p>
+            <a
+              href="mailto:khalidabdelrazk4@gmail.com"
+              className="mt-6 block text-lg underline decoration-border underline-offset-4 hover:decoration-primary"
             >
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium">
-                  Name
-                </label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  placeholder="Your name"
-                  className="bg-background/50"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">
-                  Email
-                </label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  placeholder="your.email@example.com"
-                  className="bg-background/50"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium">
-                  Message
-                </label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  placeholder="Tell me about your project..."
-                  rows={5}
-                  className="bg-background/50 resize-none"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                size="lg"
-                disabled={loading}
-                className="w-full hover-glow group"
-              >
-                <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                {loading ? "Sending..." : "Send Message"}
-              </Button>
-            </motion.form>
+              khalidabdelrazk4@gmail.com
+            </a>
+            <a href="tel:+201015565612" className="mt-2 block text-sm text-muted-foreground hover:text-foreground">
+              +20 101 556 5612
+            </a>
+            <p className="mt-8 max-w-xs text-sm leading-6 text-muted-foreground">
+              Based in Cairo. Available for data engineering, analytics engineering, and analysis work.
+            </p>
           </div>
-        </motion.div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="name" className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                placeholder="Your name"
+                className={fieldClass}
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="you@company.com"
+                className={fieldClass}
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                placeholder="What are you working on?"
+                rows={5}
+                className={`${fieldClass} resize-none`}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex h-11 items-center bg-foreground px-6 text-sm text-background transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-60"
+            >
+              {loading ? "Sending…" : "Send message"}
+            </button>
+          </form>
+        </div>
       </div>
     </section>
   );

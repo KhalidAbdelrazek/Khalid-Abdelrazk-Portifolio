@@ -1,155 +1,155 @@
-import { useState, useEffect } from "react";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
+
+const navLinks = [
+  { name: "About", id: "about", num: "01" },
+  { name: "Study", id: "education", num: "02" },
+  { name: "Credentials", id: "certifications", num: "03" },
+  { name: "Skills", id: "skills", num: "04" },
+  { name: "Experience", id: "experience", num: "05" },
+  { name: "Work", id: "projects", num: "06" },
+  { name: "Contact", id: "contact", num: "07" },
+];
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [active, setActive] = useState("hero");
+  const [clock, setClock] = useState("");
+  const { resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const nodes = ["hero", ...navLinks.map((link) => link.id)]
+      .map((id) => document.getElementById(id))
+      .filter((node): node is HTMLElement => Boolean(node));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActive(visible.target.id);
+      },
+      { rootMargin: "-30% 0px -55% 0px", threshold: [0.1, 0.25, 0.5] },
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
   }, []);
 
-  const scrollToSection = (id: string) => {
-    setIsMobileMenuOpen(false);
-    const element = document.getElementById(id);
+  useEffect(() => {
+    const tick = () => {
+      setClock(
+        new Intl.DateTimeFormat("en-GB", {
+          timeZone: "Africa/Cairo",
+          hour: "2-digit",
+          minute: "2-digit",
+          hourCycle: "h23",
+        }).format(new Date()),
+      );
+    };
+    tick();
+    const id = window.setInterval(tick, 30000);
+    return () => window.clearInterval(id);
+  }, []);
 
-    setTimeout(() => {
-      if (element) {
-        element.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }, 250);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  const goTo = (id: string) => {
+    setMenuOpen(false);
+    window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 40);
   };
 
-  const navLinks = [
-    { name: "About", id: "about" },
-    { name: "Education", id: "education" },
-    { name: "Certifications", id: "certifications" },
-    { name: "Skills", id: "skills" },
-    { name: "Experience", id: "experience" },
-    { name: "Projects", id: "projects" },
-    { name: "Contact", id: "contact" },
-  ];
+  const toggleTheme = () => setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  const themeLabel = resolvedTheme === "dark" ? "Day" : "Night";
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/0 backdrop-blur-xl  border-border shadow-md"
-          : "bg-background/0 backdrop-blur-md  border-border/50 shadow-sm"
-      }`}
-    >
-      <div className="container mx-auto px-4 sm:px-6 py-3.5">
-        <div className="flex items-center justify-between">
-          <motion.button
-            onClick={() => scrollToSection("hero")}
-            className="text-xl sm:text-2xl font-black text-gradient tracking-tight"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+    <>
+      <header className="fixed inset-x-0 top-0 z-[60] flex h-14 items-center justify-between border-b border-border bg-background px-5 lg:hidden">
+        <button type="button" onClick={() => goTo("hero")} className="font-display text-2xl leading-none">
+          Abdelrazk
+        </button>
+        <div className="flex items-center gap-4">
+          <button type="button" onClick={toggleTheme} className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+            {themeLabel}
+          </button>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="font-mono text-[11px] uppercase tracking-[0.16em]"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
-            KA.
-          </motion.button>
+            {menuOpen ? "Close" : "Index"}
+          </button>
+        </div>
+      </header>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-7">
-            {navLinks.map((link) => (
+      {menuOpen && (
+        <nav className="fixed inset-0 top-14 z-[60] flex flex-col overflow-y-auto bg-background px-6 py-8 lg:hidden" aria-label="Sections">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              type="button"
+              onClick={() => goTo(link.id)}
+              className="flex items-baseline gap-4 border-b border-border py-3 text-left"
+            >
+              <span className="font-mono text-[11px] text-primary">{link.num}</span>
+              <span className="font-display text-4xl">{link.name}</span>
+            </button>
+          ))}
+          <p className="mt-auto font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+            Cairo {clock}
+          </p>
+        </nav>
+      )}
+
+      <aside className="fixed bottom-0 left-0 top-0 z-[60] hidden w-[15rem] flex-col border-r border-border bg-background px-6 py-8 lg:flex">
+        <button type="button" onClick={() => goTo("hero")} className="text-left">
+          <span className="block font-display text-[1.85rem] leading-none">Abdelrazk</span>
+          <span className="mt-2 block font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Data · Cairo
+          </span>
+        </button>
+
+        <nav className="mt-12 flex flex-col gap-1" aria-label="Sections">
+          {navLinks.map((link) => {
+            const isActive = active === link.id;
+            return (
               <button
                 key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="text-sm font-semibold text-foreground/80 hover:text-primary transition-colors relative group py-1"
+                type="button"
+                onClick={() => goTo(link.id)}
+                className={`flex items-baseline gap-3 py-1.5 text-left text-sm transition-colors ${
+                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+                aria-current={isActive ? "true" : undefined}
               >
-                {link.name}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-gradient-primary transition-all duration-300 group-hover:w-full rounded-full" />
+                <span className={`w-5 font-mono text-[10px] ${isActive ? "text-primary" : ""}`}>{link.num}</span>
+                <span className={isActive ? "border-b border-primary" : ""}>{link.name}</span>
               </button>
-            ))}
+            );
+          })}
+        </nav>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="hover-glow text-foreground border border-border/40 hover:bg-secondary/70 rounded-xl"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4 text-amber-400" />
-              ) : (
-                <Moon className="h-4 w-4 text-foreground" />
-              )}
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button & Theme Toggle */}
-          <div className="md:hidden flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="border border-border/40 rounded-xl"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4 text-amber-400" />
-              ) : (
-                <Moon className="h-4 w-4 text-foreground" />
-              )}
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="border border-border/40 rounded-xl"
-              aria-label="Open menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-5 w-5 text-foreground" />
-              ) : (
-                <Menu className="h-5 w-5 text-foreground" />
-              )}
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/98 backdrop-blur-xl border-t border-border shadow-lg"
+        <div className="mt-auto space-y-4">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground"
           >
-            <div className="container mx-auto px-6 py-4 flex flex-col gap-1.5">
-              {navLinks.map((link, index) => (
-                <motion.button
-                  key={link.id}
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  onClick={() => scrollToSection(link.id)}
-                  className="text-left font-semibold text-foreground/90 hover:text-primary transition-colors py-2 px-3 rounded-xl hover:bg-secondary"
-                >
-                  {link.name}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+            {themeLabel} mode
+          </button>
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">Cairo {clock}</p>
+        </div>
+      </aside>
+    </>
   );
 };
 

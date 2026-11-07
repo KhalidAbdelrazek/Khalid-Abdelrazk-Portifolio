@@ -1,6 +1,4 @@
-import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
-import { Award, CalendarDays } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 
 interface Certification {
   title: string;
@@ -37,50 +35,35 @@ const certifications: Certification[] = [
 ];
 
 const Certifications = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const prefersReducedMotion = useReducedMotion();
-
   return (
-    <section id="certifications" className="py-16 md:py-24">
-      <div className="container mx-auto px-4 sm:px-6">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-          transition={{ duration: 0.45 }}
-          className="mx-auto max-w-6xl"
-        >
-          <div className="mb-8 grid gap-4 border-b border-border pb-5 sm:mb-10 sm:grid-cols-[1fr_auto] sm:items-end">
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Courses &amp; credentials</p>
-              <h2 className="text-3xl font-semibold sm:text-4xl">Certifications</h2>
-            </div>
-            <p className="text-sm text-muted-foreground">{String(certifications.length).padStart(2, "0")} completed programs</p>
-          </div>
+    <section id="certifications" className="scroll-mt-24 border-b border-border py-16 md:py-24">
+      <div className="frame">
+        <SectionHeading
+          index="03 — Credentials"
+          title="Certifications"
+          lede={`${String(certifications.length).padStart(2, "0")} programs, from Databricks to a data engineering associate track.`}
+        />
 
-          <div className="grid gap-3 md:grid-cols-2">
-            {certifications.map((cert, index) => (
-              <article key={cert.title} className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-foreground/30 sm:p-6">
-                <div className="flex items-start gap-4">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-foreground/80">
-                    <Award className="size-4" strokeWidth={1.7} aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="mb-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
-                      <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">{cert.issuer}</span>
-                      <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                        <CalendarDays className="size-3.5" aria-hidden="true" /> {cert.period}
-                      </span>
-                    </div>
-                    <h3 className="text-base font-semibold leading-snug text-foreground sm:text-lg">{cert.title}</h3>
-                    <p className="mt-3 font-mono text-[11px] tabular-nums text-muted-foreground/70">{String(index + 1).padStart(2, "0")}</p>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </motion.div>
+        <div className="hidden grid-cols-[3rem_1.4fr_1fr_auto] gap-4 border-b border-border pb-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:grid">
+          <span>No.</span>
+          <span>Program</span>
+          <span>Issuer</span>
+          <span>When</span>
+        </div>
+
+        <ul>
+          {certifications.map((cert, index) => (
+            <li
+              key={cert.title}
+              className="grid gap-1 border-b border-border py-5 sm:grid-cols-[3rem_1.4fr_1fr_auto] sm:items-baseline sm:gap-4"
+            >
+              <span className="font-mono text-[11px] text-primary">{String(index + 1).padStart(2, "0")}</span>
+              <h3 className="text-lg leading-snug sm:text-xl">{cert.title}</h3>
+              <p className="text-sm text-muted-foreground">{cert.issuer}</p>
+              <p className="font-mono text-xs text-muted-foreground sm:text-right">{cert.period}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

@@ -1,51 +1,31 @@
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
-import { motion } from "framer-motion";
+const links = [
+  { href: "https://github.com/khalidabdelrazek", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/khalid-abdelrazk-7719b32b3/", label: "LinkedIn" },
+  { href: "mailto:khalidabdelrazk4@gmail.com", label: "Email" },
+];
 
 const Footer = () => {
-  const socials = [
-    { href: "https://github.com/khalidabdelrazek", icon: Github, label: "GitHub" },
-    { href: "https://www.linkedin.com/in/khalid-abdelrazk-7719b32b3/", icon: Linkedin, label: "LinkedIn" },
-    { href: "mailto:khalidabdelrazk4@gmail.com", icon: Mail, label: "Email" },
-  ];
-
   return (
-    <footer className="py-10 border-t border-border/40 relative overflow-hidden">
-      {/* Subtle gradient top bar */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Brand */}
-          <div className="text-center md:text-left">
-            <p className="text-xl font-bold text-gradient mb-1">Khalid Abdelrazk</p>
-            <p className="text-muted-foreground text-sm">Data Analyst · Data Engineer</p>
-          </div>
-
-          {/* Social Links */}
-          <div className="flex gap-3">
-            {socials.map(({ href, icon: Icon, label }) => (
-              <motion.a
-                key={label}
-                href={href}
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="p-3 glass rounded-full hover-glow transition-all"
-                whileHover={{ scale: 1.15, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Icon className="h-5 w-5" />
-              </motion.a>
-            ))}
-          </div>
-
-          {/* Copyright */}
-          <div className="text-center md:text-right">
-            <p className="text-muted-foreground text-sm flex items-center gap-1 justify-center md:justify-end">
-              © 2026 Khalid Abdelrazk.
-            </p>
-          </div>
+    <footer className="py-10">
+      <div className="frame flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="font-display text-3xl leading-none">Khalid Abdelrazk</p>
+          <p className="mt-2 text-sm text-muted-foreground">Data analyst · Data engineer · Cairo</p>
         </div>
+        <div className="flex flex-wrap gap-x-5 gap-y-2">
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel="noreferrer"
+              className="text-sm text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-primary"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">© 2026</p>
       </div>
     </footer>
   );

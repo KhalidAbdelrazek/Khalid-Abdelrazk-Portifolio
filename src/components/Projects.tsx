@@ -6,7 +6,8 @@ import projectAiDataLayer from "@/assets/project-ai-data-layer.jpg";
 import projectCovidDashboard from "@/assets/project-covid-dashboard.jpg";
 import projectRealEstate from "@/assets/project-real-estate.jpg";
 import projectBikeBuyers from "@/assets/project-bike-buyers.jpg";
-import { ArrowUpRight, ChevronRight, ExternalLink, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 import {
   Dialog,
   DialogClose,
@@ -324,226 +325,176 @@ const Projects = () => {
     setConfidentialOpen(true);
   };
 
-  const ProjectCard = ({ project, featured = false }: { project: ProjectItem; featured?: boolean }) => {
-    const hasDemo = Boolean(demoMap[project.title]);
-    return (
-      <article className={`group flex h-full flex-col rounded-xl border border-border bg-card p-5 sm:p-6 transition-colors hover:border-foreground/30 ${featured ? "md:p-7" : ""}`}>
-        <div className="mb-5 flex items-start justify-between gap-3">
-          <span className="text-xs font-medium text-muted-foreground">{project.category}</span>
-          {project.proof && (
-            <span className="rounded-full border border-border px-2.5 py-1 text-[11px] font-medium text-foreground/80">
-              {project.proof}
-            </span>
-          )}
-        </div>
-        <h3 className={`max-w-2xl font-semibold leading-snug tracking-tight text-foreground ${featured ? "text-xl sm:text-2xl" : "text-lg"}`}>
-          {project.title}
-        </h3>
-        <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground text-pretty">
-          {project.description}
-        </p>
-        <div className="mt-5 flex flex-wrap gap-2" aria-label="Tools and methods">
-          {project.tech.slice(0, featured ? 5 : 4).map((technology) => (
-            <span key={technology} className="rounded-md bg-secondary px-2 py-1 text-[11px] text-secondary-foreground">
-              {technology}
-            </span>
-          ))}
-          {project.tech.length > (featured ? 5 : 4) && (
-            <span className="px-1 py-1 text-[11px] text-muted-foreground">+{project.tech.length - (featured ? 5 : 4)}</span>
-          )}
-        </div>
-        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-border pt-4">
-          {hasDemo && (
-            <button
-              type="button"
-              onClick={() => setDemoProject(project.title)}
-              className="inline-flex min-h-9 items-center gap-2 text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground"
-            >
-              Open project preview <ArrowUpRight className="size-4" aria-hidden="true" />
-            </button>
-          )}
-          {project.repo ? (
-            <a
-              href={project.repo}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex min-h-9 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Source code <ExternalLink className="size-3.5" aria-hidden="true" />
-            </a>
-          ) : (
-            <button
-              type="button"
-              onClick={() => openRepo("")}
-              className="inline-flex min-h-9 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              aria-label={`Learn about access to ${project.title}`}
-            >
-              <Lock className="size-3.5" aria-hidden="true" /> Client project
-            </button>
-          )}
-        </div>
-      </article>
-    );
-  };
+  const ProjectLinks = ({ project }: { project: ProjectItem }) => (
+    <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+      {demoMap[project.title] && (
+        <button
+          type="button"
+          onClick={() => setDemoProject(project.title)}
+          className="text-sm underline decoration-border underline-offset-4 hover:decoration-primary"
+        >
+          Open preview
+        </button>
+      )}
+      {project.repo ? (
+        <a href={project.repo} target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-foreground">
+          Source
+        </a>
+      ) : (
+        <button type="button" onClick={() => openRepo("")} className="text-sm text-muted-foreground hover:text-foreground">
+          Client project
+        </button>
+      )}
+    </div>
+  );
 
   return (
     <>
-      <section id="projects" className="py-20 md:py-28">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="mx-auto max-w-6xl">
-            <header className="mb-10 grid gap-5 border-b border-border pb-8 md:mb-12 md:grid-cols-[1fr_auto] md:items-end">
-              <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Selected work · {projects.length} projects</p>
-                <h2 className="max-w-2xl text-balance text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
-                  Work built around <span className="text-muted-foreground">real questions.</span>
-                </h2>
-              </div>
-              <p className="max-w-sm text-sm leading-6 text-muted-foreground text-pretty md:text-right">
-                Data pipelines, dashboards, and analysis projects—what they do, how they were built, and where to explore further.
-              </p>
-            </header>
+      <section id="projects" className="scroll-mt-24 border-b border-border py-16 md:py-24">
+        <div className="frame">
+          <SectionHeading
+            index={`06 — Work · ${String(projects.length).padStart(2, "0")}`}
+            title="Projects"
+            lede="Pipelines, dashboards, and models. The ones I can show, and the ones that stay with the client."
+          />
 
-            <nav className="mb-8 flex gap-2 overflow-x-auto pb-1" aria-label="Filter projects">
-              {filterTabs.map((tab) => {
-                const isActive = activeFilter === tab.id;
-                const count = tab.id === "all" ? projects.length : projects.filter((project) => project.category === tab.id).length;
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setActiveFilter(tab.id)}
-                    aria-pressed={isActive}
-                    className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${isActive ? "border-foreground bg-foreground text-background" : "border-border text-muted-foreground hover:text-foreground"}`}
-                  >
-                    {tab.label}<span className={isActive ? "opacity-70" : "opacity-60"}>{count}</span>
-                  </button>
-                );
-              })}
-            </nav>
+          <nav className="mb-10 flex gap-6 overflow-x-auto border-b border-border" aria-label="Filter projects">
+            {filterTabs.map((tab) => {
+              const isActive = activeFilter === tab.id;
+              const count = tab.id === "all" ? projects.length : projects.filter((project) => project.category === tab.id).length;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => {
+                    setActiveFilter(tab.id);
+                    setSelectedProjectTitle(null);
+                  }}
+                  aria-pressed={isActive}
+                  className={`inline-flex shrink-0 items-baseline gap-2 border-b-2 pb-3 text-sm ${
+                    isActive ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {tab.label}
+                  <span className="font-mono text-[11px]">{String(count).padStart(2, "0")}</span>
+                </button>
+              );
+            })}
+          </nav>
 
-            {featuredProjects.length > 0 && (
-              <div className="mb-12">
-                <div className="mb-4 flex items-center gap-3">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">A closer look</h3>
-                  <div className="h-px flex-1 bg-border" />
-                </div>
-                <div className="grid gap-4 lg:grid-cols-2">
-                  {featuredProjects.map((project) => (
-                    <ProjectCard key={project.title} project={project} featured />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="mb-5 flex items-center gap-3">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                {activeFilter === "all" ? `More projects · ${remainingProjects.length}` : `${activeFilter} · ${remainingProjects.length}`}
-              </h3>
-              <div className="h-px flex-1 bg-border" />
-              <span className="hidden text-xs text-muted-foreground sm:inline">Choose a project to explore</span>
-            </div>
-            {selectedProject ? (
-              <div className="grid items-start gap-5 lg:grid-cols-[minmax(17rem,0.85fr)_minmax(0,1.4fr)]">
-                <nav aria-label="More projects" className="order-2 divide-y divide-border overflow-hidden rounded-xl border border-border lg:order-1">
-                  {remainingProjects.map((project, index) => {
-                    const isSelected = selectedProject.title === project.title;
-                    return (
-                      <button
-                        key={project.title}
-                        type="button"
-                        onClick={() => setSelectedProjectTitle(project.title)}
-                        aria-pressed={isSelected}
-                        className={`group flex min-h-[4.5rem] w-full items-center gap-3 px-4 py-3 text-left transition-colors focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${isSelected ? "bg-secondary text-foreground" : "bg-card hover:bg-secondary/60"}`}
-                      >
-                        <span className="w-7 shrink-0 font-mono text-xs tabular-nums text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block text-sm font-medium leading-snug">{project.title}</span>
-                          <span className="mt-1 block text-xs text-muted-foreground">{project.category}</span>
-                        </span>
-                        <ChevronRight className={`size-4 shrink-0 transition-transform ${isSelected ? "translate-x-0 text-foreground" : "-translate-x-1 text-muted-foreground opacity-0 group-hover:translate-x-0 group-hover:opacity-100"}`} aria-hidden="true" />
-                      </button>
-                    );
-                  })}
-                </nav>
-
-                <article className="order-1 overflow-hidden rounded-xl border border-border bg-card lg:order-2">
-                  <div className="relative aspect-video bg-secondary">
-                    {selectedPreview ? (
-                      <iframe
-                        key={selectedProject.title}
-                        src={selectedPreview.src}
-                        title={`${selectedProject.title} preview${selectedPreview.label ? ` — ${selectedPreview.label}` : ""}`}
-                        loading="lazy"
-                        allow="fullscreen"
-                        allowFullScreen
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        className="size-full border-0"
-                      />
-                    ) : (
-                      <div className="relative flex size-full flex-col justify-between overflow-hidden p-5 text-white sm:p-7">
-                        <img
-                          src={fallbackPhoto.src}
-                          alt=""
-                          aria-hidden="true"
-                          className="absolute inset-0 size-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/20" />
-                        <span className="relative text-xs font-medium uppercase tracking-[0.12em] text-white/85">Project overview</span>
-                        <div className="relative max-w-sm">
-                          <p className="text-sm font-medium text-white">A public preview isn’t available for this project.</p>
-                          <p className="mt-2 text-xs text-white/80">Ask me about the approach and results.</p>
-                          <a
-                            href={fallbackPhoto.href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="mt-4 inline-block text-[11px] text-white/70 underline underline-offset-2 hover:text-white"
-                          >
-                            Photo by {fallbackPhoto.credit} on Unsplash
-                          </a>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-5 sm:p-7">
-                    <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-                      <span className="text-xs font-medium text-muted-foreground">{selectedProject.category}</span>
-                      {selectedProject.proof && <span className="rounded-full border border-border px-3 py-1 text-xs font-medium text-foreground/80">{selectedProject.proof}</span>}
+          {featuredProjects.length > 0 && (
+            <div className="mb-16 border-t border-border">
+              {featuredProjects.map((project, index) => (
+                <article key={project.title} className="grid gap-4 border-b border-border py-8 md:grid-cols-[4.5rem_minmax(0,1fr)] md:py-10">
+                  <p className="font-mono text-[11px] text-primary">{String(index + 1).padStart(2, "0")}</p>
+                  <div>
+                    <div className="flex flex-wrap items-baseline justify-between gap-3">
+                      <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">{project.category}</p>
+                      {project.proof && <p className="font-mono text-[11px] text-primary">{project.proof}</p>}
                     </div>
-                    <h4 className="text-xl font-semibold leading-snug sm:text-2xl">{selectedProject.title}</h4>
-                    <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground text-pretty">{selectedProject.description}</p>
-                    <div className="mt-5 flex flex-wrap gap-2" aria-label="Tools and methods">
-                      {selectedProject.tech.slice(0, 6).map((technology) => (
-                        <span key={technology} className="rounded-md bg-secondary px-2.5 py-1 text-[11px] text-secondary-foreground">{technology}</span>
+                    <h3 className="mt-3 max-w-3xl text-3xl leading-tight sm:text-4xl">{project.title}</h3>
+                    <p className="mt-4 max-w-3xl text-sm leading-6 text-muted-foreground">{project.description}</p>
+                    <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1" aria-label="Tools and methods">
+                      {project.tech.slice(0, 6).map((technology) => (
+                        <li key={technology} className="text-[11px] text-foreground/70">
+                          {technology}
+                        </li>
                       ))}
-                      {selectedProject.tech.length > 6 && <span className="px-1 py-1 text-[11px] text-muted-foreground">+{selectedProject.tech.length - 6}</span>}
-                    </div>
-                    <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-border pt-4">
-                      {demoMap[selectedProject.title] && (
-                        <button
-                          type="button"
-                          onClick={() => setDemoProject(selectedProject.title)}
-                          className="inline-flex min-h-9 items-center gap-2 text-sm font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground"
-                        >
-                          Open full preview <ArrowUpRight className="size-4" aria-hidden="true" />
-                        </button>
-                      )}
-                      {selectedProject.repo ? (
-                        <a href={selectedProject.repo} target="_blank" rel="noreferrer" className="inline-flex min-h-9 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
-                          Source code <ExternalLink className="size-3.5" aria-hidden="true" />
-                        </a>
-                      ) : (
-                        <button type="button" onClick={() => openRepo("")} className="inline-flex min-h-9 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
-                          <Lock className="size-3.5" aria-hidden="true" /> Client project
-                        </button>
-                      )}
-                    </div>
+                    </ul>
+                    <ProjectLinks project={project} />
                   </div>
                 </article>
-              </div>
-            ) : (
-              <p className="rounded-xl border border-border p-6 text-sm text-muted-foreground">No projects in this category yet.</p>
-            )}
+              ))}
+            </div>
+          )}
+
+          <div className="mb-6 flex items-baseline justify-between gap-4">
+            <h3 className="text-3xl">{activeFilter === "all" ? "The rest" : activeFilter}</h3>
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+              {String(remainingProjects.length).padStart(2, "0")}
+            </p>
           </div>
+
+          {selectedProject ? (
+            <div className="grid items-start gap-10 lg:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.3fr)]">
+              <nav aria-label="More projects" className="order-2 border-t border-border lg:order-1">
+                {remainingProjects.map((project, index) => {
+                  const isSelected = selectedProject.title === project.title;
+                  return (
+                    <button
+                      key={project.title}
+                      type="button"
+                      onClick={() => setSelectedProjectTitle(project.title)}
+                      aria-pressed={isSelected}
+                      className={`flex w-full items-baseline gap-3 border-b border-border py-3.5 text-left ${
+                        isSelected ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      <span className={`w-6 shrink-0 font-mono text-[11px] ${isSelected ? "text-primary" : ""}`}>
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="min-w-0">
+                        <span className={`block text-sm leading-snug ${isSelected ? "underline decoration-primary underline-offset-4" : ""}`}>
+                          {project.title}
+                        </span>
+                        <span className="mt-1 block text-[11px]">{project.category}</span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </nav>
+
+              <article className="order-1 border border-border lg:order-2">
+                <div className="relative aspect-video bg-secondary">
+                  {selectedPreview ? (
+                    <iframe
+                      key={selectedProject.title}
+                      src={selectedPreview.src}
+                      title={`${selectedProject.title} preview${selectedPreview.label ? ` — ${selectedPreview.label}` : ""}`}
+                      loading="lazy"
+                      allow="fullscreen"
+                      allowFullScreen
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      className="size-full border-0"
+                    />
+                  ) : (
+                    <div className="relative flex size-full flex-col justify-between overflow-hidden p-5 text-white sm:p-7">
+                      <img src={fallbackPhoto.src} alt="" aria-hidden="true" className="absolute inset-0 size-full object-cover" />
+                      <div className="absolute inset-0 bg-foreground/55" />
+                      <span className="relative font-mono text-[11px] uppercase tracking-[0.16em]">No public preview</span>
+                      <div className="relative max-w-sm">
+                        <p className="text-sm">Ask me about the approach and the result.</p>
+                        <a
+                          href={fallbackPhoto.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-4 inline-block text-[11px] text-white/80 underline underline-offset-2"
+                        >
+                          Photo by {fallbackPhoto.credit} on Unsplash
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="p-5 sm:p-7">
+                  <div className="flex flex-wrap items-baseline justify-between gap-3">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">{selectedProject.category}</p>
+                    {selectedProject.proof && <p className="font-mono text-[11px] text-primary">{selectedProject.proof}</p>}
+                  </div>
+                  <h3 className="mt-3 text-2xl leading-snug sm:text-3xl">{selectedProject.title}</h3>
+                  <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">{selectedProject.description}</p>
+                  <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1" aria-label="Tools and methods">
+                    {selectedProject.tech.slice(0, 8).map((technology) => (
+                      <li key={technology} className="text-[11px] text-foreground/70">{technology}</li>
+                    ))}
+                  </ul>
+                  <ProjectLinks project={selectedProject} />
+                </div>
+              </article>
+            </div>
+          ) : (
+            <p className="border border-border p-6 text-sm text-muted-foreground">No projects in this category yet.</p>
+          )}
         </div>
       </section>
 

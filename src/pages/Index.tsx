@@ -1,5 +1,7 @@
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/Navbar";
+import Grain from "@/components/Grain";
+import ScrollProgress from "@/components/ScrollProgress";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Education from "@/components/Education";
@@ -14,20 +16,24 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background text-foreground">
+        <Grain />
+        <ScrollProgress />
         <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Education />
-          <Certifications />
-          <SoftSkills />
-          <Skills />
-          <Experience />
-          <Projects />
-          <Contact />
-        </main>
-        <Footer />
+        <div className="pt-14 lg:pl-[15rem] lg:pt-0">
+          <main>
+            <Hero />
+            <About />
+            <Education />
+            <Certifications />
+            <SoftSkills />
+            <Skills />
+            <Experience />
+            <Projects />
+            <Contact />
+          </main>
+          <Footer />
+        </div>
       </div>
     </ThemeProvider>
   );
