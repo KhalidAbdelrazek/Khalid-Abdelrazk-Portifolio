@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import SectionHeading from "@/components/SectionHeading";
+import { AccentHeading, ease } from "@/components/design/bits";
 
 interface ExperienceItem {
   title: string;
@@ -30,7 +30,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     title: "Senior Project Lead",
-    company: "Smart Medical Sample Transport System (Graduation Project)",
+    company: "Smart Medical Sample Transport",
     location: "Cairo, Egypt",
     period: "Jun 2025 – Jun 2026",
     description: [
@@ -54,23 +54,11 @@ const experiences: ExperienceItem[] = [
       "Orchestrated data ingestion workflows with Apache Airflow, automating manual reporting cycles and reducing lead times by 40%.",
       "Utilized Git for version control across data modeling repositories, maintaining code quality and deployment standards via Docker.",
     ],
-    skills: [
-      "Data Engineering",
-      "SQL",
-      "Python",
-      "ETL/ELT",
-      "Data Warehousing",
-      "dbt",
-      "Apache Airflow",
-      "Apache Spark",
-      "Apache Kafka",
-      "Azure Databricks",
-      "Docker",
-    ],
+    skills: ["Data Engineering", "SQL", "Python", "ETL/ELT", "Data Warehousing", "dbt", "Apache Airflow", "Apache Spark", "Apache Kafka", "Azure Databricks", "Docker"],
   },
   {
     title: "Data Analyst Intern",
-    company: "IDH (Integrated Diagnostics Holdings)",
+    company: "IDH",
     location: "Cairo, Egypt",
     period: "Aug 2025 – Sept 2025",
     description: [
@@ -81,8 +69,20 @@ const experiences: ExperienceItem[] = [
     skills: ["Python", "Machine Learning", "Data Analysis", "Power BI", "SQL"],
   },
   {
+    title: "Part-Time Flutter Developer",
+    company: "OneAinity",
+    location: "Cairo, Egypt",
+    period: "Jun 2025 – Nov 2025",
+    description: [
+      "Developed and maintained cross-platform mobile applications using Flutter and Dart.",
+      "Implemented responsive UIs, state management (BLoC), and REST API integrations.",
+      "Collaborated with the team to test, debug, and deploy features in production.",
+    ],
+    skills: ["Flutter", "Dart", "BLoC", "REST API", "UI Development"],
+  },
+  {
     title: "Data Analysis Trainee",
-    company: "NTI (National Telecommunication Institute)",
+    company: "NTI",
     location: "Cairo, Egypt",
     period: "Jun 2025 – Jul 2025",
     description: [
@@ -104,100 +104,76 @@ const experiences: ExperienceItem[] = [
     ],
     skills: ["CRM", "Siebel", "Data Management", "IT Support"],
   },
-  {
-    title: "Part-Time Flutter Developer",
-    company: "OneAinity",
-    location: "Cairo, Egypt",
-    period: "Jun 2025 – Nov 2025",
-    description: [
-      "Developed and maintained cross-platform mobile applications using Flutter and Dart.",
-      "Implemented responsive UIs, state management (BLoC), and REST API integrations.",
-      "Collaborated with the team to test, debug, and deploy features in production.",
-    ],
-    skills: ["Flutter", "Dart", "BLoC", "REST API", "UI Development"],
-  },
 ];
 
 const Experience = () => {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="experience" className="scroll-mt-24 border-b border-border py-16 md:py-24">
-      <div className="frame">
-        <SectionHeading
-          index="05 — Record"
-          title="Experience"
-          lede="Roles in analytics engineering, healthcare data, and the systems around them."
-        />
+    <section id="experience" className="scroll-mt-28 bg-background py-16 sm:py-24">
+      <div className="mx-auto max-w-[1100px] px-4 sm:px-6">
+        <AccentHeading before="My" accent="Work Experience" className="text-center" />
 
-        <div className="border-t border-border">
-          {experiences.map((exp, index) => {
-            const isOpen = open === index;
-            return (
-              <article key={`${exp.company}-${exp.title}`} className="border-b border-border">
-                <button
-                  type="button"
-                  onClick={() => setOpen(isOpen ? -1 : index)}
-                  aria-expanded={isOpen}
-                  className="flex w-full flex-col gap-3 py-6 text-left sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
-                >
-                  <span className="w-28 shrink-0 font-mono text-[11px] uppercase tracking-[0.12em] text-primary">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block font-display text-2xl leading-tight sm:text-[1.7rem]">{exp.title}</span>
-                    <span className="mt-1 block text-sm text-muted-foreground">{exp.company}</span>
-                  </span>
-                  <span className="flex items-baseline gap-4 sm:block sm:text-right">
-                    <span className="block font-mono text-[11px] text-muted-foreground">{exp.period}</span>
-                    <span className="mt-1 block text-xs text-muted-foreground">{exp.location}</span>
-                  </span>
-                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground sm:w-14 sm:text-right">
-                    {isOpen ? "Close" : "Read"}
-                  </span>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      key="detail"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <div className="grid gap-6 pb-8 sm:grid-cols-[7rem_minmax(0,1fr)]">
-                        <div className="hidden sm:block" />
-                        <div className="border-l border-primary pl-5">
-                          <ul className="space-y-3">
-                            {exp.description.map((item, itemIndex) => (
-                              <motion.li
-                                key={item}
-                                initial={{ opacity: 0, x: 8 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.35, delay: 0.04 * itemIndex }}
-                                className="text-sm leading-6 text-foreground/90"
-                              >
-                                {item}
-                              </motion.li>
-                            ))}
-                          </ul>
-                          <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tools used">
-                            {exp.skills.map((skill) => (
-                              <li key={skill} className="border border-border px-2 py-1 text-[11px] text-muted-foreground">
-                                {skill}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </article>
-            );
-          })}
+        <div className="relative mx-auto mt-14 max-w-5xl">
+          <div className="absolute bottom-6 left-[7px] top-6 w-px border-l border-dashed border-foreground/25 md:left-1/2 md:-translate-x-1/2" aria-hidden="true" />
+          <ol className="space-y-10">
+            {experiences.map((item, index) => {
+              const isOpen = open === index;
+              return (
+                <li key={`${item.company}-${item.title}`}>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(isOpen ? -1 : index)}
+                    aria-expanded={isOpen}
+                    className="grid w-full grid-cols-[1.25rem_minmax(0,1fr)] gap-x-4 gap-y-2 text-left md:grid-cols-[minmax(0,1fr)_4.5rem_minmax(0,1fr)] md:items-start"
+                  >
+                    <span className="relative z-10 mt-2 grid size-4 place-items-center md:col-start-2 md:row-start-1 md:justify-self-center">
+                      <span
+                        className={`size-4 rounded-full border-2 border-dashed ${
+                          isOpen ? "border-primary bg-primary" : "border-primary bg-background"
+                        }`}
+                      />
+                    </span>
+                    <span className="col-start-2 md:col-start-1 md:row-start-1 md:pr-8 md:text-right">
+                      <span className="block text-xl font-semibold text-foreground sm:text-2xl">{item.company}</span>
+                      <span className="mt-1 block text-sm text-muted-foreground">
+                        {item.period} · {item.location}
+                      </span>
+                    </span>
+                    <span className="col-start-2 md:col-start-3 md:row-start-1 md:pl-8">
+                      <span className="block text-xl font-semibold text-foreground sm:text-2xl">{item.title}</span>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.span
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.35, ease }}
+                            className="block overflow-hidden"
+                          >
+                            <span className="mt-3 block max-w-md space-y-2 text-sm leading-6 text-[#667085]">
+                              {item.description.map((line) => (
+                                <span key={line} className="block">
+                                  {line}
+                                </span>
+                              ))}
+                            </span>
+                            <span className="mt-3 flex flex-wrap gap-2">
+                              {item.skills.map((skill) => (
+                                <span key={skill} className="rounded-full bg-secondary px-2.5 py-1 text-xs text-muted-foreground">
+                                  {skill}
+                                </span>
+                              ))}
+                            </span>
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </div>
     </section>

@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"IBM Plex Sans"', "sans-serif"],
-        display: ["Fraunces", "serif"],
+        sans: ["Urbanist", "sans-serif"],
+        display: ["Urbanist", "sans-serif"],
         mono: ['"IBM Plex Mono"', "monospace"],
       },
       colors: {

@@ -1,15 +1,13 @@
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
-import SectionHeading from "@/components/SectionHeading";
+import { AccentHeading } from "@/components/design/bits";
 
 const fieldClass =
-  "w-full rounded-none border-0 border-b border-border bg-transparent px-0 py-3 text-base text-foreground shadow-none outline-none placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-0 focus-visible:ring-offset-0";
+  "w-full rounded-2xl border border-border bg-white px-4 py-3 text-base text-foreground outline-none placeholder:text-muted-foreground/70 focus-visible:border-primary";
 
 const Contact = () => {
   const { toast } = useToast();
-  const reduced = useReducedMotion();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,118 +24,73 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
 
-    emailjs
-      .send("service_vff6qlj", "template_6twp54l", formData, "Dlv3sTt1GEqeR_uYe")
-      .then(
-        () => {
-          toast({
-            title: "Message sent",
-            description: "Thank you for reaching out. I'll get back to you soon.",
-          });
-          setFormData({ name: "", email: "", message: "", title: "Website Contact" });
-          setLoading(false);
-        },
-        (error) => {
-          console.error(error);
-          toast({
-            title: "Something went wrong",
-            description: "Please try again, or email me directly.",
-          });
-          setLoading(false);
-        },
-      );
+    emailjs.send("service_vff6qlj", "template_6twp54l", formData, "Dlv3sTt1GEqeR_uYe").then(
+      () => {
+        toast({
+          title: "Message sent",
+          description: "Thank you for reaching out. I'll get back to you soon.",
+        });
+        setFormData({ name: "", email: "", message: "", title: "Website Contact" });
+        setLoading(false);
+      },
+      (error) => {
+        console.error(error);
+        toast({
+          title: "Something went wrong",
+          description: "Please try again, or email me directly.",
+        });
+        setLoading(false);
+      },
+    );
   };
 
   return (
-    <section id="contact" className="scroll-mt-24 border-b border-border py-16 md:py-24">
-      <div className="frame">
-        <SectionHeading
-          index="07 — Correspondence"
-          title="Contact"
-          lede="A project, a role, or a question about the work. I read everything."
-        />
+    <section id="contact" className="scroll-mt-28 bg-background px-3 py-8 sm:px-6">
+      <div className="mx-auto max-w-[1100px] rounded-[32px] bg-[#F3F5F8] px-5 py-14 sm:px-10">
+        <AccentHeading before="Have a data problem?" accent="Let’s Discuss" className="text-center" />
+        <p className="mx-auto mt-4 max-w-lg text-center text-base leading-7 text-muted-foreground">
+          A role, a pipeline, or a question about the work. I read everything. Cairo, available for data and analytics engineering.
+        </p>
 
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.1fr)] lg:gap-20">
-          <div>
-            <p className="overflow-hidden font-display text-4xl italic leading-tight sm:text-5xl">
-              <motion.span
-                className="block"
-                initial={reduced ? false : { y: "110%" }}
-                whileInView={{ y: "0%" }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              >
-                Write to me.
-              </motion.span>
-            </p>
-            <a
-              href="mailto:khalidabdelrazk4@gmail.com"
-              className="mt-6 block text-lg underline decoration-border underline-offset-4 hover:decoration-primary"
-            >
-              khalidabdelrazk4@gmail.com
-            </a>
-            <a href="tel:+201015565612" className="mt-2 block text-sm text-muted-foreground hover:text-foreground">
-              +20 101 556 5612
-            </a>
-            <p className="mt-8 max-w-xs text-sm leading-6 text-muted-foreground">
-              Based in Cairo. Available for data engineering, analytics engineering, and analysis work.
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="Your name"
-                className={fieldClass}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="you@company.com"
-                className={fieldClass}
-              />
-            </div>
-            <div>
-              <label htmlFor="message" className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                placeholder="What are you working on?"
-                rows={5}
-                className={`${fieldClass} resize-none`}
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="inline-flex h-11 items-center bg-foreground px-6 text-sm text-background transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-60"
-            >
-              {loading ? "Sending…" : "Send message"}
-            </button>
-          </form>
-        </div>
+        <form onSubmit={handleSubmit} className="mx-auto mt-8 grid max-w-xl gap-4">
+          <label className="sr-only" htmlFor="name">
+            Name
+          </label>
+          <input id="name" name="name" value={formData.name} onChange={handleChange} required placeholder="Your name" className={fieldClass} />
+          <label className="sr-only" htmlFor="email">
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            placeholder="Email address"
+            className={fieldClass}
+          />
+          <label className="sr-only" htmlFor="message">
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            placeholder="What are you working on?"
+            rows={5}
+            className={`${fieldClass} resize-none`}
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="justify-self-center rounded-full bg-primary px-8 py-3 text-base font-semibold text-white disabled:opacity-60"
+          >
+            {loading ? "Sending…" : "Send message"}
+          </button>
+        </form>
       </div>
     </section>
   );

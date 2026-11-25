@@ -1,217 +1,112 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import profileImage from "@/assets/profile.jpg";
-
-const ease = [0.16, 1, 0.3, 1] as const;
-
-const stats = [
-  { end: 1, suffix: "+", decimals: 0, label: "Year building pipelines and dashboards" },
-  { end: 50, suffix: "+", decimals: 0, label: "Finance and growth KPIs in one model" },
-  { end: 36, suffix: "M+", decimals: 0, label: "Trip records in the TLC pipeline" },
-  { end: 3.3, suffix: "", decimals: 1, label: "GPA, Electronics & Communications" },
-];
-
-const links = [
-  { href: "https://github.com/khalidabdelrazek", label: "GitHub" },
-  { href: "https://www.linkedin.com/in/khalid-abdelrazk-7719b32b3/", label: "LinkedIn" },
-  { href: "mailto:khalidabdelrazk4@gmail.com", label: "Email" },
-];
-
-const useCount = (end: number, run: boolean, decimals: number, instant: boolean) => {
-  const [value, setValue] = useState(instant ? end : 0);
-
-  useEffect(() => {
-    if (!run) return;
-    if (instant) {
-      setValue(end);
-      return;
-    }
-    const start = performance.now();
-    const duration = 1200;
-    let frame = 0;
-    const tick = (now: number) => {
-      const progress = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(end * eased);
-      if (progress < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [end, instant, run]);
-
-  return decimals > 0 ? value.toFixed(decimals) : String(Math.round(value));
-};
-
-const Stat = ({
-  end,
-  suffix,
-  decimals,
-  label,
-  run,
-  index,
-}: (typeof stats)[number] & { run: boolean; index: number }) => {
-  const reduced = useReducedMotion();
-  const shown = useCount(end, run, decimals, Boolean(reduced));
-  return (
-    <motion.div
-      className="border-b border-border py-5 pr-4 sm:border-b-0 sm:border-r sm:px-5 sm:first:pl-0 sm:last:border-r-0"
-      initial={reduced ? false : { opacity: 0, y: 14 }}
-      animate={run ? { opacity: 1, y: 0 } : undefined}
-      transition={{ duration: 0.55, delay: reduced ? 0 : 0.08 * index, ease }}
-    >
-      <dt className="font-display text-3xl leading-none sm:text-4xl">
-        {shown}
-        {suffix}
-      </dt>
-      <dd className="mt-2 max-w-[12rem] text-xs leading-5 text-muted-foreground">{label}</dd>
-    </motion.div>
-  );
-};
+import { ease, scrollTo } from "@/components/design/bits";
 
 const Hero = () => {
   const reduced = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const statsRef = useRef<HTMLDListElement>(null);
-  const statsInView = useInView(statsRef, { once: true, margin: "-40px" });
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const portraitY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -56]);
-
   const rise = (delay: number) =>
     reduced
       ? {}
       : {
-          initial: { y: "115%" },
-          animate: { y: "0%" },
-          transition: { duration: 1, delay, ease },
+          initial: { opacity: 0, y: 28 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.75, delay, ease },
         };
 
   return (
-    <section id="hero" ref={sectionRef} className="scroll-mt-24 border-b border-border">
-      <div className="frame pb-12 pt-8 lg:pb-16 lg:pt-12">
-        <motion.div
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground"
-        >
-          <span>Analytics engineer at Flash</span>
-          <span className="flex items-center gap-2">
-            <span className="pulse-dot size-1.5 rounded-full bg-primary" aria-hidden="true" />
-            Cairo, Egypt
-          </span>
-        </motion.div>
+    <section id="hero" className="scroll-mt-28 overflow-hidden bg-background pb-6 pt-28 sm:pt-32">
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6">
+        <div className="relative mx-auto flex max-w-[980px] flex-col items-center">
+          <motion.div {...rise(0.05)} className="relative">
+            <span className="inline-flex rounded-full border border-[#171717] px-5 py-2 text-lg font-medium">Hello!</span>
+            <svg viewBox="0 0 28 30" className="absolute -right-7 -top-3 h-7 w-7 text-primary" fill="none" aria-hidden="true">
+              <path d="M4 22c6-2 8-8 7-14M16 6c2 4 6 6 10 5M14 16c3 1 5 4 5 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </motion.div>
 
-        <div className="mt-10 grid items-end gap-8 xl:mt-16 xl:grid-cols-[minmax(0,1fr)_16.5rem] xl:gap-14">
-          <div>
-            <motion.p
-              initial={reduced ? false : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="mb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-primary"
-            >
-              Data analyst · Data engineer
-            </motion.p>
-            <h1 className="text-[clamp(2.9rem,7.2vw,6.6rem)] leading-[0.84] tracking-[-0.045em]">
-              <span className="block overflow-hidden pb-[0.06em]">
-                <motion.span className="block" {...rise(0.12)}>
-                  Khalid
-                </motion.span>
-              </span>
-              <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span className="block italic text-primary" {...rise(0.26)}>
-                  Abdelrazk
-                </motion.span>
-              </span>
-            </h1>
-            <motion.p
-              initial={reduced ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="mt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground"
-            >
-              Mohammed Ibrahim
-            </motion.p>
-          </div>
+          <motion.h1 {...rise(0.16)} className="mt-5 max-w-[16ch] text-center text-[clamp(3.1rem,7vw,5.8rem)] font-semibold leading-[0.92] tracking-[-0.045em]">
+            I’m <span className="text-primary">Khalid</span>,
+            <br />
+            Data Engineer
+          </motion.h1>
+          <motion.p {...rise(0.28)} className="mt-3 text-center text-base font-medium text-muted-foreground sm:text-lg">
+            Analytics engineer · Cairo
+          </motion.p>
 
-          <motion.figure style={{ y: portraitY }} className="max-w-[16rem] xl:max-w-none xl:justify-self-end">
-            <div className="relative">
+          <div className="relative mt-2 h-[430px] w-full sm:h-[500px]">
+            <div className="absolute bottom-0 left-1/2 w-[min(92%,620px)] -translate-x-1/2">
               <motion.div
                 aria-hidden="true"
-                className="absolute -left-2.5 -top-2.5 h-full w-full border border-primary"
-                initial={reduced ? false : { opacity: 0, x: 14, y: 14 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.55, ease }}
+                className="h-[330px] w-full rounded-t-[320px] bg-[#E7D9CE] sm:h-[390px]"
+                initial={reduced ? false : { scale: 0.92, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.9, delay: 0.2, ease }}
               />
-              <div className="overflow-hidden">
-                <motion.img
-                  src={profileImage}
-                  alt="Portrait of Khalid Abdelrazk"
-                  className="relative aspect-[4/5] w-full object-cover object-[center_20%]"
-                  initial={reduced ? false : { clipPath: "inset(100% 0 0 0)", scale: 1.08 }}
-                  animate={{ clipPath: "inset(0% 0 0 0)", scale: 1 }}
-                  transition={{ duration: 1.15, delay: 0.35, ease }}
-                  whileHover={reduced ? undefined : { scale: 1.035 }}
-                />
-              </div>
             </div>
-            <figcaption className="mt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-              Portrait · Cairo
-            </figcaption>
-          </motion.figure>
-        </div>
+            <div className="absolute bottom-0 left-1/2 w-[min(78%,380px)] -translate-x-1/2">
+              <motion.img
+                src={profileImage}
+                alt="Portrait of Khalid Abdelrazk"
+                className="h-[400px] w-full object-cover object-[center_12%] sm:h-[470px] [mask-image:radial-gradient(ellipse_70%_78%_at_50%_40%,#000_68%,transparent_78%)]"
+                initial={reduced ? false : { opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.28, ease }}
+              />
+            </div>
 
-        <div className="mt-12 grid gap-8 pt-8 lg:grid-cols-[minmax(0,38rem)_auto] lg:items-end">
-          <motion.div
-            aria-hidden="true"
-            className="col-span-full h-px origin-left bg-border"
-            initial={reduced ? false : { scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.9, delay: 0.55, ease }}
-          />
-          <motion.p
-            initial={reduced ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.75, ease }}
-            className="text-base leading-7 text-foreground/90 sm:text-lg sm:leading-8"
-          >
-            Data Analyst and Data Engineer with 1+ years of experience building data pipelines, analytics models, and BI dashboards that turn raw data into business decisions. Skilled in Python, SQL, dbt, Power BI, and cloud data platforms.
-          </motion.p>
-          <motion.div
-            initial={reduced ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.88, ease }}
-            className="flex flex-wrap items-center gap-x-6 gap-y-3"
-          >
-            <a
-              href="https://drive.google.com/file/d/1R4OBFBmX3yRYVu-ZxegHulADLe0amrLn/view?usp=sharing"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-11 items-center bg-foreground px-5 text-sm text-background transition-colors duration-300 hover:bg-primary hover:text-primary-foreground"
+            <motion.aside {...rise(0.4)} className="absolute left-0 top-[38%] hidden max-w-[240px] lg:block">
+              <QuoteMark />
+              <p className="mt-3 text-lg leading-snug text-[#344054]">
+                Pipelines and models built so finance, growth, and ops can trust the same numbers.
+              </p>
+            </motion.aside>
+
+            <motion.aside {...rise(0.48)} className="absolute right-0 top-[40%] hidden text-right lg:block">
+              <p className="text-4xl font-semibold tracking-tight">36M+</p>
+              <p className="mt-1 text-sm text-muted-foreground">Trip records modeled</p>
+            </motion.aside>
+
+            <div className="absolute bottom-2 left-1/2 z-10 -translate-x-1/2">
+            <motion.div
+              {...rise(0.55)}
+              className="flex w-max items-center gap-1 rounded-full border-2 border-white bg-white/80 p-1.5 shadow-[0_10px_30px_rgba(23,23,23,0.08)] backdrop-blur-md"
             >
-              Download CV
-            </a>
-            {links.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith("http") ? "_blank" : undefined}
-                rel="noreferrer"
-                className="link-draw text-sm text-muted-foreground"
+              <button
+                type="button"
+                onClick={() => scrollTo("projects")}
+                className="inline-flex items-center gap-1 rounded-full bg-primary px-5 py-3 text-lg font-semibold text-white"
               >
-                {link.label}
-              </a>
-            ))}
-          </motion.div>
-        </div>
+                Portfolio
+                <svg viewBox="0 0 24 24" className="size-5" fill="none" aria-hidden="true">
+                  <path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              </button>
+              <button type="button" onClick={() => scrollTo("contact")} className="rounded-full px-5 py-3 text-lg font-medium text-[#1D2430]">
+                Hire me
+              </button>
+            </motion.div>
+            </div>
+          </div>
 
-        <dl ref={statsRef} className="mt-12 grid grid-cols-2 border-t border-border sm:grid-cols-4">
-          {stats.map((stat, index) => (
-            <Stat key={stat.label} {...stat} index={index} run={Boolean(statsInView) || Boolean(reduced)} />
-          ))}
-        </dl>
+          <div className="mt-6 grid w-full gap-6 sm:grid-cols-2 lg:hidden">
+            <p className="text-base leading-snug text-[#344054]">
+              Pipelines and models built so finance, growth, and ops can trust the same numbers.
+            </p>
+            <p className="sm:text-right">
+              <span className="block text-3xl font-semibold">36M+</span>
+              <span className="text-sm text-muted-foreground">Trip records modeled</span>
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
 };
+
+const QuoteMark = () => (
+  <svg viewBox="0 0 36 28" className="h-7 w-9 text-[#1D2430]" fill="currentColor" aria-hidden="true">
+    <path d="M14 0C6 4 2 10 2 17c0 5 3 9 7 9 3 0 6-2 6-6s-2-5-5-5c0-4 3-8 7-11L14 0zm20 0c-8 4-12 10-12 17 0 5 3 9 7 9 3 0 6-2 6-6s-2-5-5-5c0-4 3-8 7-11L34 0z" />
+  </svg>
+);
 
 export default Hero;

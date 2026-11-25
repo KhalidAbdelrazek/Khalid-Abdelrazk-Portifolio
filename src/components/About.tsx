@@ -1,125 +1,58 @@
-import { motion } from "framer-motion";
-import SectionHeading from "@/components/SectionHeading";
+import profileImage from "@/assets/profile.jpg";
+import { AccentHeading, Reveal, scrollTo } from "@/components/design/bits";
 
-const services = [
-  {
-    title: "Data Analysis",
-    description: "Explore datasets, test patterns, and turn findings into practical business recommendations.",
-  },
-  {
-    title: "Data Visualization",
-    description: "Build Power BI and Python dashboards that make performance, trends, and KPIs clear.",
-  },
-  {
-    title: "Machine Learning",
-    description: "Develop and evaluate predictive models for forecasting and classification problems.",
-  },
-  {
-    title: "Data Engineering",
-    description: "Create dependable ETL pipelines, data models, and database foundations for analytics.",
-  },
-  {
-    title: "Data Cleaning",
-    description: "Resolve missing values, duplicates, and inconsistent formats with repeatable transformations.",
-  },
-  {
-    title: "Analytics Engineering",
-    description: "Build maintainable dbt models and analytics-ready data layers that teams can trust.",
-  },
-];
-
-const contactItems = [
-  { label: "Location", value: "Cairo, Egypt" },
-  { label: "Phone", value: "+20 101 556 5612", href: "tel:+201015565612" },
-  { label: "Email", value: "khalidabdelrazk4@gmail.com", href: "mailto:khalidabdelrazk4@gmail.com" },
+const points = [
+  { title: "Problem solving", copy: "Break a messy metric into a definition, a model, and a check." },
+  { title: "Communication", copy: "Explain a pipeline in the language finance and growth already use." },
+  { title: "Critical thinking", copy: "Question a number before it becomes a decision." },
 ];
 
 const About = () => {
   return (
-    <section id="about" className="scroll-mt-24 border-b border-border py-16 md:py-24">
-      <div className="frame">
-        <SectionHeading
-          index="01 — Profile"
-          title="About"
-          lede="Analysis, analytics engineering, and BI — built so other people can trust the numbers."
-        />
+    <section id="about" className="scroll-mt-28 bg-[#F3F5F8] py-16 sm:py-24">
+      <div className="mx-auto grid max-w-[1100px] items-center gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+        <Reveal>
+          <div className="relative mx-auto w-full max-w-[460px]">
+            <div className="absolute inset-x-8 bottom-0 top-10 rounded-[36px] bg-[#E7D3C4]" aria-hidden="true" />
+            <img
+              src={profileImage}
+              alt="Khalid Abdelrazk, analytics engineer"
+              className="relative mx-auto h-[460px] w-[86%] rounded-[32px] object-cover object-[center_15%] shadow-[0_20px_50px_rgba(29,36,48,0.12)]"
+            />
+          </div>
+        </Reveal>
 
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-16">
-          <div>
-            <p className="max-w-3xl font-display text-[1.65rem] font-medium leading-[1.25] sm:text-4xl sm:leading-[1.2]">
-              I’m a data analyst and data engineer with more than a year of experience turning complex datasets into clear decisions and dependable data systems.
-            </p>
-            <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
-              My work spans data analysis, analytics engineering, and BI, using Python, SQL, dbt, and Power BI.
-            </p>
-
-            <div className="mt-10 border-l border-primary pl-5">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">Graduation project</p>
-              <h3 className="mt-3 text-2xl leading-snug">Smart Medical Sample Transport System</h3>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-                I led an eight-person team to build the system, applying analytics and automation to improve healthcare workflows. The project earned full marks.
-              </p>
+        <Reveal delay={0.08}>
+          <AccentHeading before="Why" accent="Hire me?" />
+          <p className="mt-6 max-w-md text-lg leading-8 text-[#667085]">
+            I’m an analytics engineer and data engineer in Cairo. I turn operational data into models, pipelines, and dashboards that other people can rely on.
+          </p>
+          <dl className="mt-8 grid max-w-lg grid-cols-2 gap-6">
+            <div>
+              <dt className="text-4xl font-semibold tracking-tight text-foreground">50+</dt>
+              <dd className="mt-1 text-sm text-muted-foreground">Finance and growth KPIs in one model</dd>
             </div>
-
-            <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-border pt-6">
-              <div>
-                <dt className="font-display text-3xl">1+</dt>
-                <dd className="mt-1 text-xs leading-5 text-muted-foreground">year of experience</dd>
-              </div>
-              <div>
-                <dt className="font-display text-3xl">8</dt>
-                <dd className="mt-1 text-xs leading-5 text-muted-foreground">people on the team I led</dd>
-              </div>
-              <div>
-                <dt className="font-display text-3xl">Full</dt>
-                <dd className="mt-1 text-xs leading-5 text-muted-foreground">marks on the graduation project</dd>
-              </div>
-            </dl>
-          </div>
-
-          <aside className="lg:pt-2" aria-label="Contact details">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Reach me</p>
-            <ul className="mt-4 divide-y divide-border border-y border-border">
-              {contactItems.map((item) => (
-                <li key={item.label} className="py-4">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{item.label}</p>
-                  {item.href ? (
-                    <a href={item.href} className="mt-1 block text-sm break-all hover:text-primary">
-                      {item.value}
-                    </a>
-                  ) : (
-                    <p className="mt-1 text-sm">{item.value}</p>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </aside>
-        </div>
-
-        <div className="mt-16 md:mt-24">
-          <div className="mb-2 flex items-baseline justify-between gap-4">
-            <h3 className="text-3xl">Services</h3>
-            <p className="hidden font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground sm:block">
-              From raw data to a decision
-            </p>
-          </div>
-          <div className="border-t border-border">
-            {services.map((service, index) => (
-              <motion.article
-                key={service.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                className="grid gap-2 border-b border-border py-5 transition-colors duration-300 hover:bg-secondary/40 sm:grid-cols-[3.5rem_14rem_minmax(0,1fr)] sm:items-baseline sm:gap-6 sm:px-2"
-              >
-                <span className="font-mono text-[11px] text-primary">{String(index + 1).padStart(2, "0")}</span>
-                <h4 className="text-base font-medium">{service.title}</h4>
-                <p className="text-sm leading-6 text-muted-foreground">{service.description}</p>
-              </motion.article>
+            <div>
+              <dt className="text-4xl font-semibold tracking-tight text-foreground">1+</dt>
+              <dd className="mt-1 text-sm text-muted-foreground">Year building pipelines and BI</dd>
+            </div>
+          </dl>
+          <button
+            type="button"
+            onClick={() => scrollTo("contact")}
+            className="mt-8 rounded-full border border-[#1D2430] px-10 py-3 text-lg font-medium transition-colors duration-300 hover:bg-[#1D2430] hover:text-white"
+          >
+            Hire me
+          </button>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-3">
+            {points.map((point) => (
+              <li key={point.title}>
+                <p className="font-semibold text-foreground">{point.title}</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">{point.copy}</p>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </Reveal>
       </div>
     </section>
   );
